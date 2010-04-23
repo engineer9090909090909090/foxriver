@@ -1,8 +1,11 @@
 ﻿// Create by blue, 2010-4-22
 var _IsRequesting = false;
+
+var _EnabledFileType = ['jpg', 'jpeg','gif','png'];
 var admin = {
-    MangeItems : [{'text':'Update Password','img':'user.gif', 'controlId':'passwordManagement'},
-    {'text':'gallery management','img':'user.gif', 'controlId':'galleryManagement'}],
+    MangeItems : [{'text':'Update Password','img':'user.gif', 'controlId':'passwordManagement'}
+    ,{'text':'gallery management','img':'user.gif', 'controlId':'galleryManagement'}
+    ,{'text':'photo upload', 'img':'user.gif','controlId':'photo'}],
     
     CurrentControl : 'Login'
 }
@@ -18,21 +21,27 @@ $(document).ready(function(){
             .appendTo($div)
             .data('controlId', item.controlId)
             .click(function(e){
-                //alert(e.target.tagName);
+                if ( !_IsSignIn ) {
+                    Swamp2(admin.CurrentControl, "Login");
+                    return;
+                }
                 var a = e.target;
                 if ( a.tagName.toLowerCase != 'a') {
                     a = $(e.target).parents("a");
                 }
-                
-                Swamp( $('#' + admin.CurrentControl), $('#' + a.data('controlId')));
+                Swamp2( admin.CurrentControl, a.data('controlId'));
             });
-        $("<img src='images\\" + item.img + "'>").appendTo($a);
+        $("<img src='images/" + item.img + "'>").appendTo($a);
         $("<div></div>").text(item.text).appendTo($a);
        
        $("<div style='width:20px;height:10px;overflow:hidden'></div>").appendTo($menuContainer);
     }
-    
-    $('#Login').css({'display':'block'});
+    if ( _IsSignIn ) {
+        Swamp2(null, 'passwordManagement');
+    } else {
+        Swamp2(null, 'Login');
+    }
+    //$('#Login').css({'display':'block'});
 });
 
 function Login() {
@@ -42,12 +51,35 @@ function Login() {
     $.extend(para, {'password':$(input[1]).attr('value')});
     
     _postJSON({'method':'Login'}, para, function (data){
-        Swamp($('#Login'), $('#passwordManagement'));
+        if ( data.msgId) {
+            alert(data.message);
+        } else {
+            _IsSignIn = 1;
+            Swamp($('#Login'), $('#passwordManagement'));
+        }
+        E();
     });
     
-}
+};
+function Swamp2(id1, id2) {
+    if ( id1 == id2 ) {
+        return;
+    }
+    var show = function ()  {
+        $('#' + id2).fadeIn('fast');
+        admin.CurrentControl = id2;
+    };
+    
+    if ( id1 ) {
+        $('#' + id1 ).fadeOut('fast', function() {show();});
+    } else {
+        show();
+    }
+};
+
 
 function Swamp($1, $2) {
+    
     if ( $1) {
         $1.fadeOut('fast', function () {
             $2.fadeIn('fast');
@@ -57,6 +89,64 @@ function Swamp($1, $2) {
      }
      admin.CurrentControl = $2[0].id;
 }
+function checkSignIn() {
+    if ( !_IsSignIn ) {
+        Swamp2(admin.CurrentControl, "Login");
+    }
+}
+function B() {
+    _IsRequesting = true;
+    $("#Loading").show();
+};
+function E() {
+    _IsRequesting = false;
+    $("#Loading").hide();
+};
+function SavePhoto() {
+    B();
+    if ( !checkFile() ) {
+        E();
+        return;
+    };
+    $.ajaxFileUpload({
+		url:'savephoto.aspx', 
+		secureuri:false,
+		fileElementId:'fileToUpload',
+		dataType: 'json',
+		success: function (data, status){
+			if ( data.msgId ) {
+			    E();
+			    alert(data.message);
+			} else {
+				saveInformation(data);
+			}
+		},
+		error: function (data, status, e) {
+		    E();
+		    for(p in data ) {
+		        //alert(data[p]);
+		    }
+		}
+	});
+    var saveInformation = function(data) {
+        alert(data.message);
+        E();
+    };
+};
+
+function checkFile() {
+    var fileName = $('#fileToUpload').attr('value');
+    fileName = fileName.substr(fileName.lastIndexOf('.') + 1 ).toLowerCase();
+    if (! fileName ) {
+        return false;
+    }
+    for ( var i = 0; i < _EnabledFileType.length ; ++i ) {
+        if ( _EnabledFileType[i] == fileName)
+            return true;
+    }
+    alert("Please select correct file type!");
+    return false;
+};
 
 function getPostUrl() {
     var u = document.location.href;

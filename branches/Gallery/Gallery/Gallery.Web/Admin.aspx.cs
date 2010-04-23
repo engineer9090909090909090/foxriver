@@ -25,5 +25,15 @@ namespace Gallery.Web
             }
 
         }
+
+        protected int IsSignIn
+        {
+            get
+            {
+                return WebMethods.IsSignIn;
+            }
+        }
     }
+
+    
 }
