@@ -57,7 +57,7 @@
             position: absolute;
             left: 300px;
             top: 90px;
-            display:none;
+            display: none;
         }
         .window_header
         {
@@ -65,17 +65,22 @@
             line-height: 25px;
             background: url(images/top-bottom.png) repeat-x 0px 0px;
             border-bottom: solid 2px #649fe5;
-            font-weight:bold;
+            font-weight: bold;
         }
         .window_content
         {
             background-color: #ffffff;
         }
     </style>
+    <script language="javascript">
+    var _IsSignIn = <%= IsSignIn %>;
+    </script>
 
     <script language="javascript" src="scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
 
     <script language="javascript" src="scripts/admin.js" type="text/javascript"></script>
+
+    <script language="javascript" src="scripts/ajaxfileupload.js" type="text/javascript"></script>
 
 </head>
 <body>
@@ -89,12 +94,20 @@
         <div class="window_content">
             <table>
                 <tr>
-                    <td>User Name</td>
-                    <td><input type="text" /></td>
+                    <td>
+                        User Name
+                    </td>
+                    <td>
+                        <input type="text" />
+                    </td>
                 </tr>
                 <tr>
-                    <td>Password</td>
-                    <td><input type="password" /></td>
+                    <td>
+                        Password
+                    </td>
+                    <td>
+                        <input type="password" />
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="2">
@@ -121,17 +134,19 @@
             user name:
         </div>
     </div>
-   <%-- <div class="win">
-        <div class="window_header">
-            asdf;
+    
+    <div id="photo" class="win" style="width: 500px;">
+        <div class="window_header" style="width: 500px;">
+            Photo Upload
         </div>
-        <div>
+        <div class="window_content" style="">
+            <input type="file" id="fileToUpload" name="fileToUpload" />
         </div>
+        <div><input type="button" value="Save" onclick="SavePhoto();"/></div>
     </div>
     
-    <div id="galleryManagement" class="window_content" style="width: 300px; height: 150px;">
-        galleryManagement
-    </div>--%>
+    
+    <img id="Loading" src="images/loading.gif" style="position: absolute; left: 250px; top: 200px;display:none;" />
     </form>
 </body>
 </html>
