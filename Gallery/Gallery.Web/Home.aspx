@@ -34,7 +34,7 @@
         {
             width: 100px;
             margin-top: 10px;
-            font-size: 15pt;
+            font-size: 13pt;
             font-weight: bold;
             color: #ffffff;
             display: none;
@@ -45,7 +45,10 @@
             position: absolute;
             left: 150px;
             top: 10px;
+            width:717px;
+            height:260px;
             background-color: #fff;
+            background-image: url(images/Dxd_header270.jpg)
         }
         .ContentItem
         {
@@ -54,9 +57,9 @@
             top: 10px;
             width: 400px;
             height: 500px;
-            overflow:hidden;
-            display:none;
-            color:#fff;
+            overflow: hidden;
+            display: none;
+            color: #fff;
         }
     </style>
 
@@ -70,19 +73,30 @@
     <div id="Menu">
         <div cid="Home">
             Home</div>
+            
+        <div cid="Home">
+            About Us</div>
+            
+        <div cid="Home">
+            Our Services</div>
         <div cid="Gallery">
-            Gallery</div>
+        
+            Our Work</div>
         <div cid="Contact">
-            Contact</div>
+            Contact Us</div>
     </div>
     <div id="Content">
     </div>
     <div class="ContentItem" id="Home">
         Home</div>
+    <div class="ContentItem" id="Div1">
+        About Us</div>
+    <div class="ContentItem" id="Div2">
+        Our Services</div>
     <div class="ContentItem" id="Gallery">
-        Gallery</div>
+        Our work</div>
     <div class="ContentItem" id="Contact">
-        Contact</div>
+        Contact Us</div>
     </form>
 </body>
 </html>
