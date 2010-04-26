@@ -1,0 +1,227 @@
+ <?xml version='1.0' encoding='UTF-8'?>
+ <!-- The time si in seconds so 10  =  10 seconds until the next image will load
+      Set hide_thumbs to yes or no
+	  	- If is set to no the thumb holder and description will not animate up and down
+		- If is set to yes the thumb holder and description will animate up and down
+ -->
+<content>
+  <!---------------------------------------------------------------->
+  <time>5</time>
+  <hide_thumbs>yes</hide_thumbs>
+  
+  
+   <image>
+  	   <small_bimage_path>load/smallimage/1.jpg</small_bimage_path>
+	   <big_bimage_path>load/bigimage/1.jpg</big_bimage_path>
+	   <description></description>
+  </image>
+  
+  <image>
+      <small_bimage_path>load/smallimage/2.jpg</small_bimage_path>
+	  <big_bimage_path>load/bigimage/2.jpg</big_bimage_path>
+	  <description></description>
+  </image>
+ 
+  <image>
+ 	  <small_bimage_path>load/smallimage/3.jpg</small_bimage_path>
+	  <big_bimage_path>load/bigimage/3.jpg</big_bimage_path>
+	   <description></description>
+  </image>
+ 
+  <image>
+      <small_bimage_path>load/smallimage/5.jpg</small_bimage_path>
+	  <big_bimage_path>load/bigimage/5.jpg</big_bimage_path>
+	  <description></description>
+  </image>
+  
+   <image>
+  	   <small_bimage_path>load/smallimage/6.jpg</small_bimage_path>
+	   <big_bimage_path>load/bigimage/6.jpg</big_bimage_path>
+	   <description></description>
+  </image>
+  
+  <image>
+ 	  <small_bimage_path>load/smallimage/8.jpg</small_bimage_path>
+	  <big_bimage_path>load/bigimage/8.jpg</big_bimage_path>
+	   <description></description>
+  </image>
+ 
+ <image>
+  	   <small_bimage_path>load/smallimage/9.jpg</small_bimage_path>
+	   <big_bimage_path>load/bigimage/9.jpg</big_bimage_path>
+	   <description></description>
+  </image>
+  
+  <image>
+      <small_bimage_path>load/smallimage/10.jpg</small_bimage_path>
+	  <big_bimage_path>load/bigimage/10.jpg</big_bimage_path>
+	  <description></description>
+  </image>
+  
+   <image>
+  	   <small_bimage_path>load/smallimage/11.jpg</small_bimage_path>
+	   <big_bimage_path>load/bigimage/11.jpg</big_bimage_path>
+	   <description></description>
+  </image>
+  
+  <image>
+      <small_bimage_path>load/smallimage/12.jpg</small_bimage_path>
+	  <big_bimage_path>load/bigimage/12.jpg</big_bimage_path>
+	  <description></description>
+  </image>
+ 
+  <image>
+ 	  <small_bimage_path>load/smallimage/13.jpg</small_bimage_path>
+	  <big_bimage_path>load/bigimage/13.jpg</big_bimage_path>
+	   <description></description>
+  </image>
+ 
+  <image>
+      <small_bimage_path>load/smallimage/15.jpg</small_bimage_path>
+	  <big_bimage_path>load/bigimage/15.jpg</big_bimage_path>
+	  <description></description>
+  </image>
+  
+   <image>
+  	   <small_bimage_path>load/smallimage/16.jpg</small_bimage_path>
+	   <big_bimage_path>load/bigimage/16.jpg</big_bimage_path>
+	   <description></description>
+  </image>
+  
+  <image>
+      <small_bimage_path>load/smallimage/17.jpg</small_bimage_path>
+	  <big_bimage_path>load/bigimage/17.jpg</big_bimage_path>
+	  <description></description>
+  </image>
+ 
+  <image>
+ 	  <small_bimage_path>load/smallimage/18.jpg</small_bimage_path>
+	  <big_bimage_path>load/bigimage/18.jpg</big_bimage_path>
+	   <description></description>
+  </image>
+ 
+ <image>
+  	   <small_bimage_path>load/smallimage/19.jpg</small_bimage_path>
+	   <big_bimage_path>load/bigimage/19.jpg</big_bimage_path>
+	   <description></description>
+  </image>
+  
+  <image>
+      <small_bimage_path>load/smallimage/20.jpg</small_bimage_path>
+	  <big_bimage_path>load/bigimage/20.jpg</big_bimage_path>
+	  <description></description>
+  </image>
+  
+   <image>
+  	   <small_bimage_path>load/smallimage/21.jpg</small_bimage_path>
+	   <big_bimage_path>load/bigimage/21.jpg</big_bimage_path>
+	   <description></description>
+  </image>
+  
+  <image>
+      <small_bimage_path>load/smallimage/22.jpg</small_bimage_path>
+	  <big_bimage_path>load/bigimage/22.jpg</big_bimage_path>
+	  <description></description>
+  </image>
+ 
+  <image>
+ 	  <small_bimage_path>load/smallimage/23.jpg</small_bimage_path>
+	  <big_bimage_path>load/bigimage/23.jpg</big_bimage_path>
+	   <description></description>
+  </image>
+ 
+ <image>
+  	   <small_bimage_path>load/smallimage/24.jpg</small_bimage_path>
+	   <big_bimage_path>load/bigimage/24.jpg</big_bimage_path>
+	   <description></description>
+  </image>
+  
+  <image>
+      <small_bimage_path>load/smallimage/25.jpg</small_bimage_path>
+	  <big_bimage_path>load/bigimage/25.jpg</big_bimage_path>
+	  <description></description>
+  </image>
+  
+   <image>
+  	   <small_bimage_path>load/smallimage/26.jpg</small_bimage_path>
+	   <big_bimage_path>load/bigimage/26.jpg</big_bimage_path>
+	   <description></description>
+  </image>
+  
+  <image>
+      <small_bimage_path>load/smallimage/27.jpg</small_bimage_path>
+	  <big_bimage_path>load/bigimage/27.jpg</big_bimage_path>
+	  <description></description>
+  </image>
+ 
+  <image>
+ 	  <small_bimage_path>load/smallimage/28.jpg</small_bimage_path>
+	  <big_bimage_path>load/bigimage/28.jpg</big_bimage_path>
+	   <description></description>
+  </image>
+ 
+ <image>
+  	   <small_bimage_path>load/smallimage/29.jpg</small_bimage_path>
+	   <big_bimage_path>load/bigimage/29.jpg</big_bimage_path>
+	   <description></description>
+  </image>
+  
+  <image>
+      <small_bimage_path>load/smallimage/30.jpg</small_bimage_path>
+	  <big_bimage_path>load/bigimage/30.jpg</big_bimage_path>
+	  <description></description>
+  </image>
+  
+   <image>
+  	   <small_bimage_path>load/smallimage/31.jpg</small_bimage_path>
+	   <big_bimage_path>load/bigimage/31.jpg</big_bimage_path>
+	   <description></description>
+  </image>
+  
+  <image>
+      <small_bimage_path>load/smallimage/32.jpg</small_bimage_path>
+	  <big_bimage_path>load/bigimage/32.jpg</big_bimage_path>
+	  <description></description>
+  </image>
+ 
+  <image>
+ 	  <small_bimage_path>load/smallimage/33.jpg</small_bimage_path>
+	  <big_bimage_path>load/bigimage/33.jpg</big_bimage_path>
+	   <description></description>
+  </image>
+ 
+  
+  <image>
+      <small_bimage_path>load/smallimage/35.jpg</small_bimage_path>
+	  <big_bimage_path>load/bigimage/35.jpg</big_bimage_path>
+	  <description></description>
+  </image>
+  
+   <image>
+  	   <small_bimage_path>load/smallimage/36.jpg</small_bimage_path>
+	   <big_bimage_path>load/bigimage/36.jpg</big_bimage_path>
+	   <description></description>
+  </image>
+  
+  <image>
+      <small_bimage_path>load/smallimage/37.jpg</small_bimage_path>
+	  <big_bimage_path>load/bigimage/37.jpg</big_bimage_path>
+	  <description></description>
+  </image>
+ 
+  <image>
+ 	  <small_bimage_path>load/smallimage/38.jpg</small_bimage_path>
+	  <big_bimage_path>load/bigimage/38.jpg</big_bimage_path>
+	   <description></description>
+  </image>
+  
+  <image>
+ 	  <small_bimage_path>load/smallimage/39.jpg</small_bimage_path>
+	  <big_bimage_path>load/bigimage/39.jpg</big_bimage_path>
+	   <description></description>
+  </image>
+
+  
+  <!---------------------------------------------------------------->
+</content>
+

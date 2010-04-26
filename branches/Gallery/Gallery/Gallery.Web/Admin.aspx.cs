@@ -24,6 +24,20 @@ namespace Gallery.Web
                 return;
             }
 
+            System.Data.SqlClient.SqlConnection conn = new System.Data.SqlClient.SqlConnection();
+            conn.ConnectionString= @"Data Source=207.56.187.6,1433\SQLExpress1;Initial Catalog=dxdpho;User Id=dxdphosql;Password=dxdpho;";
+            try
+            {
+                conn.Open();
+                Response.Write("Connection is OK!");
+
+            }
+            catch(System.Exception ex)
+            {
+                Response.Write(ex.Message);
+            }
+            conn.Dispose();
+
         }
 
         protected int IsSignIn
