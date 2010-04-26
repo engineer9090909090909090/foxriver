@@ -15,6 +15,7 @@ namespace Gallery.Web
 {
     public class Utility
     {
+        //Data Source=207.56.187.6,1433\SQLExpress1;Initial Catalog=dxdpho;User Id=dxdphosql;Password=your password;
         #region GetCommand
 
         static public SqlCommand GetCommand()
