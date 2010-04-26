@@ -53,11 +53,18 @@
     <Reference Include="System.Web.Mobile" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="About.htm" />
     <Content Include="Admin.aspx" />
+    <Content Include="Contact.htm" />
     <Content Include="Home.aspx" />
+    <Content Include="home.html" />
+    <Content Include="Images\slogan.png" />
+    <Content Include="Images\splash1.jpg" />
     <Content Include="Images\desk.jpg" />
     <Content Include="Images\Dxd_header270.jpg" />
+    <Content Include="Images\Dxd_logosplash.png" />
     <Content Include="Images\loading.gif" />
+    <Content Include="Images\splash2.jpg" />
     <Content Include="Images\top-bottom.png" />
     <Content Include="Images\user.gif" />
     <Content Include="Index.htm" />
@@ -65,8 +72,12 @@
     <Content Include="Scripts\admin.js" />
     <Content Include="Scripts\ajaxfileupload.js" />
     <Content Include="Scripts\Home.js" />
+    <Content Include="Scripts\index.js" />
     <Content Include="Scripts\jquery-1.4.1.min.js" />
+    <Content Include="Services.htm" />
+    <Content Include="Style.css" />
     <Content Include="Web.config" />
+    <Content Include="Work.htm" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin.aspx.cs">
