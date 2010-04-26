@@ -71,6 +71,7 @@
     <Content Include="SavePhoto.aspx" />
     <Content Include="Scripts\admin.js" />
     <Content Include="Scripts\ajaxfileupload.js" />
+    <Content Include="Scripts\gallery.js" />
     <Content Include="Scripts\Home.js" />
     <Content Include="Scripts\index.js" />
     <Content Include="Scripts\jquery-1.4.1.min.js" />
