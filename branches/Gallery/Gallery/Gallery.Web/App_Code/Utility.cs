@@ -53,5 +53,50 @@ namespace Gallery.Web
             }
             return -1;
         }
+
+
+        static public DataTable GetGalleries()
+        {
+            using (SqlCommand command = GetCommand())
+            {
+                command.CommandText = "SELECT [ID], GalleryName FROM TGallery";
+
+                DataTable t = new DataTable();
+                SqlDataAdapter ada = new SqlDataAdapter(command);
+                ada.Fill(t);
+
+                command.Connection.Close();
+                command.Dispose();
+
+                return t;
+            }
+        }
+
+        static public string GetGalleriesJson()
+        {
+            System.Text.StringBuilder json = new System.Text.StringBuilder();
+            json.Append("[");
+
+            DataTable t = GetGalleries();
+            
+            if (t.Rows.Count > 0)
+            {
+                int count = 0;
+                foreach (DataRow row in t.Rows)
+                {
+                    if ( count > 0 )
+                        json.Append(",");
+                    json.Append("{");
+                    json.AppendFormat("\"id\":{0},\"text\":\"{1}\",\"show\":{2}",
+                        row[0].ToString(),
+                        row[1].ToString().Replace("\"", "\\\""));
+                    json.Append("}");
+                    ++count;
+                }
+            }
+            json.Append("[");
+
+            return json.ToString();
+        }
     }
 }
