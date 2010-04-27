@@ -28,27 +28,19 @@
             top: 10px;
             width: 120px;
             height: 400px;
-            border: solid 1px red;
+            border: solid 1px silver;
+            font-size: 13pt;
+            color: #fff;
         }
         #Menu div
         {
             width: 100px;
             margin-top: 10px;
             font-size: 13pt;
-            font-weight: bold;
             color: #ffffff;
-            display: none;
             cursor: pointer;
-        }
-        #Content
-        {
-            position: absolute;
-            left: 150px;
-            top: 10px;
-            width:717px;
-            height:260px;
-            background-color: #fff;
-            background-image: url(images/Dxd_header270.jpg)
+            font-weight: normal;
+            margin-left: 15px;
         }
         .ContentItem
         {
@@ -61,6 +53,69 @@
             display: none;
             color: #fff;
         }
+        .win
+        {
+            border: solid 2px #649fe5;
+            position: absolute;
+            left: 150px;
+            top: 10px;
+        }
+        .window_header
+        {
+            height: 25px;
+            line-height: 25px;
+            background: url(images/top-bottom.png) repeat-x 0px 0px;
+            border-bottom: solid 2px #649fe5;
+            font-weight: bold;
+        }
+        .window_content
+        {
+            background-color: #ffffff;
+        }
+        .table_header
+        {
+            width: 650px;
+            border-bottom: solid 1px silver;
+        }
+        .window_content a
+        {
+            color: Blue;
+            text-decoration: underline;
+            margin-left: 20px;
+        }
+        .row
+        {
+            width: 650px;
+            height: 50px;
+            line-height: 50px;
+            border-bottom: solid 1px silver;
+            margin-top:5px;
+        }
+        .thumb
+        {
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            float: left;
+        }
+        .photo
+        {
+            width: 400px;
+            height: 50px;
+            line-height: 50px;
+            float: left;
+            margin-left: 20px;
+            border-left: solid 1px silver;
+        }
+        .Operation
+        {
+            margin-left: 5px;
+            border-left: solid 1px silver;
+            width: 130px;
+            height: 50px;
+            line-height: 50px;
+            float: left;
+        }
     </style>
 
     <script language="javascript" src="scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
@@ -71,32 +126,50 @@
 <body>
     <form id="form1" runat="server">
     <div id="Menu">
-        <div cid="Home">
-            Home</div>
-            
-        <div cid="Home">
-            About Us</div>
-            
-        <div cid="Home">
-            Our Services</div>
-        <div cid="Gallery">
-        
-            Our Work</div>
-        <div cid="Contact">
-            Contact Us</div>
+        <div style="text-decoration: underline; font-weight: bold; margin-left: 5px;">
+            Gallery List</div>
     </div>
-    <div id="Content">
+    <div class="win" style="width: 700px;">
+        <div class="window_header" style="width: 700px;">
+            Gallery Maintainance
+        </div>
+        <div class="window_content" style="width: 700px; height: 600px;">
+            <div class="table_header">
+                <input type="checkbox" />
+                Show this gallery. <a href="javascript:void(0);">Update</a> <a href="javascript:void(0);"
+                    onclick="addRow();">Add Row</a>
+                    <a href="javascript:void(0);">Save Row's Order</a>
+            </div>
+            <div style="width: 700px; height: 578px; overflow: auto" id="RowContainer">
+                
+            </div>
+        </div>
     </div>
-    <div class="ContentItem" id="Home">
-        Home</div>
-    <div class="ContentItem" id="Div1">
-        About Us</div>
-    <div class="ContentItem" id="Div2">
-        Our Services</div>
-    <div class="ContentItem" id="Gallery">
-        Our work</div>
-    <div class="ContentItem" id="Contact">
-        Contact Us</div>
+    <div class="row" id="TempRow" style="display:none">
+        <div class="thumb">
+            <img src="images/defaultThumb.jpg" style="width:50px;height:50px;" />
+        </div>
+        <div class="photo">
+            <div style="height: 25px; line-height: 25px;">
+                <input type="file"  />
+                <a href="javascript:void(0);">Upload Thumbnail</a>
+            </div>
+            <div style="height: 25px; line-height: 25px;">
+                <input type="file" />
+                <a href="javascript:void(0);">Upload Photo</a>
+            </div>
+        </div>
+        <div class="Operation">
+            <a href="javascript:void(0);" style="margin-left: 5px;">Del</a> <a href="javascript:void(0);"
+                style="margin-left: 5px;">Up</a> <a href="javascript:void(0);" style="margin-left: 5px;">
+                    Down</a>
+                    <a href="javascript:void(0);" style="margin-left: 5px;">
+                    View
+                    </a>
+        </div>
+        <div style="clear: both;">
+        </div>
+    </div>
     </form>
 </body>
 </html>
