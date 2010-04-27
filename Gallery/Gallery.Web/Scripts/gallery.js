@@ -22,6 +22,7 @@ $(document).ready(function(){
     }
     
     Gallery_Init();
+    Play();
 });
 
 var $slide;
@@ -102,8 +103,6 @@ function SetThumbStyle($img) {
 };
 var timer = null;
 var speed = 2000;
-speed = 200;
-
 function PlayImage(data, callback) {
     SetThumbStyle($('#__' + data.index));
     var SetCallback = function() {
@@ -146,13 +145,16 @@ function LoadImage( data, callback ) {
     isRequesting = true;
     var img = new Image();
     img.id = "_" + data.index;
-    $(img).css({'display':'none'});
+    $(img).css({'display':'none','border':'solid 1px silver'});
     
     $(img).load(function (e){
         isRequesting = false;
         if ( callback ) {
             callback();
         }
+        
+//        alert(e.target.offsetWidth);
+//        $(e.target).css({'width':e.target.offsetWidth,'height':e.target.offsetHeight});
     }).appendTo($('#imgHolder'))
     .attr('src', data.s2);
 }
@@ -169,14 +171,14 @@ function SetPage(increasement) {
 }
 
 function Up(){
-    if ( currentPage == 0 )
+    if (isPlaying || currentPage == 0 )
         return;
         
     SetPage(1);
     --currentPage;
 };
 function Down(){
-    if ( currentPage >= pageCount -1 )
+    if ( isPlaying || currentPage >= pageCount -1 )
         return;
         
     SetPage( -1);
