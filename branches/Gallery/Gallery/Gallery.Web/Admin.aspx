@@ -21,6 +21,10 @@
             border-bottom: 0px;
             height: 100%;
         }
+        a.selected
+        {
+        	color:Blue;
+        }
         A
         {
             display: block;

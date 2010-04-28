@@ -11,7 +11,20 @@ namespace Gallery.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!string.IsNullOrEmpty(Request.QueryString["ajax"]))
+            {
+                WebMethods.Process();
+                //Response.End();
+                return;
+            }
+        }
 
+        protected string Galleries
+        {
+            get
+            {
+                return Utility.GetGalleriesJson();
+            }
         }
     }
 }

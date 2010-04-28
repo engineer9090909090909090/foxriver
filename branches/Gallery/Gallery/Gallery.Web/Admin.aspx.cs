@@ -47,6 +47,7 @@ namespace Gallery.Web
                 return WebMethods.IsSignIn;
             }
         }
+
     }
 
     

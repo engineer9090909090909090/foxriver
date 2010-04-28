@@ -89,7 +89,7 @@
             height: 50px;
             line-height: 50px;
             border-bottom: solid 1px silver;
-            margin-top:5px;
+            margin-top: 5px;
         }
         .thumb
         {
@@ -122,6 +122,10 @@
 
     <script language="javascript" src="scripts/home.js" type="text/javascript"></script>
 
+    <script language="javascript" type="text/javascript">
+    var GalleryList = <%= Galleries %>
+    </script>
+
 </head>
 <body>
     <form id="form1" runat="server">
@@ -135,23 +139,21 @@
         </div>
         <div class="window_content" style="width: 700px; height: 600px;">
             <div class="table_header">
-                <input type="checkbox" />
+                <input type="checkbox" id="cbxShow" />
                 Show this gallery. <a href="javascript:void(0);">Update</a> <a href="javascript:void(0);"
-                    onclick="addRow();">Add Row</a>
-                    <a href="javascript:void(0);">Save Row's Order</a>
+                    onclick="Add_Click();">Add Row</a> <a href="javascript:void(0);">Save Row's Order</a>
             </div>
             <div style="width: 700px; height: 578px; overflow: auto" id="RowContainer">
-                
             </div>
         </div>
     </div>
-    <div class="row" id="TempRow" style="display:none">
+    <div class="row" id="TempRow" style="display: none">
         <div class="thumb">
-            <img src="images/defaultThumb.jpg" style="width:50px;height:50px;" />
+            <img src="images/defaultThumb.jpg" style="width: 50px; height: 50px;" />
         </div>
         <div class="photo">
             <div style="height: 25px; line-height: 25px;">
-                <input type="file"  />
+                <input type="file" />
                 <a href="javascript:void(0);">Upload Thumbnail</a>
             </div>
             <div style="height: 25px; line-height: 25px;">
@@ -162,14 +164,13 @@
         <div class="Operation">
             <a href="javascript:void(0);" style="margin-left: 5px;">Del</a> <a href="javascript:void(0);"
                 style="margin-left: 5px;">Up</a> <a href="javascript:void(0);" style="margin-left: 5px;">
-                    Down</a>
-                    <a href="javascript:void(0);" style="margin-left: 5px;">
-                    View
-                    </a>
+                    Down</a> <a href="javascript:void(0);" style="margin-left: 5px;">View </a>
         </div>
         <div style="clear: both;">
         </div>
     </div>
+    <img id="Loading" src="images/loading.gif" style="position: absolute; left: 250px;
+        top: 200px; display: none;" />
     </form>
 </body>
 </html>
