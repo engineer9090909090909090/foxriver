@@ -120,6 +120,8 @@
 
     <script language="javascript" src="scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
 
+    <script language="javascript" src="scripts/ajaxfileupload.js" type="text/javascript"></script>
+
     <script language="javascript" src="scripts/home.js" type="text/javascript"></script>
 
     <script language="javascript" type="text/javascript">
@@ -153,11 +155,11 @@
         </div>
         <div class="photo">
             <div style="height: 25px; line-height: 25px;">
-                <input type="file" />
+                <input type="file" name="s1" ptype="s1" />
                 <a href="javascript:void(0);">Upload Thumbnail</a>
             </div>
             <div style="height: 25px; line-height: 25px;">
-                <input type="file" />
+                <input type="file" name="s2" ptype="s2" />
                 <a href="javascript:void(0);">Upload Photo</a>
             </div>
         </div>

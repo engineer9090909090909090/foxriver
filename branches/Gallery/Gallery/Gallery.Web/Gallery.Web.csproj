@@ -80,6 +80,11 @@
     <Content Include="Docs\OldWebSites\Work.htm" />
     <Content Include="Home.aspx" />
     <Content Include="home.html" />
+    <Content Include="Images\asmptag_sm.jpg" />
+    <Content Include="Images\c-IMG_0164_resize.jpg" />
+    <Content Include="Images\c-Show Jumping 2 179_resize.jpg" />
+    <Content Include="Images\c1a-IMG_0098_resize.jpg" />
+    <Content Include="Images\PriceList_1.jpg" />
     <Content Include="Images\slogan.png" />
     <Content Include="Images\splash1.jpg" />
     <Content Include="Images\desk.jpg" />

@@ -51,8 +51,8 @@ function FillRow(photo, $row) {
     } else {
         rowControl.thumb.attr('src', 'Images/defaultThumb.jpg');
     }
-
 }
+
 $(document).ready(function() {
     var menuContainer = $('#Menu');
     $cbxShow = $('#cbxShow');
@@ -76,13 +76,20 @@ $(document).ready(function() {
 
     } // end for
 
+    var getInputFile = function($link) {
+        var $div = $link.parent();
+        return $div.children('input');
+    };
     var tmpRowData = GetRow($('#TempRow'));
     // upload thumb
-    tmpRowData.u1.click(function() {
-        alert('2');
+    tmpRowData.u1.click(function(e) {
+        var $file = getInputFile($(e.target));
+        //alert($file.attr('type'));
+        SavePhoto($file);
     });
-    tmpRowData.u2.click(function() {
-        alert('3');
+    tmpRowData.u2.click(function(e) {
+        var $file = getInputFile($(e.target));
+        SavePhoto($file);
     });
 
     tmpRowData.del.click(function(e) {
@@ -114,6 +121,7 @@ $(document).ready(function() {
     tmpRowData.view.click(function() {
         alert('view');
     });
+
 
     //
     //    alert($('#Menu').children('div')[0].innerHTML);
@@ -148,11 +156,17 @@ function Add_Click() {
         E();
     });
 };
+var idseed = 1024;
 function addRow() {
     var newRow = $('#TempRow')
         .clone(true)
         .css({ 'display': '' })
         .appendTo($('#RowContainer'));
+    var data = GetRow(newRow);
+    data.f1[0].id = '_' + (idseed++);
+    data.f2[0].id = '_' + (idseed++);
+    data.f1.attr('name', data.f1[0].id);
+    data.f2.attr('name', data.f2[0].id);
     return newRow;
 }
 
@@ -164,23 +178,29 @@ function E() {
     _IsRequesting = false;
     $("#Loading").hide();
 };
-function SavePhoto() {
-    B();
-    if (!checkFile()) {
-        E();
+function SavePhoto($input) {
+    if (!checkFile($input)) {
+        alert("Please select correct file type!");
         return;
     };
+//    alert($input[0].id);
+//    return;
+    B();
+//    alert('savephoto.aspx?nothing=' + encodeURI(new Date().toString()) + '&name=' + $input.attr('name') + "&ptype=" + $input.attr('ptype'));
+//    alert($input[0].outerHTML);
+    
     $.ajaxFileUpload({
-        url: 'savephoto.aspx',
+        url: 'savephoto.aspx?nothing=' + encodeURI(new Date().toString()) + '&name=' + $input.attr('name') + "&ptype=" + $input.attr('ptype'),
         secureuri: false,
-        fileElementId: 'fileToUpload',
+        //        fileElementId: 'fileToUpload',
+        fileElementId: $input.attr('id'),
         dataType: 'json',
         success: function(data, status) {
             if (data.msgId) {
                 E();
                 alert(data.message);
             } else {
-                saveInformation(data);
+                saveInformation(data,$input);
             }
         },
         error: function(data, status, e) {
@@ -190,14 +210,17 @@ function SavePhoto() {
             }
         }
     });
-    var saveInformation = function(data) {
+    var saveInformation = function(data, $input) {
         alert(data.message);
+        $input.attr('value', '');
         E();
     };
 };
 
-function checkFile() {
-    var fileName = $('#fileToUpload').attr('value');
+function checkFile($input) {
+    //var fileName = $('#fileToUpload').attr('value');
+    var _EnabledFileType = ['jpg', 'jpeg', 'gif', 'png'];
+    var fileName = $input.attr('value');
     fileName = fileName.substr(fileName.lastIndexOf('.') + 1).toLowerCase();
     if (!fileName) {
         return false;
@@ -206,7 +229,7 @@ function checkFile() {
         if (_EnabledFileType[i] == fileName)
             return true;
     }
-    alert("Please select correct file type!");
+    
     return false;
 };
 
