@@ -14,10 +14,10 @@ $(document).ready(function() {
     
     addMenu("Home", "home.html");
     addMenu("About Us","about.htm");
-    addMenu("Our Services", "services.htm");
-    var $work = addMenu("Our Work", "work.htm");
+    addMenu("Services", "services.htm");
+    var $work = addMenu("Galleries", "work.htm");
     addMenu("Contact Us", "contact.htm");
-    $sub = $("<div style='position:absolute;top:-100px;left:-100px;overflow:hidden;display:none;background-color:#000;color:#fff;'></div>").appendTo(document.body);
+    $sub = $("<div style='position:absolute;top:-100px;left:-100px;overflow:hidden;display:none;background-color:#000;color:#fff;text-align:left;'></div>").appendTo(document.body);
     for ( var i = 0; i < galleries.length; ++i ) {
         var div = $('<div></div>')
             .css({'height':'23px','line-height':'23px','margin-left':'5px','margin-right':'20px'})
