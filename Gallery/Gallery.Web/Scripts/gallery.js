@@ -12,14 +12,14 @@ function photo (src1, src2) {
     this.selected = 0;
     this.index = 0;
 }
-var photoList = new Array();
+//var photoList = new Array();
 $(document).ready(function(){
     $slide = $('#Slide');
-    var testCount = 23;
-    for ( var i = 0; i < testCount; ++i ) {
-        var p = new photo('', 'photos/' + (i+1) + '.jpg');
-        photoList.push( p);
-    }
+//    var testCount = 23;
+//    for ( var i = 0; i < testCount; ++i ) {
+//        var p = new photo('', 'photos/' + (i+1) + '.jpg');
+//        photoList.push( p);
+//    }
     
     Gallery_Init();
     Play();
@@ -43,6 +43,13 @@ function Gallery_Init() {
         var img = photoList[i];
         if (img.s1.length == 0 ) {
             img.s1 = 'images/defaultThumb.jpg';
+        } else {
+            img.s1 = 'photos/' + img.s1;
+        }
+        if ( img.s2.length == 0 ) {
+            img.s2 = 'images/default.jpg';
+        } else {
+            img.s2 = 'photos/' + img.s2;
         }
         var $img = $("<img id='" + "__" + i + "' />")
             .addClass('img_thumb')
@@ -62,8 +69,11 @@ function Gallery_Init() {
                 $(e.target).fadeTo(400,0.6);
             })
             .click(function(e){
-                if ( isRequesting || isPlaying)
+                if ( isRequesting )
                     return;
+                if ( isPlaying) {
+                    Stop();
+                }
                 var $img = $(e.target);
                 var data = $img.data('data');
                 if ( data.selected ) {

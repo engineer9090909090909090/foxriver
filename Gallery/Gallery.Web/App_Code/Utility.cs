@@ -1,4 +1,5 @@
-﻿using System;
+﻿#define COM
+using System;
 using System.Data;
 using System.Configuration;
 using System.Linq;
@@ -20,7 +21,11 @@ namespace Gallery.Web
 
         static public SqlCommand GetCommand()
         {
+#if COM
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["Gallery_VM_COMPANY"].ConnectionString);
+#else
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["Gallery"].ConnectionString);
+#endif
             SqlCommand com = conn.CreateCommand();
             com.CommandType = CommandType.Text;
             conn.Open();
@@ -35,6 +40,8 @@ namespace Gallery.Web
         }
 
         #endregion
+
+        #region UpdateConfig
 
         public int UpdateConfig(string name, string value)
         {
@@ -60,6 +67,8 @@ namespace Gallery.Web
             }
             return -1;
         }
+
+        #endregion
 
         #region GetGallery
 
@@ -129,6 +138,8 @@ namespace Gallery.Web
 
         #endregion
 
+        #region AddPhoto
+
         static public int AddPhoto(int galleryId)
         {
             SqlCommand comm = GetCommand(string.Format("INSERT INTO TPhotos ( GalleryId ) VALUES ({0});SELECT @@IDENTITY", galleryId));
@@ -139,6 +150,8 @@ namespace Gallery.Web
 
             return int.Parse(o.ToString());
         }
+
+        #endregion
 
         #region GetTable
 
@@ -157,6 +170,8 @@ namespace Gallery.Web
         }
 
         #endregion
+
+        #region DeletePhoto
 
         static public int DeletePhoto(int photoId)
         {
@@ -182,6 +197,10 @@ namespace Gallery.Web
             return 0;
         }
 
+        #endregion
+
+        #region DeleteFile
+
         static void DeleteFile(string fileName)
         {
             if (string.IsNullOrEmpty(fileName))
@@ -195,5 +214,50 @@ namespace Gallery.Web
                 System.IO.File.Delete(target);
             }
         }
+
+        #endregion
+
+        #region UpdateGallery
+
+        static internal void UpdateGallery(int galleryId, string galleryName, int show)
+        {
+            string sql = "UPDATE [TGallery] SET [GalleryName] = '{0}', [Show] = {1} WHERE [ID] = {2};";
+            SqlCommand command = GetCommand(string.Format(sql, galleryName.Replace("'", "''"), show, galleryId));
+            command.ExecuteNonQuery();
+            command.Connection.Close();
+            command.Dispose();
+        }
+
+        #endregion
+
+        #region UpdatePhotoFile
+
+        static internal void UpdatePhotoFile(int photoId, string newPhotoName, string photoType)
+        {
+            string field = "[ThumbName]";
+            if (string.Compare( photoType, "s2", true) == 0 )
+            {
+                field = "[PhotoName]";
+            }
+            DataTable t = GetTable(string.Format("SELECT {0} FROM [TPhotos] WHERE [ID] = {1}", field, photoId));
+
+            if (t.Rows.Count == 0)
+                return;
+
+            if (t.Rows[0][0] != DBNull.Value)
+            {
+                // delete old photos
+                DeleteFile(t.Rows[0][0].ToString());
+            }
+
+            SqlCommand comm = GetCommand(string.Format("UPDATE [TPhotos] SET {0} = '{1}' WHERE [ID] = {2}",
+                field, newPhotoName, photoId));
+            comm.ExecuteNonQuery();
+            comm.Connection.Close();
+            comm.Dispose();
+
+        }
+
+        #endregion
     }
 }
