@@ -128,6 +128,7 @@ namespace Gallery.Web
         }
 
         #endregion
+
         #region Process
 
         static public AjaxResult Process()
@@ -209,6 +210,20 @@ namespace Gallery.Web
                 ar.Message = ex.Message;
             }
             return ar;
+        }
+
+
+        static public AjaxResult GetGalleries()
+        {
+            //DataTable t = Utility.GetGalleries();
+            //DataRow[] rows = t.Select("Show=1");
+            //for (int i = 0; i < rows.Count; ++i)
+            //{
+            //}
+
+            AjaxResult ar = new AjaxResult { ReturnCode = 0, Message = string.Empty, Json = Utility.GetGalleriesJson() };
+            return ar;
+
         }
     }
 
