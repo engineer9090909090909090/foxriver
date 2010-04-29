@@ -94,8 +94,8 @@ namespace Gallery.Web
 
         #endregion
 
-        #region
-        
+        #region AddPhoto
+
         static public AjaxResult AddPhoto()
         {
             int gId = int.Parse(HttpContext.Current.Request.Form["galleryId"]);
@@ -107,6 +107,8 @@ namespace Gallery.Web
         }
 
         #endregion
+
+        #region DeletePhoto
 
         static public AjaxResult DeletePhoto()
         {
@@ -124,6 +126,8 @@ namespace Gallery.Web
             }
             return ar;
         }
+
+        #endregion
         #region Process
 
         static public AjaxResult Process()
@@ -171,7 +175,8 @@ namespace Gallery.Web
 
         #endregion
 
-       
+        #region OutputResult
+
         static public void OutputResult(AjaxResult ar)
         {
             if (string.IsNullOrEmpty(ar.Json))
@@ -182,6 +187,28 @@ namespace Gallery.Web
                           ar.ReturnCode,
                           ar.Message.Replace("\"", "\\\""),
                           ar.Json) + "}");
+        }
+
+        #endregion
+
+        static public AjaxResult UpdateGallery()
+        {
+            AjaxResult ar = new AjaxResult { ReturnCode = 0, Message = string.Empty, Json = "{}" };
+            HttpRequest req = HttpContext.Current.Request;
+            try
+            {
+                int galleryId = int.Parse(req.Form["galleryId"]);
+                int show = int.Parse(req.Form["Show"]);
+                string galleryName = req.Form["galleryName"];
+
+                Utility.UpdateGallery(galleryId, galleryName, show);
+            }
+            catch (System.Exception ex)
+            {
+                ar.ReturnCode = 1;
+                ar.Message = ex.Message;
+            }
+            return ar;
         }
     }
 

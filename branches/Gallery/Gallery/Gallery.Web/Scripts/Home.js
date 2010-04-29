@@ -8,7 +8,8 @@ function GalleryEntity(id, text, show) {
 };
 var $CurrentGalleryItem = null;
 var $cbxShow = null;
-
+var $tbGalleryName = null;
+var $BigPhoto = null;
 function GalleryItem_Click($item) {
     if ($CurrentGalleryItem) {
         $CurrentGalleryItem.css({ 'background-color': '' });
@@ -16,7 +17,7 @@ function GalleryItem_Click($item) {
     $item.css({ 'background-color': 'Silver' });
     $CurrentGalleryItem = $item;
     var data = $item.data('data');
-    //alert(data.text);
+    $tbGalleryName.attr('value', data.text);
     if (data.show) {
         $cbxShow.attr('checked', true);
     } else {
@@ -36,9 +37,27 @@ function GalleryItem_Click($item) {
         E();
     });
 };
+function UpdateGallery() {
+    var show = $cbxShow.attr('checked') ? 1 : 0;
+    var gName = $tbGalleryName.attr('value');
+    var gId = $CurrentGalleryItem.data('data').id;
+    //alert(gId);
+    _postJSON({'method':'UpdateGallery'}, {'galleryId': gId, 'galleryName': gName,'show': show}, function (data){
+        E();
+        if ( data.msgId ) {
+            alert(data.message);
+        } else {
+            $CurrentGalleryItem.text(gName);
+            var gData = $CurrentGalleryItem.data('data');
+            gData.show = show;
+            gData.text = gName;
+            alert('Update OK!');
+        }
+    });
+};
 function FillTable(photoList) {
     for (var i = 0; i < photoList.length; ++i) {
-        var $newRow = addRow();
+        var $newRow = addRow(photoList[i].id);
         FillRow(photoList[i], $newRow);
     }
 };
@@ -51,11 +70,20 @@ function FillRow(photo, $row) {
     } else {
         rowControl.thumb.attr('src', 'Images/defaultThumb.jpg');
     }
+    
+    rowControl.view.attr('img', photo.s2);
+    if ( photo.s2 && photo.s2.length > 0 ) {
+        rowControl.view.show();
+    } else {
+        rowControl.view.hide();
+    }
+    
 }
 
 $(document).ready(function() {
     var menuContainer = $('#Menu');
     $cbxShow = $('#cbxShow');
+    $tbGalleryName = $('#tbGalleryName');
     //var firstGallery = null;
     for (var i = 0; i < GalleryList.length; ++i) {
         $('<div></div>')
@@ -84,7 +112,6 @@ $(document).ready(function() {
     // upload thumb
     tmpRowData.u1.click(function(e) {
         var $file = getInputFile($(e.target));
-        //alert($file.attr('type'));
         SavePhoto($file);
     });
     tmpRowData.u2.click(function(e) {
@@ -118,8 +145,26 @@ $(document).ready(function() {
         alert('down');
     });
 
-    tmpRowData.view.click(function() {
-        alert('view');
+    tmpRowData.view.click(function(e) {
+        //alert('view');
+        var src = $(e.target).attr('img');
+        //alert(link.attr('img'));
+        if ( !src || src.length == 0 ) {
+            return;
+        }
+        //B();
+        var photo = new Image();
+        $(photo)
+        .appendTo(document.body)
+        .attr('title', 'Click to hide photo')
+        .css({'display':'none','position':'absolute','left':'200px','top':'150px','cursor':'pointer','border':'solid 2px silver'})
+        .click(function(e){
+            $(e.target).remove();
+        })
+        .load( function(e){
+            $(e.target).show()
+        })
+        .attr('src', 'Photos/' + src );
     });
 
 
@@ -151,22 +196,26 @@ function GetRow($row) {
 function Add_Click() {
     B();
     _postJSON({ 'method': 'AddPhoto' }, { 'galleryId': $CurrentGalleryItem.data('data').id }, function(data) {
-        var newRow = addRow();
+        var newRow = addRow(data.data);
         FillRow({ 'id': data.data, 's1': '', 's2': '' }, newRow);
         E();
     });
 };
 var idseed = 1024;
-function addRow() {
+function addRow(photoId) {
     var newRow = $('#TempRow')
         .clone(true)
         .css({ 'display': '' })
         .appendTo($('#RowContainer'));
     var data = GetRow(newRow);
-    data.f1[0].id = '_' + (idseed++);
-    data.f2[0].id = '_' + (idseed++);
+    
+    data.f1[0].id = '_' + photoId;
+    data.f2[0].id = '__' + photoId;
     data.f1.attr('name', data.f1[0].id);
     data.f2.attr('name', data.f2[0].id);
+    data.f1.attr('pid', photoId);
+    data.f2.attr('pid', photoId);
+    data.view.attr('img', '');
     return newRow;
 }
 
@@ -183,14 +232,12 @@ function SavePhoto($input) {
         alert("Please select correct file type!");
         return;
     };
-//    alert($input[0].id);
-//    return;
     B();
-//    alert('savephoto.aspx?nothing=' + encodeURI(new Date().toString()) + '&name=' + $input.attr('name') + "&ptype=" + $input.attr('ptype'));
-//    alert($input[0].outerHTML);
     
+//    alert($input.attr('ptype'));
+    var inputId = $input[0].id;
     $.ajaxFileUpload({
-        url: 'savephoto.aspx?nothing=' + encodeURI(new Date().toString()) + '&name=' + $input.attr('name') + "&ptype=" + $input.attr('ptype'),
+        url: 'savephoto.aspx?nothing=' + encodeURI(new Date().toString()) + '&name=' + $input.attr('name') + "&ptype=" + $input.attr('ptype') + "&pid=" + $input.attr('pid'),
         secureuri: false,
         //        fileElementId: 'fileToUpload',
         fileElementId: $input.attr('id'),
@@ -200,22 +247,35 @@ function SavePhoto($input) {
                 E();
                 alert(data.message);
             } else {
-                saveInformation(data,$input);
+                saveInformation(data,$('#' + inputId));
             }
         },
         error: function(data, status, e) {
+//            alert(e);
             E();
-            for (p in data) {
-                alert(data[p]);
-            }
+            alert( "There are some errors happened, please try again later!");
+//            for (p in e) {
+//                //alert(e[p]);
+//            }
         }
     });
-    var saveInformation = function(data, $input) {
-        alert(data.message);
-        $input.attr('value', '');
+    var saveInformation = function(data, $f) {
+        var row =  $f.parents('.row');
+        var rowControl = GetRow(row);
+//        alert( $f.attr('ptype'));
+        if ( $f.attr('ptype') == 's1') {
+            rowControl.thumb.attr('src', 'Photos/' + data.message);
+        } else {
+            // set View
+            rowControl.view.attr('img', data.message);
+            rowControl.view.show();
+        }
+        $f.attr('value', '');
         E();
     };
 };
+
+
 
 function checkFile($input) {
     //var fileName = $('#fileToUpload').attr('value');
