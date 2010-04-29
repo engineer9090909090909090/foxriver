@@ -19,12 +19,16 @@ namespace Gallery.Web
 
         protected void Unnamed1_Click(object sender, EventArgs e)
         {
-            System.Data.SqlClient.SqlConnection conn = new System.Data.SqlClient.SqlConnection();
-            conn.ConnectionString = ConfigurationManager.ConnectionStrings["Gallery"].ConnectionString;
+            //System.Data.SqlClient.SqlConnection conn = new System.Data.SqlClient.SqlConnection();
+            //conn.ConnectionString = ConfigurationManager.ConnectionStrings["Gallery"].ConnectionString;
             try
             {
-                conn.Open();
-                conn.Dispose();
+                SqlCommand comm = Utility.GetCommand();
+
+                //conn.Open();
+                //conn.Dispose();
+                comm.Connection.Close();
+                comm.Dispose();
                 Info.Text = "Connection is OK!";
             }
             catch (System.Exception ex)
@@ -34,16 +38,11 @@ namespace Gallery.Web
             }
             finally
             {
-                conn.Dispose();
+                //conn.Dispose();
             }
         }
 
-        const string SQL_GALLERIES = @"
-INSERT INTO TGallery( GalleryName ) VALUES ( '')
-";
-        void InsertGalleries()
-        {
-        }
+
 
         protected void btnCreateDb_Click(object sender, EventArgs e)
         {

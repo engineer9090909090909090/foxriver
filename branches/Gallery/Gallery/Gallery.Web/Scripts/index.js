@@ -10,12 +10,30 @@ function addMenu( menuItem, href ) {
 }
 
 var $sub = null;
+
+function goToGallery(galleryId){
+    //document.location.href = 'work.htm?gid=' + galleryId;
+    /*
+    var $form = $("<form></form>")
+        .attr("method","post")
+        .attr("action","gallery.aspx")
+        .appendTo(document.body);
+        */
+    var $form = $("<form action='gallery.aspx' method='post'></form>").appendTo(document.body);
+    var $gid = $("<input type='text' name='galleryId' value='" + galleryId + "' />").appendTo($form);
+//    alert("FFF");
+    $form[0].submit();
+};
 $(document).ready(function() {
     
     addMenu("Home", "home.html");
     addMenu("About Us","about.htm");
     addMenu("Services", "services.htm");
-    var $work = addMenu("Galleries", "work.htm");
+    //var $work = addMenu("Galleries", "work.htm");
+    var $work = addMenu("Galleries", "javascript:void(0);");
+    $work.click(function(){
+        goToGallery(1);
+    });
     addMenu("Contact Us", "contact.htm");
     $sub = $("<div style='position:absolute;top:-100px;left:-100px;overflow:hidden;display:none;background-color:#000;color:#fff;text-align:left;'></div>").appendTo(document.body);
     for ( var i = 0; i < galleries.length; ++i ) {
@@ -34,13 +52,13 @@ $(document).ready(function() {
             })
             .click(function(e) {
                 var gid = $(e.target).attr('gid');
-                alert(gid);
+                //alert(gid);
+                goToGallery(gid);
             });
     }
+    
     $work.hover(function ( e) {
         var a = $(e.target);
-        //alert(e.target.tagName);
-        //alert(a.text());
         $sub.css({'left': a.offset().left + 'px', 'top':(a.offset().top + 22) + 'px', 'display' : ''});
         //$sub.css({});
         },

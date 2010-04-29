@@ -32,8 +32,8 @@ CREATE TABLE [dbo].[TGallery](
 
 CREATE TABLE [dbo].[TPhotos](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
-	[ThumbName] [nvarchar](50) COLLATE Chinese_PRC_CI_AS NULL,
-	[PhotoName] [nchar](10) COLLATE Chinese_PRC_CI_AS NULL,
+	[ThumbName] [varchar](100) COLLATE Chinese_PRC_CI_AS NULL,
+	[PhotoName] [varchar](100) COLLATE Chinese_PRC_CI_AS NULL,
 	[OrderIndex] [int] NOT NULL CONSTRAINT [DF_TPhotos_OrderIndex]  DEFAULT ((0)),
 	[GalleryId] [int] NOT NULL,
  CONSTRAINT [PK_TPhotos] PRIMARY KEY CLUSTERED 

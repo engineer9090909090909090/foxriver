@@ -1,4 +1,5 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="Gallery.Web._Default" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="GalleryManagr.aspx.cs"
+    Inherits="Gallery.Web._Default" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -36,7 +37,7 @@
         {
             width: 100px;
             margin-top: 10px;
-            font-size: 13pt;
+            font-size: 10pt;
             color: #ffffff;
             cursor: pointer;
             font-weight: normal;
@@ -132,7 +133,7 @@
 <body>
     <form id="form1" runat="server">
     <div id="Menu">
-        <div style="text-decoration: underline; font-weight: bold; margin-left: 5px;">
+        <div style="text-decoration: underline; font-weight: bold; margin-left: 5px;font-size:10pt;">
             Gallery List</div>
     </div>
     <div class="win" style="width: 700px;">
@@ -141,9 +142,16 @@
         </div>
         <div class="window_content" style="width: 700px; height: 600px;">
             <div class="table_header">
-                <input type="checkbox" id="cbxShow" />
-                Show this gallery. <a href="javascript:void(0);">Update</a> <a href="javascript:void(0);"
-                    onclick="Add_Click();">Add Row</a> <a href="javascript:void(0);">Save Row's Order</a>
+                <div style="float: left;height:27px;line-height:27px;">
+                    <input type="text" value="" id="tbGalleryName" />
+                    <input type="checkbox" id="cbxShow" />
+                    Show this gallery. <a href="javascript:void(0);" onclick="UpdateGallery();">Update</a>
+                </div>
+                <div style="float:right;height:27px;line-height:27px;">
+                    <a href="javascript:void(0);" onclick="Add_Click();">Add Row</a> <a href="javascript:void(0);">
+                        Save Row's Order</a>
+                </div>
+                <div style="clear:both;"></div>
             </div>
             <div style="width: 700px; height: 578px; overflow: auto" id="RowContainer">
             </div>
@@ -173,6 +181,7 @@
     </div>
     <img id="Loading" src="images/loading.gif" style="position: absolute; left: 250px;
         top: 200px; display: none;" />
+        
     </form>
 </body>
 </html>

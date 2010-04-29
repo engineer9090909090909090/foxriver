@@ -21,6 +21,7 @@ namespace Gallery.Web
             //string FILE_ID = "fileToUpload";
             string FILE_ID = Request.QueryString["name"];
             string photoType = Request.QueryString["ptype"];
+            int photoId = int.Parse(Request.QueryString["pid"]);
 
             AjaxResult ar = new AjaxResult { ReturnCode = 0, Message = string.Empty };
             if (Request.Files[FILE_ID] == null || Request.Files[FILE_ID].ContentLength == 0)
@@ -56,6 +57,9 @@ namespace Gallery.Web
                     file.SaveAs(combined);
 
                     ar.Message = fileName;
+
+                    // update db
+                    Utility.UpdatePhotoFile(photoId, fileName, photoType);
                 }
                 catch (System.Exception ex)
                 {
