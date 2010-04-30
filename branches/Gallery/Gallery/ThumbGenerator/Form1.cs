@@ -56,6 +56,9 @@ namespace ThumbGenerator
 
             errorList.Clear();
             count = 0;
+
+            System.Text.StringBuilder SQL = new StringBuilder();
+
             foreach (System.IO.FileInfo file in files)
             {
                 //if (file.FullName.ToLower().EndsWith(
@@ -65,9 +68,10 @@ namespace ThumbGenerator
                 {
                     continue;
                 }
-                processFile(file.FullName);
+                processFile(file.FullName, SQL);
             }
 
+            tbGeneratedSQL.Text = SQL.ToString();
             MessageBox.Show(string.Format("There are {0} thumbnails generated!", count));
             if (errorList.Count > 0)
             {
@@ -95,11 +99,11 @@ namespace ThumbGenerator
         #endregion
 
         List<string> errorList = new List<string>();
-        void processFile(string fileName)
+        void processFile(string fileName, StringBuilder SQL)
         {
             try
             {
-                
+
                 Image sourceImg = Image.FromFile(fileName);
                 //int width = sourceImg.Width;
                 //int height = sourceImg.Height;
@@ -123,6 +127,11 @@ namespace ThumbGenerator
                 thumb.Save(thumbFileName);
 
                 //MessageBox.Show(thumbFileName);
+                SQL.AppendFormat("INSERT INTO [TPhotos] ([ThumbName],[PhotoName],[GalleryId]) VALUES ( '{0}','{1}',{2} )\r\n",
+                    thumbFileName.Substring(thumbFileName.LastIndexOf("\\") + 1),
+                    fileName.Substring(fileName.LastIndexOf("\\") + 1),
+                    tbGalleryId.Text);
+
                 thumb.Dispose();
                 sourceImg.Dispose();
                 GC.Collect();

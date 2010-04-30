@@ -64,5 +64,20 @@ namespace Gallery.Web
             }
 
         }
+
+        protected void btnRun_Click(object sender, EventArgs e)
+        {
+            SqlCommand command = Utility.GetCommand(tbSQL.Text.Trim());
+            command.ExecuteNonQuery();
+            command.Connection.Close();
+            command.Dispose();
+        }
+
+        protected void btnGenereateGridView_Click(object sender, EventArgs e)
+        {
+            DataTable table = Utility.GetTable(tbSQL.Text.Trim());
+            gv.DataSource = table;
+            gv.DataBind();
+        }
     }
 }

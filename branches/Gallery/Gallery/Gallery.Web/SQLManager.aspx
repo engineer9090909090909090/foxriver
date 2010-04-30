@@ -5,6 +5,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head runat="server">
     <title></title>
+    <script language="javascript" type="text/javascript">
+    function createDbSchema() {
+         return confirm("Are you sure to build the database again, this will result all exist data lost!");
+    }
+    </script>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -13,7 +18,7 @@
     <asp:Label runat="server" ID="Info"></asp:Label>
     
     <br />
-    <asp:TextBox ID="DBSchema" runat="server" TextMode="MultiLine">
+    <asp:TextBox ID="DBSchema" runat="server" TextMode="MultiLine" Width="700px" Height="250px">
 if   object_id('TPhotos','u') is not null 
 	DROP TABLE TPhotos
 	
@@ -59,7 +64,12 @@ INSERT INTO TGallery ( GalleryName, Show ) VALUES ('Gallery  6',0)
 INSERT INTO TGallery ( GalleryName, Show ) VALUES ('Gallery 7',0)
     </asp:TextBox>
     <asp:Button ID="btnCreateDb" runat="server" Text="Create" 
-            onclick="btnCreateDb_Click" />
+            onclick="btnCreateDb_Click" OnClientClick="return createDbSchema();" />
+            
+            <asp:TextBox ID="tbSQL" runat="server" Width="800px" Height="80px" TextMode="MultiLine"></asp:TextBox>
+            <asp:Button ID="btnRun" runat="server" Text="Execute" OnClick="btnRun_Click" />
+            <asp:Button ID="btnGenereateGridView" runat="server" Text="Genereate Grid View" OnClick="btnGenereateGridView_Click" />
+            <asp:GridView ID="gv" runat="server" AutoGenerateColumns="true" ></asp:GridView>
     </div>
     </form>
 </body>

@@ -44,12 +44,12 @@ function Gallery_Init() {
         if (img.s1.length == 0 ) {
             img.s1 = 'images/defaultThumb.jpg';
         } else {
-            img.s1 = 'photos/' + img.s1;
+            img.s1 = '/photos/' + img.s1;
         }
         if ( img.s2.length == 0 ) {
             img.s2 = 'images/default.jpg';
         } else {
-            img.s2 = 'photos/' + img.s2;
+            img.s2 = '/photos/' + img.s2;
         }
         var $img = $("<img id='" + "__" + i + "' />")
             .addClass('img_thumb')
@@ -61,12 +61,18 @@ function Gallery_Init() {
         $img.hover(function(e){
                 if ( $(e.target).data('data').selected)
                     return;
-                $(e.target).fadeTo(400,1);
+                $(e.target)
+                    .css({'border':'solid 2px silver'})
+                    .fadeTo(400,1);
+                
             },
             function(e){
                 if ( $(e.target).data('data').selected)
                     return;
-                $(e.target).fadeTo(400,0.6);
+                    
+                $(e.target)
+                    .css({'border':'none'})
+                    .fadeTo(400,0.6);
             })
             .click(function(e){
                 if ( isRequesting )
@@ -75,6 +81,7 @@ function Gallery_Init() {
                     Stop();
                 }
                 var $img = $(e.target);
+//                $img.css({'border':'solid 2px silver'})
                 var data = $img.data('data');
                 if ( data.selected ) {
                     return;
@@ -104,11 +111,11 @@ function SetThumbStyle($img) {
     var data = $img.data('data');
     data.selected = 1;
     if ($selectedImg) {
-        $selectedImg.css({'opacity': 0.6});
+        $selectedImg.css({'opacity': 0.6,'border':'none'});
         $selectedImg.data('data').selected = 0;
     }
     $selectedImg = $img;
-    $selectedImg.css({'opacity': 1});
+    $selectedImg.css({'opacity': 1,'border':'solid 1px silver'});
     $selectedImg.data('data').selected = 1;
 };
 var timer = null;
@@ -136,6 +143,7 @@ function PlayImage(data, callback) {
 
 function ShowImage ( $img, callback ) {
     var show = function () {
+        //$img.css({'border': 'solid 2px silver'});
         $img.fadeIn('fast', function() {
             $showingImg = $img;
             if ( callback ) {
@@ -162,11 +170,13 @@ function LoadImage( data, callback ) {
         if ( callback ) {
             callback();
         }
+//        alert(img.width);
         
 //        alert(e.target.offsetWidth);
 //        $(e.target).css({'width':e.target.offsetWidth,'height':e.target.offsetHeight});
     }).appendTo($('#imgHolder'))
     .attr('src', data.s2);
+    //.css({'height':'545px'});
 }
 
 function SetPage(increasement) {
