@@ -164,12 +164,10 @@ $(document).ready(function() {
         .load( function(e){
             $(e.target).show()
         })
-        .attr('src', 'Photos/' + src );
+        .attr('src', '/Photos/' + src );
     });
 
 
-    //
-    //    alert($('#Menu').children('div')[0].innerHTML);
     $($('#Menu').children('div')[1]).click();
 });
 
