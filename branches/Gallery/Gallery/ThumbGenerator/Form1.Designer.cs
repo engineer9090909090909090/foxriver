@@ -37,6 +37,10 @@
             this.tbThumbWidth = new System.Windows.Forms.TextBox();
             this.tbThumbHeight = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.tbGeneratedSQL = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tbGalleryId = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // textBox1
@@ -113,11 +117,51 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Visible = false;
             // 
+            // tbGeneratedSQL
+            // 
+            this.tbGeneratedSQL.Location = new System.Drawing.Point(23, 213);
+            this.tbGeneratedSQL.Multiline = true;
+            this.tbGeneratedSQL.Name = "tbGeneratedSQL";
+            this.tbGeneratedSQL.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.tbGeneratedSQL.Size = new System.Drawing.Size(504, 183);
+            this.tbGeneratedSQL.TabIndex = 8;
+            this.tbGeneratedSQL.WordWrap = false;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(12, 189);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(131, 12);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Generated TPhotos SQL";
+            // 
+            // tbGalleryId
+            // 
+            this.tbGalleryId.Location = new System.Drawing.Point(487, 186);
+            this.tbGalleryId.Name = "tbGalleryId";
+            this.tbGalleryId.Size = new System.Drawing.Size(40, 21);
+            this.tbGalleryId.TabIndex = 10;
+            this.tbGalleryId.Text = "1";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(410, 189);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(71, 12);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "Gallery ID:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(548, 167);
+            this.ClientSize = new System.Drawing.Size(548, 408);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.tbGalleryId);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.tbGeneratedSQL);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.tbThumbHeight);
             this.Controls.Add(this.tbThumbWidth);
@@ -145,6 +189,10 @@
         private System.Windows.Forms.TextBox tbThumbWidth;
         private System.Windows.Forms.TextBox tbThumbHeight;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox tbGeneratedSQL;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox tbGalleryId;
+        private System.Windows.Forms.Label label4;
     }
 }
 
