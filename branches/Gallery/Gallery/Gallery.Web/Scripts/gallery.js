@@ -115,7 +115,7 @@ function SetThumbStyle($img) {
         $selectedImg.data('data').selected = 0;
     }
     $selectedImg = $img;
-    $selectedImg.css({'opacity': 1,'border':'solid 1px silver'});
+    $selectedImg.css({'opacity': 1,'border':'solid 2px silver'});
     $selectedImg.data('data').selected = 1;
 };
 var timer = null;
