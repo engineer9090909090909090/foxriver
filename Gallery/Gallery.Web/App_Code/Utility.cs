@@ -1,4 +1,4 @@
-﻿#define COM
+﻿#define COM3
 using System;
 using System.Data;
 using System.Configuration;
