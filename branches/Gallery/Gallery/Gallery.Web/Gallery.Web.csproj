@@ -138,7 +138,9 @@
     <Content Include="Images\Default.jpg" />
     <Content Include="Images\DxdSlogan.gif" />
     <Content Include="Images\EPN_logo.gif" />
+    <Content Include="Images\homepage.jpg" />
     <Content Include="Images\PriceList_1.jpg" />
+    <Content Include="Images\price_bg.jpg" />
     <Content Include="Images\slogan.png" />
     <Content Include="Images\splash1.jpg" />
     <Content Include="Images\desk.jpg" />
