@@ -145,3 +145,12 @@ h2{
 	text-align:center;
 	padding: 20px 0px;
 }
+
+.Paragraph
+{
+    font-weight:800;
+    font-family:Tahoma;
+    color:#ffffff;
+    margin: 20px 0px 20px 0px;
+    font-size:12pt;
+}
