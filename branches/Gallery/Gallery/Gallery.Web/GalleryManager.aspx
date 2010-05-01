@@ -4,7 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Home Page</title>
+    <title>Gallery Management</title>
     <style type="text/css">
         BODY
         {
@@ -148,7 +148,7 @@
                     Show this gallery. <a href="javascript:void(0);" onclick="UpdateGallery();">Update</a>
                 </div>
                 <div style="float:right;height:27px;line-height:27px;">
-                    <a href="javascript:void(0);" onclick="Add_Click();">Add Row</a> <a href="javascript:void(0);">
+                    <a href="javascript:void(0);" onclick="Add_Click();">Add Row</a> <a style="display:none;" href="javascript:void(0);">
                         Save Row's Order</a>
                 </div>
                 <div style="clear:both;"></div>
@@ -173,7 +173,7 @@
         </div>
         <div class="Operation">
             <a href="javascript:void(0);" style="margin-left: 5px;">Del</a> <a href="javascript:void(0);"
-                style="margin-left: 5px;">Up</a> <a href="javascript:void(0);" style="margin-left: 5px;">
+                style="margin-left: 5px;display:none;">Up</a> <a href="javascript:void(0);" style="display:none;margin-left: 5px;">
                     Down</a> <a href="javascript:void(0);" style="margin-left: 5px;">View </a>
         </div>
         <div style="clear: both;">

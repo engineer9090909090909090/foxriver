@@ -66,7 +66,7 @@ function FillRow(photo, $row) {
     $row.data('data', photo.id);
     var rowControl = GetRow($row);
     if (photo.s1.length > 0) {
-        rowControl.thumb.attr('src', 'Photos/' + photo.s1);
+        rowControl.thumb.attr('src', '/Photos/' + photo.s1);
     } else {
         rowControl.thumb.attr('src', 'Images/defaultThumb.jpg');
     }
@@ -262,7 +262,7 @@ function SavePhoto($input) {
         var rowControl = GetRow(row);
 //        alert( $f.attr('ptype'));
         if ( $f.attr('ptype') == 's1') {
-            rowControl.thumb.attr('src', 'Photos/' + data.message);
+            rowControl.thumb.attr('src', '/Photos/' + data.message);
         } else {
             // set View
             rowControl.view.attr('img', data.message);
