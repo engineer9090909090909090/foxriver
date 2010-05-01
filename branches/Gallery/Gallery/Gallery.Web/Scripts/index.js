@@ -13,13 +13,16 @@ var $sub = null;
 var $work;
 
 function goToGallery(galleryId){
-    var $form = $("<form action='gallery.aspx' method='post'></form>").appendTo(document.body);
-    var $gid = $("<input type='text' name='galleryId' value='" + galleryId + "' />").appendTo($form);
-    $form[0].submit();
+//    var $form = $("<form action='gallery.aspx' method='get'></form>").appendTo(document.body);
+//    var $gid = $("<input type='text' name='galleryId' value='" + galleryId + "' />").appendTo($form);
+    //    $form[0].submit();
+    document.location.href = "gallery.aspx?galleryId=" + galleryId + "&nothing=" + encodeURI(new Date().toString());
+    
 };
 function ProcessGalleryList(gList) {
     var galleries = gList;
-    $sub = $("<div style='position:absolute;top:-100px;left:-100px;overflow:hidden;display:none;background-color:#000;color:#fff;text-align:left;'></div>").appendTo(document.body);
+    $sub = $("<div style='position:absolute;top:-100px;left:-100px;overflow:hidden;display:none;background-color:#000;color:#fff;text-align:left;'></div>")
+        .appendTo(document.body);
     for ( var i = 0; i < galleries.length; ++i ) {
         if ( !galleries[i].show) {
             continue;

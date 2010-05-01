@@ -82,7 +82,7 @@
         </div>
     </div>
     <div id="content" style="width: 717px; text-align: center; margin: 0 auto;">
-        <div id="cp" style="width: 148px; border: solid 1px silver; height: 440px; float: left;">
+        <div id="cp" style="width: 148px; border: solid 1px silver; height: 440px; float: left;margin-top:5px;">
             <div id="cpTop">
                 <a href="javascript:void(0);" title="Play" onclick="Play();">►</a>
                  <a href="javascript:void(0);" title="Stop" onclick="Stop();"> ◙ </a>
@@ -96,8 +96,7 @@
                     onclick="Down();" title="Page Down">▼</a>
             </div>
         </div>
-        <div style="float: left; margin-left: 7px; width: 560px;margin-top:20px;
-            height: 550px;" id="imgHolder">
+        <div style="float: left; margin-left: 7px; width: 560px;margin-top:5px;" id="imgHolder">
         </div>
         <div style="clear: both;">
         </div>
