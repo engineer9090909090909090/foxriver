@@ -1,10 +1,13 @@
 ﻿// Create By Blue, 2010-4-26
 // to create a Gallery slide show
 var g = {
-    ControlPanel : null,
-    ImageHolder : null
+    ControlPanel: null,
+    ImageHolder: null
 }
-function photo (src1, src2) {
+var fixedSize = true;
+var fixedW = 558
+var fixedH = 558;
+function photo(src1, src2) {
     // if s1 == '' we'll use a default gif
     this.s1 = src1;
     this.s2 = src2;
@@ -13,14 +16,14 @@ function photo (src1, src2) {
     this.index = 0;
 }
 //var photoList = new Array();
-$(document).ready(function(){
+$(document).ready(function() {
     $slide = $('#Slide');
-//    var testCount = 23;
-//    for ( var i = 0; i < testCount; ++i ) {
-//        var p = new photo('', 'photos/' + (i+1) + '.jpg');
-//        photoList.push( p);
-//    }
-    
+    if (fixedSize) {
+        $('#imgHolder').css({ 'width': fixedW + 'px', 'height': fixedH + 'px','border':'solid 1px gray' });
+        //         height: 550px;
+    } else {
+        //$('#imgHolde').css({'
+    }
     Gallery_Init();
     Play();
 });
@@ -34,56 +37,56 @@ var isRequesting = false;
 var playingIndex = -1;
 var isPlaying = 0;
 function Gallery_Init() {
-    pageCount =Math.floor( photoList.length / 12) + 1 ;
-    for ( var i = 0; i < photoList.length; ++i ) {
+    pageCount = Math.floor(photoList.length / 12) + 1;
+    for (var i = 0; i < photoList.length; ++i) {
         photoList[i].index = i;
         var $d = $("<div><div>")
             .addClass('thumb')
             .appendTo($slide);
         var img = photoList[i];
-        if (img.s1.length == 0 ) {
+        if (img.s1.length == 0) {
             img.s1 = 'images/defaultThumb.jpg';
         } else {
             img.s1 = '/photos/' + img.s1;
         }
-        if ( img.s2.length == 0 ) {
+        if (img.s2.length == 0) {
             img.s2 = 'images/default.jpg';
         } else {
             img.s2 = '/photos/' + img.s2;
         }
         var $img = $("<img id='" + "__" + i + "' />")
             .addClass('img_thumb')
-            .css({'opacity': 0.6})
+            .css({ 'opacity': 0.6 })
             .attr('src', img.s1)
             .data('data', photoList[i])
             .appendTo($d);
         $img.attr('s2', img.sr2);
-        $img.hover(function(e){
-                if ( $(e.target).data('data').selected)
+        $img.hover(function(e) {
+            if ($(e.target).data('data').selected)
+                return;
+            $(e.target)
+                    .css({ 'border': 'solid 2px silver' })
+                    .fadeTo(400, 1);
+
+        },
+            function(e) {
+                if ($(e.target).data('data').selected)
                     return;
+
                 $(e.target)
-                    .css({'border':'solid 2px silver'})
-                    .fadeTo(400,1);
-                
-            },
-            function(e){
-                if ( $(e.target).data('data').selected)
-                    return;
-                    
-                $(e.target)
-                    .css({'border':'none'})
-                    .fadeTo(400,0.6);
+                    .css({ 'border': 'none' })
+                    .fadeTo(400, 0.6);
             })
-            .click(function(e){
-                if ( isRequesting )
+            .click(function(e) {
+                if (isRequesting)
                     return;
-                if ( isPlaying) {
+                if (isPlaying) {
                     Stop();
                 }
                 var $img = $(e.target);
-//                $img.css({'border':'solid 2px silver'})
+                //                $img.css({'border':'solid 2px silver'})
                 var data = $img.data('data');
-                if ( data.selected ) {
+                if (data.selected) {
                     return;
                 }
                 PlayImage(data);
@@ -95,12 +98,12 @@ function SetThumbSelected($img) {
     var data = $img.data('data');
     data.selected = 1;
     if ($selectedImg) {
-        $selectedImg.css({'opacity': 0.6});
+        $selectedImg.css({ 'opacity': 0.6 });
         $selectedImg.data('data').selected = 0;
     }
     $selectedImg = $img;
-    
-    if (!data.load ) {
+
+    if (!data.load) {
         LoadImage(data);
     } else {
         ShowImage($('#_' + data.index));
@@ -111,11 +114,11 @@ function SetThumbStyle($img) {
     var data = $img.data('data');
     data.selected = 1;
     if ($selectedImg) {
-        $selectedImg.css({'opacity': 0.6,'border':'none'});
+        $selectedImg.css({ 'opacity': 0.6, 'border': 'none' });
         $selectedImg.data('data').selected = 0;
     }
     $selectedImg = $img;
-    $selectedImg.css({'opacity': 1,'border':'solid 2px silver'});
+    $selectedImg.css({ 'opacity': 1, 'border': 'solid 2px silver' });
     $selectedImg.data('data').selected = 1;
 };
 var timer = null;
@@ -123,57 +126,63 @@ var speed = 2000;
 function PlayImage(data, callback) {
     SetThumbStyle($('#__' + data.index));
     var SetCallback = function() {
-        if ( callback ) {
+        if (callback) {
             callback();
         }
-        if ( isPlaying) {
-            timer = window.setTimeout(function(){startPlay();}, speed);
+        if (isPlaying) {
+            timer = window.setTimeout(function() { startPlay(); }, speed);
         }
     }
-    if ( data.load) {
-        ShowImage( $('#_' + data.index), SetCallback);
+    if (data.load) {
+        ShowImage($('#_' + data.index), SetCallback);
         return;
     }
-    
+
     LoadImage(data, function() {
-        ShowImage ( $('#_' + data.index),SetCallback );
+        ShowImage($('#_' + data.index), SetCallback);
     });
-    
+
 }
 
-function ShowImage ( $img, callback ) {
-    var show = function () {
+function ShowImage($img, callback) {
+    var show = function() {
+
         //$img.css({'border': 'solid 2px silver'});
         $img.fadeIn('fast', function() {
             $showingImg = $img;
-            if ( callback ) {
+            if (callback) {
                 callback();
             }
         });
     };
-    if ($showingImg ){
-        $showingImg.fadeOut( 'fast', function() {
+    if ($showingImg) {
+        $showingImg.fadeOut('fast', function() {
             show();
         });
     } else {
         show();
     }
 }
-function LoadImage( data, callback ) {
+function LoadImage(data, callback) {
     isRequesting = true;
     var img = new Image();
     img.id = "_" + data.index;
-    $(img).css({'display':'none','border':'solid 1px silver'});
-    
-    $(img).load(function (e){
+    var $img = $(img);
+    $img.css({ 'display': 'none', 'border': 'none' });
+    if (fixedSize) {
+        $img.css({ 'width': (fixedW - 2) + 'px', 'height': (fixedH - 2) + 'px' });
+    } else {
+    $img.css({ 'border':'solid 2px gray' });
+    }
+    $(img).load(function(e) {
         isRequesting = false;
-        if ( callback ) {
+        if (callback) {
             callback();
         }
-//        alert(img.width);
-        
-//        alert(e.target.offsetWidth);
-//        $(e.target).css({'width':e.target.offsetWidth,'height':e.target.offsetHeight});
+        //        alert(img.width);
+
+        //        alert(e.target.offsetWidth);
+        //        $(e.target).css({'width':e.target.offsetWidth,'height':e.target.offsetHeight});
     }).appendTo($('#imgHolder'))
     .attr('src', data.s2);
     //.css({'height':'545px'});
@@ -182,35 +191,35 @@ function LoadImage( data, callback ) {
 function SetPage(increasement) {
     //currentPage += increasement;
     var top = parseInt($slide.css('top').replace('px', ''), 10);
-    if ( increasement > 0 ) {
+    if (increasement > 0) {
         top += 360;
     } else {
         top -= 360;
     }
-    $slide.animate({'top' : top + 'px'});
+    $slide.animate({ 'top': top + 'px' });
 }
 
-function Up(){
-    if (isPlaying || currentPage == 0 )
+function Up() {
+    if (isPlaying || currentPage == 0)
         return;
-        
+
     SetPage(1);
     --currentPage;
 };
-function Down(){
-    if ( isPlaying || currentPage >= pageCount -1 )
+function Down() {
+    if (isPlaying || currentPage >= pageCount - 1)
         return;
-        
-    SetPage( -1);
+
+    SetPage(-1);
     ++currentPage;
 };
 function Play() {
-    if ( isPlaying || photoList.length < 1 )
+    if (isPlaying || photoList.length < 1)
         return;
     //
     isPlaying = 1;
     currentPage = 0;
-    $slide.css({'top':'0px','left':'0px'});
+    $slide.css({ 'top': '0px', 'left': '0px' });
     playingIndex = -1;
     startPlay();
 };
@@ -218,28 +227,28 @@ function Play() {
 
 function startPlay() {
     ++playingIndex;
-    
-    if ( playingIndex == photoList.length) {
+
+    if (playingIndex == photoList.length) {
         playingIndex = 0;
-        $slide.css({'top':'0px','left':'0px'});
+        $slide.css({ 'top': '0px', 'left': '0px' });
         currentPage = 0;
     } else {
-        
-        var newPage =Math.floor( playingIndex / 12 );
-        if ( newPage > currentPage) {
+
+        var newPage = Math.floor(playingIndex / 12);
+        if (newPage > currentPage) {
             SetPage(-1);
-        } else if ( newPage < currentPage ) {
+        } else if (newPage < currentPage) {
             SetPage(1);
         }
-        
-//        SetPage(-1);
+
+        //        SetPage(-1);
         currentPage = newPage;
     }
-    
+
     PlayImage(photoList[playingIndex]);
 }
 function Stop() {
-    if ( timer) {
+    if (timer) {
         window.clearTimeout(timer);
     }
     timer = null;

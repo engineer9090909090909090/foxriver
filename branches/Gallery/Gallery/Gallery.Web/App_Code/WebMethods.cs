@@ -48,18 +48,24 @@ namespace Gallery.Web
         }
         #region GetPhotos
 
+        //stackalloc public AjaxResult GetPhotos
+
+
         static public AjaxResult GetPhotos()
         {
             AjaxResult ar = new AjaxResult { ReturnCode = 0, Message = string.Empty };
             HttpRequest req = HttpContext.Current.Request;
-            if (string.IsNullOrEmpty(req.Form["galleryId"]))
+
+            if (string.IsNullOrEmpty(req["galleryId"]))
+            //if (string.IsNullOrEmpty(req.Form["galleryId"]))
             {
                 ar.ReturnCode = -1;
                 ar.Message = "NO Gallery Found!";
                 OutputResult(ar);
             }
 
-            int gId = int.Parse(req.Form["galleryId"]);
+            //int gId = int.Parse(req.Form["galleryId"]);
+            int gId = int.Parse(req["galleryId"]);
 
             System.Text.StringBuilder json = new System.Text.StringBuilder();
             json.Append("[");
