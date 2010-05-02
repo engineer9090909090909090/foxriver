@@ -71,6 +71,9 @@ INSERT INTO TGallery ( GalleryName, Show ) VALUES ('Gallery 7',0)
             <asp:Button ID="btnGenereateGridView" runat="server" Text="Genereate Grid View" OnClick="btnGenereateGridView_Click" />
             <asp:GridView ID="gv" runat="server" AutoGenerateColumns="true" ></asp:GridView>
     </div>
+    
+    
+    <asp:Button ID="btnUpdatePhotoSizeFromFile" Text = "Update Photos Size From Size" runat="server" OnClick="btnUpdatePhotoSizeFromFile_Click" OnClientClick="return confirm('Start to update, it will take several minutes!');"/>
     </form>
 </body>
 </html>

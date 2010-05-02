@@ -60,6 +60,16 @@ namespace Gallery.Web
 
                     // update db
                     Utility.UpdatePhotoFile(photoId, fileName, photoType);
+
+                    if (photoType.Equals("s2"))
+                    {
+                        Utility.UpdatePhotoSize(combined);
+
+                        System.Drawing.Size photoSize = Utility.GetPhotoSizeById(photoId);
+                        ar.Json = "{" + string.Format("\"width\":{0},\"height\":{1}", photoSize.Width, photoSize.Height) + "}";
+                    }
+
+
                 }
                 catch (System.Exception ex)
                 {

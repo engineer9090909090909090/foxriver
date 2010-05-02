@@ -10,6 +10,7 @@ var $CurrentGalleryItem = null;
 var $cbxShow = null;
 var $tbGalleryName = null;
 var $BigPhoto = null;
+var $comments = null;
 function GalleryItem_Click($item) {
     if ($CurrentGalleryItem) {
         $CurrentGalleryItem.css({ 'background-color': '' });
@@ -18,6 +19,7 @@ function GalleryItem_Click($item) {
     $CurrentGalleryItem = $item;
     var data = $item.data('data');
     $tbGalleryName.attr('value', data.text);
+    $comments.attr('value', data.description);
     if (data.show) {
         $cbxShow.attr('checked', true);
     } else {
@@ -41,16 +43,21 @@ function UpdateGallery() {
     var show = $cbxShow.attr('checked') ? 1 : 0;
     var gName = $tbGalleryName.attr('value');
     var gId = $CurrentGalleryItem.data('data').id;
+    var comments = $comments.attr('value');
+//    alert(comments);
+//    return;
+    //var comments = $('#
     //alert(gId);
-    _postJSON({'method':'UpdateGallery'}, {'galleryId': gId, 'galleryName': gName,'show': show}, function (data){
+    _postJSON({ 'method': 'UpdateGallery' }, { 'galleryId': gId, 'galleryName': gName, 'show': show, 'galleryDescription': comments }, function(data) {
         E();
-        if ( data.msgId ) {
+        if (data.msgId) {
             alert(data.message);
         } else {
             $CurrentGalleryItem.text(gName);
             var gData = $CurrentGalleryItem.data('data');
             gData.show = show;
             gData.text = gName;
+            gData.description = comments;
             alert('Update OK!');
         }
     });
@@ -63,6 +70,7 @@ function FillTable(photoList) {
 };
 
 function FillRow(photo, $row) {
+    //alert(photo.width);
     $row.data('data', photo.id);
     var rowControl = GetRow($row);
     if (photo.s1.length > 0) {
@@ -70,20 +78,30 @@ function FillRow(photo, $row) {
     } else {
         rowControl.thumb.attr('src', 'Images/defaultThumb.jpg');
     }
-    
+
     rowControl.view.attr('img', photo.s2);
-    if ( photo.s2 && photo.s2.length > 0 ) {
+    if (!photo['width']) {
+        photo['width'] = 556;
+    }
+    if (!photo['height']) {
+        photo['height'] = 556;
+    }
+
+    if (photo.s2 && photo.s2.length > 0) {
         rowControl.view.show();
+        rowControl.view.attr('iw', photo['width']);
+        rowControl.view.attr('ih', photo['height']);
     } else {
         rowControl.view.hide();
     }
-    
+
 }
 
 $(document).ready(function() {
     var menuContainer = $('#Menu');
     $cbxShow = $('#cbxShow');
     $tbGalleryName = $('#tbGalleryName');
+    $comments = $('#tbDescription');
     //var firstGallery = null;
     for (var i = 0; i < GalleryList.length; ++i) {
         $('<div></div>')
@@ -148,8 +166,10 @@ $(document).ready(function() {
     tmpRowData.view.click(function(e) {
         //alert('view');
         var src = $(e.target).attr('img');
+        var width = $(e.target).attr('iw');
+        var height = $(e.target).attr('ih');
         //alert(link.attr('img'));
-        if ( !src || src.length == 0 ) {
+        if (!src || src.length == 0) {
             return;
         }
         //B();
@@ -157,14 +177,14 @@ $(document).ready(function() {
         $(photo)
         .appendTo(document.body)
         .attr('title', 'Click to hide photo')
-        .css({'display':'none','position':'absolute','left':'200px','top':'150px','cursor':'pointer','border':'solid 2px silver'})
-        .click(function(e){
+        .css({ 'width': width + 'px', 'height': height + 'px', 'display': 'none', 'position': 'absolute', 'left': '50px', 'top': '50px', 'cursor': 'pointer', 'border': 'solid 2px silver' })
+        .click(function(e) {
             $(e.target).remove();
         })
-        .load( function(e){
+        .load(function(e) {
             $(e.target).show()
         })
-        .attr('src', '/Photos/' + src );
+        .attr('src', '/Photos/' + src);
     });
 
 
@@ -206,7 +226,7 @@ function addRow(photoId) {
         .css({ 'display': '' })
         .appendTo($('#RowContainer'));
     var data = GetRow(newRow);
-    
+
     data.f1[0].id = '_' + photoId;
     data.f2[0].id = '__' + photoId;
     data.f1.attr('name', data.f1[0].id);
@@ -231,8 +251,8 @@ function SavePhoto($input) {
         return;
     };
     B();
-    
-//    alert($input.attr('ptype'));
+
+    //    alert($input.attr('ptype'));
     var inputId = $input[0].id;
     $.ajaxFileUpload({
         url: 'savephoto.aspx?nothing=' + encodeURI(new Date().toString()) + '&name=' + $input.attr('name') + "&ptype=" + $input.attr('ptype') + "&pid=" + $input.attr('pid'),
@@ -245,27 +265,31 @@ function SavePhoto($input) {
                 E();
                 alert(data.message);
             } else {
-                saveInformation(data,$('#' + inputId));
+                saveInformation(data, $('#' + inputId));
             }
         },
         error: function(data, status, e) {
-//            alert(e);
+            //            alert(e);
             E();
-            alert( "There are some errors happened, please try again later!");
-//            for (p in e) {
-//                //alert(e[p]);
-//            }
+            alert("There are some errors happened, please try again later!");
+            //            for (p in e) {
+            //                //alert(e[p]);
+            //            }
         }
     });
     var saveInformation = function(data, $f) {
-        var row =  $f.parents('.row');
+        var row = $f.parents('.row');
         var rowControl = GetRow(row);
-//        alert( $f.attr('ptype'));
-        if ( $f.attr('ptype') == 's1') {
+        //        alert( $f.attr('ptype'));
+
+        if ($f.attr('ptype') == 's1') {
             rowControl.thumb.attr('src', '/Photos/' + data.message);
         } else {
             // set View
+            //alert(data.data.width);
             rowControl.view.attr('img', data.message);
+            rowControl.view.attr('iw', data.data.width);
+            rowControl.view.attr('ih', data.data.height);
             rowControl.view.show();
         }
         $f.attr('value', '');
@@ -287,7 +311,7 @@ function checkFile($input) {
         if (_EnabledFileType[i] == fileName)
             return true;
     }
-    
+
     return false;
 };
 
