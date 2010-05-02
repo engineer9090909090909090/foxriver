@@ -76,7 +76,7 @@ namespace Gallery.Web
         {
             using (SqlCommand command = GetCommand())
             {
-                command.CommandText = "SELECT [ID], [GalleryName],[Show] FROM TGallery";
+                command.CommandText = "SELECT [ID], [GalleryName],[Show],[Description] FROM TGallery";
 
                 DataTable t = new DataTable();
                 SqlDataAdapter ada = new SqlDataAdapter(command);
@@ -103,11 +103,14 @@ namespace Gallery.Web
                 {
                     if (count > 0)
                         json.Append(",");
+
+                    string des = row[3] == DBNull.Value ? string.Empty : row[3].ToString().Replace("\"", "\\\"");
+
                     json.Append("{");
-                    json.AppendFormat("\"id\":{0},\"text\":\"{1}\",\"show\":{2}",
+                    json.AppendFormat("\"id\":{0},\"text\":\"{1}\",\"show\":{2},\"description\":\"{3}\"",
                         row[0].ToString(),
                         row[1].ToString().Replace("\"", "\\\""),
-                        row[2].ToString());
+                        row[2].ToString(), des);
                     json.Append("}");
                     ++count;
                 }
@@ -124,7 +127,7 @@ namespace Gallery.Web
         static public DataTable GetPhotos(int galleryId)
         {
             SqlCommand command = GetCommand();
-            command.CommandText = "SELECT [ID],	[ThumbName],[PhotoName],[OrderIndex],[GalleryId] FROM TPhotos WHERE [GalleryId] = " + galleryId.ToString();
+            command.CommandText = "SELECT [ID],[Width],[Height],[ThumbName],[PhotoName],[OrderIndex],[GalleryId] FROM TPhotos WHERE [GalleryId] = " + galleryId.ToString();
 
             DataTable t = new DataTable();
             SqlDataAdapter ada = new SqlDataAdapter(command);
@@ -219,11 +222,24 @@ namespace Gallery.Web
 
         #region UpdateGallery
 
-        static internal void UpdateGallery(int galleryId, string galleryName, int show)
+        static internal void UpdateGallery(int galleryId, string galleryName, int show, string comments)
         {
+            /*
             string sql = "UPDATE [TGallery] SET [GalleryName] = '{0}', [Show] = {1} WHERE [ID] = {2};";
             SqlCommand command = GetCommand(string.Format(sql, galleryName.Replace("'", "''"), show, galleryId));
             command.ExecuteNonQuery();
+            command.Connection.Close();
+            command.Dispose();
+            */
+            string sql = "UPDATE [TGallery] SET [GalleryName] = @gName, [Show] = @show, [Description] = @des WHERE [ID] = @id;";
+            SqlCommand command = GetCommand(sql);
+
+            command.Parameters.Add(new SqlParameter("gName", galleryName));
+            command.Parameters.Add(new SqlParameter("show", show));
+            command.Parameters.Add(new SqlParameter("des", comments));
+            command.Parameters.Add(new SqlParameter("id", galleryId));
+            command.ExecuteNonQuery();
+
             command.Connection.Close();
             command.Dispose();
         }
@@ -235,7 +251,7 @@ namespace Gallery.Web
         static internal void UpdatePhotoFile(int photoId, string newPhotoName, string photoType)
         {
             string field = "[ThumbName]";
-            if (string.Compare( photoType, "s2", true) == 0 )
+            if (string.Compare(photoType, "s2", true) == 0)
             {
                 field = "[PhotoName]";
             }
@@ -259,5 +275,65 @@ namespace Gallery.Web
         }
 
         #endregion
+
+        static string[] _AVAILABLE_PHOTO_TYPE = new string[] { "jpg", "jpeg", "png" };
+        static public void UpdatePhotoSize(string filePath)
+        {
+            bool OK = false;
+            for (int i = 0; i < _AVAILABLE_PHOTO_TYPE.Length; ++i)
+            {
+                if (filePath.ToLower().EndsWith(_AVAILABLE_PHOTO_TYPE[i]))
+                {
+                    OK = true;
+                    break;
+                }
+            }
+            if (!OK)
+            {
+                return;
+            }
+            if (!System.IO.File.Exists(filePath))
+            {
+                return;
+            }
+
+
+            string fileName = filePath.Substring(filePath.LastIndexOf("\\") + 1);
+            System.Drawing.Image img = System.Drawing.Image.FromFile(filePath);
+            if (img.Width > 0 && img.Height > 0)
+            {
+                //
+
+                UpdatePhotoSize(fileName, img.Width, img.Height);
+
+
+                img.Dispose();
+
+            }
+        }
+
+
+        static public System.Drawing.Size GetPhotoSizeById(int photoId)
+        {
+            System.Drawing.Size size = new System.Drawing.Size(0, 0);
+            //SqlCommand comm = GetCommand(string.Format("SELECT [Width],[Height] FROM TPhotos WHERE [ID] = {0}", photoId));
+            DataTable t = GetTable(string.Format("SELECT [Width],[Height] FROM TPhotos WHERE [ID] = {0}", photoId));
+            if (t.Rows.Count == 0)
+                return size;
+
+            size.Width = (int)t.Rows[0][0];
+            size.Height = (int)t.Rows[0][1];
+            return size;
+        }
+
+        static void UpdatePhotoSize(string fileName, int w, int h)
+        {
+            SqlCommand comm = GetCommand(string.Format("UPDATE [TPhotos] SET [Width] = {0}, [Height] = {1} WHERE [PhotoName] = '{2}';"
+                , w, h, fileName));
+
+            comm.ExecuteNonQuery();
+            comm.Connection.Close();
+            comm.Dispose();
+        }
     }
 }

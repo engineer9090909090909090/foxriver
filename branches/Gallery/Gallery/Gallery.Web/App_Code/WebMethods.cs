@@ -86,6 +86,8 @@ namespace Gallery.Web
                     json.AppendFormat(",\"s1\":\"{0}\"", row["ThumbName"]);
                     json.AppendFormat(",\"s2\":\"{0}\"", row["PhotoName"]);
                     json.AppendFormat(",\"order\":{0}", row["OrderIndex"].ToString());
+                    json.AppendFormat(",\"width\":{0}", row["Width"].ToString());
+                    json.AppendFormat(",\"height\":{0}", row["Height"].ToString());
                     json.Append("}");
                     ++count;
                 }
@@ -207,8 +209,9 @@ namespace Gallery.Web
                 int galleryId = int.Parse(req.Form["galleryId"]);
                 int show = int.Parse(req.Form["Show"]);
                 string galleryName = req.Form["galleryName"];
+                string comments = req.Form["galleryDescription"];
 
-                Utility.UpdateGallery(galleryId, galleryName, show);
+                Utility.UpdateGallery(galleryId, galleryName, show, comments);
             }
             catch (System.Exception ex)
             {

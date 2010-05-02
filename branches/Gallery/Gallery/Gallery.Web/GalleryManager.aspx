@@ -133,7 +133,7 @@
 <body>
     <form id="form1" runat="server">
     <div id="Menu">
-        <div style="text-decoration: underline; font-weight: bold; margin-left: 5px;font-size:10pt;">
+        <div style="text-decoration: underline; font-weight: bold; margin-left: 5px; font-size: 10pt;">
             Gallery List</div>
     </div>
     <div class="win" style="width: 700px;">
@@ -142,16 +142,25 @@
         </div>
         <div class="window_content" style="width: 700px; height: 600px;">
             <div class="table_header">
-                <div style="float: left;height:27px;line-height:27px;">
-                    <input type="text" value="" id="tbGalleryName" />
-                    <input type="checkbox" id="cbxShow" />
-                    Show this gallery. <a href="javascript:void(0);" onclick="UpdateGallery();">Update</a>
+                <%--height:27px;line-height:27px;--%>
+                <div style="float: left;">
+                    <div>
+                        <input type="text" value="" id="tbGalleryName" />
+                        <input type="checkbox" id="cbxShow" />Show this gallery.
+                    </div>
+                    <div>
+                        Comments</div>
+                    <div>
+                        <textarea style="width: 250px; height: 50px;" id="tbDescription"></textarea></div>
                 </div>
-                <div style="float:right;height:27px;line-height:27px;">
-                    <a href="javascript:void(0);" onclick="Add_Click();">Add Row</a> <a style="display:none;" href="javascript:void(0);">
-                        Save Row's Order</a>
+                <div style="float: left;margin-top:55px;">
+                    <a href="javascript:void(0);" onclick="UpdateGallery();">Update</a></div>
+                <div style="float: right;margin-top:55px; ">
+                    <a href="javascript:void(0);" onclick="Add_Click();">Add Row</a> <a style="display: none;"
+                        href="javascript:void(0);">Save Row's Order</a>
                 </div>
-                <div style="clear:both;"></div>
+                <div style="clear: both;">
+                </div>
             </div>
             <div style="width: 700px; height: 578px; overflow: auto" id="RowContainer">
             </div>
@@ -173,15 +182,15 @@
         </div>
         <div class="Operation">
             <a href="javascript:void(0);" style="margin-left: 5px;">Del</a> <a href="javascript:void(0);"
-                style="margin-left: 5px;display:none;">Up</a> <a href="javascript:void(0);" style="display:none;margin-left: 5px;">
-                    Down</a> <a href="javascript:void(0);" style="margin-left: 5px;">View </a>
+                style="margin-left: 5px; display: none;">Up</a> <a href="javascript:void(0);" style="display: none;
+                    margin-left: 5px;">Down</a> <a href="javascript:void(0);" style="margin-left: 5px;">
+                        View </a>
         </div>
         <div style="clear: both;">
         </div>
     </div>
     <img id="Loading" src="images/loading.gif" style="position: absolute; left: 250px;
         top: 200px; display: none;" />
-        
     </form>
 </body>
 </html>

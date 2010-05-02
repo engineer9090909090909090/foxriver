@@ -4,9 +4,9 @@ var g = {
     ControlPanel: null,
     ImageHolder: null
 }
-var fixedSize = true;
-var fixedW = 558
-var fixedH = 558;
+var fixedSize = false;
+var fixedW = 556
+var fixedH = 556;
 function photo(src1, src2) {
     // if s1 == '' we'll use a default gif
     this.s1 = src1;
@@ -14,16 +14,13 @@ function photo(src1, src2) {
     this.load = 0;
     this.selected = 0;
     this.index = 0;
+
+    this.width = 558;
+    this.height = 558;
 }
-//var photoList = new Array();
+
 $(document).ready(function() {
     $slide = $('#Slide');
-    if (fixedSize) {
-        $('#imgHolder').css({ 'width': fixedW + 'px', 'height': fixedH + 'px','border':'solid 1px gray' });
-        //         height: 550px;
-    } else {
-        //$('#imgHolde').css({'
-    }
     Gallery_Init();
     Play();
 });
@@ -164,28 +161,51 @@ function ShowImage($img, callback) {
     }
 }
 function LoadImage(data, callback) {
+    //alert(data.width);
+    var w = data.width, h = data.height;
+    var mgL = 0, mgT = 0;
+    //alert(data.height);
+    //alert(w);
+    //alert(h);
+    if (w > h) {
+        mgL = 0;
+        h = Math.floor(fixedW * h / w);
+        w = fixedW;
+        mgT = Math.floor((fixedH - h) / 2);
+    } else {
+//    alert(w);
+//    alert(h);
+        mgT = 0;
+        w = Math.floor(fixedH * w / h);
+        h = fixedH;
+        mgL = Math.floor((fixedW - w) / 2);
+//        alert(w);
+//        alert(fixedW);
+        //        alert((fixedW - w) / 2);
+        // Warning :MARGIN-LFET:
+        //mgL -= 30;
+    }
+
     isRequesting = true;
     var img = new Image();
     img.id = "_" + data.index;
     var $img = $(img);
-    $img.css({ 'display': 'none', 'border': 'none' });
+    $img.css({ 'display': 'none', 'float':'left', 'border': 'none','width':w + 'px','height':h + 'px','margin-top': mgT + 'px','margin-left':mgL + 'px' });
+    /*
     if (fixedSize) {
         $img.css({ 'width': (fixedW - 2) + 'px', 'height': (fixedH - 2) + 'px' });
     } else {
-    $img.css({ 'border':'solid 2px gray' });
+        $img.css({ 'border': 'solid 2px gray' });
     }
+    */
+    //alert(mgL);
     $(img).load(function(e) {
         isRequesting = false;
         if (callback) {
             callback();
         }
-        //        alert(img.width);
-
-        //        alert(e.target.offsetWidth);
-        //        $(e.target).css({'width':e.target.offsetWidth,'height':e.target.offsetHeight});
     }).appendTo($('#imgHolder'))
     .attr('src', data.s2);
-    //.css({'height':'545px'});
 }
 
 function SetPage(increasement) {
