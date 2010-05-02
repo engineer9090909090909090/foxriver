@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace ThumbGenerator
 {
@@ -155,6 +156,34 @@ namespace ThumbGenerator
             Image myThumbnail = myBitmap.GetThumbnailImage(40, 40, myCallback, IntPtr.Zero);
 
             e.Graphics.DrawImage(myThumbnail, 150, 75);
+        }
+
+        private void btnGenerateSizeSql_Click(object sender, EventArgs e)
+        {
+            //if ( MessageBox.Show("Start","Warning",  MessageBoxButtons.YesNo)
+            if (!Directory.Exists(textBox1.Text.Trim()))
+            {
+                MessageBox.Show("No folder found!");
+                return;
+            }
+
+            DirectoryInfo di = new DirectoryInfo(textBox1.Text.Trim());
+            FileInfo[] files = di.GetFiles();
+
+            StringBuilder builder = new StringBuilder();
+            foreach (FileInfo file in files)
+            {
+                if (file.FullName.ToLower().IndexOf("_thumb.") > -1)
+                {
+                    continue;
+                }
+                if (checkFileType(file))
+                {
+                    continue;
+                }
+
+                //builder.AppendFormat("UPDATE [TPhotos]
+            }
         }
     }
 }

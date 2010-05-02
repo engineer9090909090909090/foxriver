@@ -96,7 +96,7 @@
                     onclick="Down();" title="Page Down">▼</a>
             </div>
         </div>
-        <div style="float: left; margin-left: 7px; width: 560px;margin-top:5px;" id="imgHolder">
+        <div style="float: left; margin-left: 5px; width: 558px;margin-top:5px;height:558px;border:solid 2px silver;" id="imgHolder">
         </div>
         <div style="clear: both;">
         </div>
