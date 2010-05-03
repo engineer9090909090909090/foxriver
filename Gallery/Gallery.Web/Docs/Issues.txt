@@ -1,31 +1,46 @@
 ﻿Good morning Blue,
  
-Karen is right.  The website looks great!  I do have a couple of questions, but first, I must say that the galleries look terrific and the maintenance page is so easy to use.  I've added a few photographs just to see how it works.
+Karen is right.  The website looks great!  I do have a couple of questions, but first,
+I must say that the galleries look terrific and the maintenance page is so easy to use.
+  I've added a few photographs just to see how it works.
  
 I've listed Karen's suggestions below so that I can comment on them.
  
  
 
-1.    I would store a gallery description field in db for each gallery that could be displayed at the top or bottom of the slideshow frame.  You could describe the distinguishing features of the portraits in this selected gallery.  This is a very good idea.  I'd like to have this feature as long as having the text display is optional.  There won't always be a comment or description, so I'd like to be able to use or not use this feature.
+1.    I would store a gallery description field in db for each gallery that could be displayed at the top
+or bottom of the slideshow frame.  You could describe the distinguishing features of the portraits in this selected gallery.
+
+This is a very good idea.  I'd like to have this feature as long as having the text display is optional.
+There won't always be a comment or description, so I'd like to be able to use or not use this feature.
 It's no problem and I'll figure it out but it just need some time.
 
  
 
 2.  Contact us might have a form to sign up for discounts and newsletter in addition to basic contact info.
 
-Emails collected could be stored in user table for mailing campaigns (separate from website)  This is also a very good idea.  Blue, is this something you can do within the scope of our design agreement?
+Emails collected could be stored in user table for mailing campaigns (separate from website)  
+This is also a very good idea.  Blue, is this something you can do within the scope of our design agreement?
 It's not a big issue but i need you to provide the detailed design of what you want. 
 
  
 
  
 
-3.  My personal opinion is that the font for contact us should all be white. I would also change page font to verdana because it is easier to read so it can be smaller pt size.   I agree with these suggestions.  The current font and colors are a hold over from the original site.  Blue, would you mind making these changes.  There's also plenty of room on this page for the sign-up form Karen suggested in #2.
+3.  My personal opinion is that the font for contact us should all be white. 
+I would also change page font to verdana because it is easier to read so it can be smaller pt size.
+I agree with these suggestions.  The current font and colors are a hold over from the original site.
+Blue, would you mind making these changes.  There's also plenty of room on this page for the sign-up form Karen suggested in #2.
 The changes are OK, but I need the detailed design for "sing up".
  
 Here are my questions:
  
-A.  I noticed that some of the photographs are distorted, either stretched or "squished" so that they don't look right.  Can this be fixed by resizing the images?  Is there a certain size that would work best so that there is no distortion.  A couple of examples of this are the image of the dog and cat (that I added) and the image of the mother and baby horse.
- 
-B.  When I want to change the prices or add a package deal to the Services page, will I be able to do that fairly easily?  I know that wasn't included in the design, but I just realized (after seeing a couple of other websites) that it will be something I'll need to do.  Maybe it would be easier to do if the prices aren't displayed on top of a photograph (although I like the way that looks).  What do you think, Blue?
+A.  I noticed that some of the photographs are distorted, either stretched or
+"squished" so that they don't look right.  Can this be fixed by resizing the images?
+Is there a certain size that would work best so that there is no distortion.  
+A couple of examples of this are the image of the dog
+and cat (that I added) and the image of the mother and baby horse.
+B.  When I want to change the prices or add a package deal to the Services page, will I be able to do that fairly easily?
+I know that wasn't included in the design, but I just realized (after seeing a couple of other websites) that
+it will be something I'll need to do.  Maybe it would be easier to do if the prices aren't displayed on top of a photograph (although I like the way that looks).  What do you think, Blue?
 I'll try to make it out. It just need some time.
