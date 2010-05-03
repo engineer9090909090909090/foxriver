@@ -16,6 +16,7 @@
 
     <script language="javascript" type="text/javascript">
     var photoList = <%= Photos %>;
+    var description = "<%= Description %>";
     </script>
     <style type="text/css">
         .thumb
@@ -80,6 +81,9 @@
             <ul id="Menu">
             </ul>
         </div>
+    </div>
+    <div id="divDescription" style="display:none; width: 717px; text-align: left; margin: 0 auto;color:#ffffff;font-weight:bold;">
+   
     </div>
     <div id="content" style="width: 717px; text-align: center; margin: 0 auto;">
         <div id="cp" style="width: 148px; border: solid 1px silver; height: 440px; float: left;margin-top:5px;">
