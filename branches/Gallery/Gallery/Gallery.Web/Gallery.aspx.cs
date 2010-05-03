@@ -37,6 +37,22 @@ namespace Gallery.Web
 
         }
 
+        protected string Description
+        {
+            get
+            {
+                if (gid < 0)
+                    return string.Empty;
+                string des = Utility.GetGalleryDescription(gid);
+
+                if (string.IsNullOrEmpty(des))
+                    return string.Empty;
+
+                return des.Replace("\"", "\\\"");
+                //return Utility.GetGalleryDescription(gid);
+            }
+        }
+
         protected string Photos
         {
             get
