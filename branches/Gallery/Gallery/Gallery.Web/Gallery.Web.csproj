@@ -209,6 +209,7 @@
   <ItemGroup>
     <None Include="App_Data\2010-05-02.sql" />
     <None Include="App_Data\SQL.sql" />
+    <None Include="App_Data\Account.sql" />
     <None Include="Docs\DxD Photography Website Update.doc" />
     <None Include="Docs\DxD_Photography_Website_Update_v2.doc" />
     <None Include="Docs\OldWebSites\index.fla" />
