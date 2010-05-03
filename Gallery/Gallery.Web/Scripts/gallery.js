@@ -7,6 +7,15 @@ var g = {
 var fixedSize = false;
 var fixedW = 556
 var fixedH = 556;
+
+var $slide, $des;
+var currentPage = 0;
+var pageCount = 0;
+var $selectedImg = null;
+var $showingImg = null;
+var isRequesting = false;
+var playingIndex = -1;
+var isPlaying = 0;
 function photo(src1, src2) {
     // if s1 == '' we'll use a default gif
     this.s1 = src1;
@@ -21,18 +30,16 @@ function photo(src1, src2) {
 
 $(document).ready(function() {
     $slide = $('#Slide');
+    $des = $('#divDescription');
+
+    if ($.trim(description).length > 0) {
+        //$des.css({'visibility':'visible','height':'2
+        $des.text(description)
+            .fadeIn('slow');
+    }
     Gallery_Init();
     Play();
 });
-
-var $slide;
-var currentPage = 0;
-var pageCount = 0;
-var $selectedImg = null;
-var $showingImg = null;
-var isRequesting = false;
-var playingIndex = -1;
-var isPlaying = 0;
 function Gallery_Init() {
     pageCount = Math.floor(photoList.length / 12) + 1;
     for (var i = 0; i < photoList.length; ++i) {

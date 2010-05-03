@@ -276,6 +276,9 @@ namespace Gallery.Web
 
         #endregion
 
+
+        #region Photo Size Function
+
         static string[] _AVAILABLE_PHOTO_TYPE = new string[] { "jpg", "jpeg", "png" };
         static public void UpdatePhotoSize(string filePath)
         {
@@ -335,5 +338,25 @@ namespace Gallery.Web
             comm.Connection.Close();
             comm.Dispose();
         }
+
+        #endregion
+
+
+        #region GetGalleryDescription
+
+        static internal string GetGalleryDescription(int galleryId)
+        {
+            string sql = string.Format("SELECT [Description] FROM [TGallery] WHERE [Id] = {0};", galleryId);
+            DataTable t = GetTable(sql);
+
+            if (t.Rows.Count == 0)
+            {
+                return null;
+            }
+
+            return t.Rows[0][0] == DBNull.Value ? null : t.Rows[0][0].ToString();
+        }
+
+        #endregion
     }
 }
