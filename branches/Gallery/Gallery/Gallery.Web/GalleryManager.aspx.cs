@@ -26,5 +26,13 @@ namespace Gallery.Web
                 return Utility.GetGalleriesJson();
             }
         }
+
+        protected string PriceSettings
+        {
+            get
+            {
+                return Utility.GetPriceSettings();
+            }
+        }
     }
 }

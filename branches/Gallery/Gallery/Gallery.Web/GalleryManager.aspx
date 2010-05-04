@@ -1,6 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="GalleryManager.aspx.cs"
     Inherits="Gallery.Web._Default" %>
 
+<%@ Register TagPrefix="Gallery" TagName="MH" Src="~/ManagementHeader.ascx" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
@@ -26,7 +27,7 @@
         {
             position: absolute;
             left: 20px;
-            top: 10px;
+            top: 40px;
             width: 120px;
             height: 400px;
             border: solid 1px silver;
@@ -54,25 +55,7 @@
             display: none;
             color: #fff;
         }
-        .win
-        {
-            border: solid 2px #649fe5;
-            position: absolute;
-            left: 150px;
-            top: 10px;
-        }
-        .window_header
-        {
-            height: 25px;
-            line-height: 25px;
-            background: url(images/top-bottom.png) repeat-x 0px 0px;
-            border-bottom: solid 2px #649fe5;
-            font-weight: bold;
-        }
-        .window_content
-        {
-            background-color: #ffffff;
-        }
+        
         .table_header
         {
             width: 650px;
@@ -126,23 +109,23 @@
     <script language="javascript" src="scripts/home.js" type="text/javascript"></script>
 
     <script language="javascript" type="text/javascript">
-    var GalleryList = <%= Galleries %>
+    var GalleryList = <%= Galleries %>;
     </script>
 
 </head>
 <body>
     <form id="form1" runat="server">
+    <Gallery:MH ID="MH1" runat="server" />
     <div id="Menu">
         <div style="text-decoration: underline; font-weight: bold; margin-left: 5px; font-size: 10pt;">
             Gallery List</div>
     </div>
-    <div class="win" style="width: 700px;">
+    <div class="win" style="width: 700px;" id="phtoWin">
         <div class="window_header" style="width: 700px;">
             Gallery Maintainance
         </div>
         <div class="window_content" style="width: 700px; height: 600px;">
             <div class="table_header">
-                <%--height:27px;line-height:27px;--%>
                 <div style="float: left;">
                     <div>
                         <input type="text" value="" id="tbGalleryName" />
@@ -153,16 +136,17 @@
                     <div>
                         <textarea style="width: 250px; height: 50px;" id="tbDescription"></textarea></div>
                 </div>
-                <div style="float: left;margin-top:55px;">
+                <div style="float: left; margin-top: 55px;">
                     <a href="javascript:void(0);" onclick="UpdateGallery();">Update</a></div>
-                <div style="float: right;margin-top:55px; ">
+                <div style="float: right; margin-top: 55px;">
                     <a href="javascript:void(0);" onclick="Add_Click();">Add Row</a> <a style="display: none;"
                         href="javascript:void(0);">Save Row's Order</a>
                 </div>
                 <div style="clear: both;">
                 </div>
             </div>
-            <div style="width: 700px; height: 578px; overflow: auto" id="RowContainer">
+            <div style="width: 700px; height: 578px; overflow: auto; background-color: #ffffff;"
+                id="RowContainer">
             </div>
         </div>
     </div>

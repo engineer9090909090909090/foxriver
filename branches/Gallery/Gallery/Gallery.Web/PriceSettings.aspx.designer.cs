@@ -11,7 +11,7 @@
 namespace Gallery.Web {
     
     
-    public partial class _Default {
+    public partial class PriceSettings {
         
         /// <summary>
         /// form1 控件。

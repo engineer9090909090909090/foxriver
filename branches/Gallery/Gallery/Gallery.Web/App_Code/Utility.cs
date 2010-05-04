@@ -17,6 +17,9 @@ namespace Gallery.Web
     public class Utility
     {
         //Data Source=207.56.187.6,1433\SQLExpress1;Initial Catalog=dxdpho;User Id=dxdphosql;Password=your password;
+
+        const string CONFIG_PRICE = "PRICE";
+        const string INIT_PRICE = "150.00,80.00,80.00,20.00,10.00,15.00,20.00,5.00,10.00,20.00";
         #region GetCommand
 
         static public SqlCommand GetCommand()
@@ -41,10 +44,37 @@ namespace Gallery.Web
 
         #endregion
 
+
+
+        static public string GetConfig(string key)
+        {
+            //return string.Empty;
+
+            string sql = "SELECT [Value] FROM [TConfig] WHERE [Key] = '" + key + "';";
+            SqlCommand com = GetCommand(sql);
+
+            object o = com.ExecuteScalar();
+
+            return o == DBNull.Value ? string.Empty : o.ToString();
+        }
+
+        static public void UpdatePriceSettigns(string newSettings)
+        {
+            UpdateConfig(CONFIG_PRICE, newSettings);
+        }
+        static public string GetPriceSettings()
+        {
+            string ps = GetConfig(CONFIG_PRICE);
+            return string.IsNullOrEmpty(ps) ? INIT_PRICE : ps;
+        }
+
+
+
         #region UpdateConfig
 
-        public int UpdateConfig(string name, string value)
+        static public void UpdateConfig(string name, string value)
         {
+            /*
             using (SqlCommand command = GetCommand())
             {
                 command.CommandText = "DELETE FROM [TConfig] WHERE [Key] = @Key AND [Value] = @Value";
@@ -55,6 +85,32 @@ namespace Gallery.Web
                 command.Connection.Dispose();
             }
             return 0;
+            */
+
+            SqlCommand com = AddConfigKey(name);
+            com.CommandText = "UPDATE [TConfig] SET [Value] = '" + value.Replace("'", "''") + "' WHERE [Key] = '" + name + "';";
+            com.ExecuteNonQuery();
+            com.Connection.Close();
+            com.Dispose();
+
+
+        }
+
+        static SqlCommand AddConfigKey(string key)
+        {
+            string sql = "SELECT COUNT(*) FROM [TConfig] WHERE [Key] = '" + key + "';";
+            SqlCommand com = GetCommand(sql);
+
+            int count = int.Parse(com.ExecuteScalar().ToString());
+
+            if (count == 0)
+            {
+                com.CommandText = "INSERT INTO [TConfig] ( [Key] ) VALUES ( '" + key + "');";
+                com.ExecuteNonQuery();
+            }
+
+
+            return com;
         }
 
         public int UpdatePassword(string oldPwd, string newPwd)
@@ -358,5 +414,85 @@ namespace Gallery.Web
         }
 
         #endregion
+
+
+        #region Accounts functions
+
+        static public DataTable GetAccounts()
+        {
+            DataTable t = GetTable("SELECT [ID],[FirstName],[LastName],[Email] FROM [TAccount]");
+            return t;
+        }
+
+        static public bool CheckAccountExist(string emailAddress)
+        {
+            DataTable t = GetTable(string.Format("SELECT COUNT(*) FROM [TAccount] WHERE [Email] = '{0}'", emailAddress.Replace("'", "''")));
+
+            /*
+            if (t.Rows.Count > 0)
+                
+                return true;
+            */
+            return int.Parse(t.Rows[0][0].ToString()) > 0;
+        }
+
+
+        static public int AddAccount(string firstName, string lastName, string email)
+        {
+            SqlCommand command = GetCommand("INSERT INTO [TAccount] ( [FirstName],[LastName],[Email] ) VALUES (@firstName, @lastName, @email);SELECT @@IDENTITY");
+
+            command.Parameters.Add(new SqlParameter("firstName", firstName));
+            command.Parameters.Add(new SqlParameter("lastName", lastName));
+            command.Parameters.Add(new SqlParameter("email", email));
+
+            object o = command.ExecuteScalar();
+
+            command.Connection.Close();
+            command.Dispose();
+
+            return int.Parse(o.ToString());
+        }
+
+        #endregion
+
+        #region JsonCellData
+
+        static public string JsonCellData(object cellValue)
+        {
+            if (cellValue == DBNull.Value || cellValue == null)
+            {
+                return string.Empty;
+            }
+
+            return cellValue.ToString().Replace("\"", "\\\"");
+
+        }
+
+        #endregion
+
+        #region SetClientPassword
+
+        static public void SetClientPassword(int clientId, string password)
+        {
+            string sql = "UPDATE [TAccount] SET [Password] = '" + password.Replace("'", "''") + "' WHERE [ID] = " + clientId;
+            //SqlCommand 
+            ExecuteNonQuery(sql);
+        }
+
+        #endregion
+
+        #region ExecuteNonQuery
+
+        static void ExecuteNonQuery(string sql)
+        {
+            SqlCommand com = GetCommand(sql);
+            com.ExecuteNonQuery();
+
+            com.Connection.Close();
+            com.Dispose();
+        }
+
+        #endregion
+
     }
 }
