@@ -200,6 +200,8 @@ namespace Gallery.Web
 
         #endregion
 
+        #region UpdateGallery
+
         static public AjaxResult UpdateGallery()
         {
             AjaxResult ar = new AjaxResult { ReturnCode = 0, Message = string.Empty, Json = "{}" };
@@ -221,6 +223,9 @@ namespace Gallery.Web
             return ar;
         }
 
+        #endregion
+
+        #region GetGalleries
 
         static public AjaxResult GetGalleries()
         {
@@ -231,6 +236,103 @@ namespace Gallery.Web
             //}
 
             AjaxResult ar = new AjaxResult { ReturnCode = 0, Message = string.Empty, Json = Utility.GetGalleriesJson() };
+            return ar;
+
+        }
+
+        #endregion
+
+        #region AddAccount
+
+        static public AjaxResult AddAccount()
+        {
+            HttpRequest req = HttpContext.Current.Request;
+            string firstName = req.Form["firstName"];
+            string lastName = req.Form["lastName"];
+            string email = req.Form["email"];
+
+            AjaxResult ar = new AjaxResult { ReturnCode = 0, Message = string.Empty, Json = "{}" };
+            if (Utility.CheckAccountExist(email))
+            {
+                ar.ReturnCode = -1;
+                ar.Message = "The current email has been regeistered before!";
+                return ar;
+            }
+
+            Utility.AddAccount(firstName, lastName, email);
+            return ar;
+        }
+
+        #endregion
+
+        #region UpdatePriceSettings
+
+        static public AjaxResult UpdatePriceSettings()
+        {
+            AjaxResult ar = new AjaxResult { ReturnCode = 0, Message = string.Empty, Json = "{}" };
+
+            Utility.UpdatePriceSettigns(HttpContext.Current.Request.Form["priceSettings"]);
+
+            return ar;
+        }
+
+        #endregion
+
+        #region GetClients
+
+        static public AjaxResult GetClients()
+        {
+            DataTable t = Utility.GetTable("SELECT [ID],[FirstName],[LastName],[Email],[Password] FROM [TAccount]");
+            AjaxResult ar = new AjaxResult();
+            ar.ReturnCode = 0;
+            ar.Message = string.Empty;
+
+            if (t.Rows.Count == 0)
+            {
+                ar.Json = "{}";
+                return ar;
+            }
+
+            System.Text.StringBuilder json = new System.Text.StringBuilder();
+            json.Append("[");
+            int count = 0;
+            foreach (DataRow row in t.Rows)
+            {
+                if (count > 0)
+                {
+                    json.Append(",");
+                }
+
+                //string firstName =   row["FirstName"] == DBNull.Value ? string.Empty : row["FirstName"].ToString().Replace("\"", "\\\"");
+                //string lastName = row["LastName
+
+                json.Append("{");
+                json.AppendFormat("\"id\":{0}", row["ID"]);
+                json.AppendFormat(",\"firstName\":\"{0}\"", Utility.JsonCellData(row["FirstName"]));
+                json.AppendFormat(",\"lastName\":\"{0}\"", Utility.JsonCellData(row["LastName"]));
+                json.AppendFormat(",\"email\":\"{0}\"", Utility.JsonCellData(row["Email"]));
+                json.AppendFormat(",\"password\":\"{0}\"", Utility.JsonCellData(row["Password"]));
+                json.Append("}");
+
+                ++count;
+            }
+            json.Append("]");
+
+            ar.Json = json.ToString();
+            return ar;
+        }
+
+        #endregion
+
+        static public AjaxResult SetClientPassword()
+        {
+            HttpRequest req = HttpContext.Current.Request;
+            string password = req.Form["password"];
+            int id = int.Parse(req.Form["id"]);
+
+            AjaxResult ar = new AjaxResult { ReturnCode = 0, Message = string.Empty, Json = "{}" };
+
+            Utility.SetClientPassword(id, password);
             return ar;
 
         }

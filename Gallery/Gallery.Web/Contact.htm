@@ -57,6 +57,40 @@
             width:140px;
         }
     </style>
+    <script language="javascript" type="text/javascript">
+    function singUp() {
+        var firstName =$.trim( $('#tbFirstName').attr('value'));
+        var lastName = $.trim($('#tbLastName').attr('value'));
+        var email = $.trim($('#tbEmail').attr('value'));
+        
+        if ( firstName.length == 0 || lastName.length == 0 ) {
+            alert("Please enter your fist name or last name!");
+            return;
+        }
+        var emailTest = /^([\w]+)(.[\w]+)*@([\w-]+\.){1,5}([A-Za-z]){2,4}$/;
+        if (!emailTest.test(email)) {
+            alert( "Please enter correct email adderss");
+            return;
+        }
+        
+        var url = "admin.aspx?nothing=" + encodeURI( new Date().toString())
+            +"&method=AddAccount&ajax=1";
+        $.post(url,
+            {'firstName':firstName,'lastName':lastName,'email':email},
+            function(data) {
+                if ( data.msgId< 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    $('#tbFirstName').attr('value','');
+                    $('#tbLastName').attr('value','');
+                    $('#tbEmail').attr('value','');
+                    
+                    alert("Thanks for your sign up!");
+                }
+            },'json');
+    };
+    </script>
 </head>
 <body>
     <div id="container">
@@ -110,20 +144,20 @@
                         <div class="left_cell">
                             Last Name:</div>
                         <div class="right_cell">
-                            <input id="Text1" />
+                            <input id="tbLastName" />
                         </div>
                         <div style="clear: both;">
                         </div>
                         <div class="left_cell">
                             Email:</div>
                         <div class="right_cell">
-                            <input id="Text2" />
+                            <input id="tbEmail" />
                         </div>
                         <div style="clear: both;">
                         </div>
                     </div>
                     <div style="width: 100%; text-align: center;margin-top:10px;">
-                        <input type="button" value="Sign Up Now" class="signup_button" />
+                        <input type="button" value="Sign Up Now" class="signup_button" onclick="singUp();" />
                     </div>
                 </div>
             </div>
