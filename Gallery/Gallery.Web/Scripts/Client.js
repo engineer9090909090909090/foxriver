@@ -6,6 +6,16 @@ $(document).ready(function() {
     Page_Load();
 });
 function Page_Load() {
+    var $sel = $('#selGalleries');
+//    alert(gList.length);
+    for (var i = 0; i < gList.length; ++i) {
+        //        alert(i);
+//        alert(gList[i].text);
+        //$sel.prepend("<option value='" + gList[i].id + "'>" + gList[i].text + "</option>");
+            //.text(gList[i].text)
+        //.appendTo($sel);
+        $("<option value='" + gList[i].id + "'>" + gList[i].text + "</option>").appendTo($sel);
+    }
     for ( var i = 0; i < clients.length; ++i ) {
         AddRow(clients[i]);
     }

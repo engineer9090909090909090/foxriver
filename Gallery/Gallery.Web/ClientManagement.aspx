@@ -9,7 +9,7 @@
     <style type="text/css">
         .row
         {
-            width: 700px;
+            width: 900px;
             height: 23px;
             color: #ffffff;
             line-height: 23px;
@@ -24,7 +24,7 @@
         }
         .header
         {
-            width: 700px;
+            width: 900px;
             background-color: #000000;
             color: #ffffff;
             height: 25px;
@@ -61,12 +61,18 @@
             float: left;
             width: 80px;
         }
+        .gallery
+        {
+            float: left;
+            width: 200px;
+        }
     </style>
 
     <script language="javascript" src="scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
 
     <script language="javascript" type="text/javascript">
     var clients = <%= Clients %>;
+    var gList = <%= Galleries %>
     </script>
 
     <script language="javascript" src="scripts/client.js" type="text/javascript"></script>
@@ -75,11 +81,11 @@
 <body>
     <form id="form1" runat="server">
     <Gallery:MH ID="MH1" runat="server" />
-    <div class="win" style="width: 700px; z-index: 20; left: 20px;" id="priceWin">
-        <div class="window_header" style="width: 700px;">
+    <div class="win" style="width: 900px; z-index: 20; left: 20px;" id="priceWin">
+        <div class="window_header" style="width: 900px;">
             Client Maintainance
         </div>
-        <div class="window_content" style="width: 700px; height: 600px;" id="ClientTable">
+        <div class="window_content" style="width: 900px; height: 600px;" id="ClientTable">
             <div class="header">
                 <div class="first_name">
                     First Name</div>
@@ -89,6 +95,8 @@
                     Email</div>
                 <div class="client_password">
                     Password</div>
+                <div class="gallery">
+                    Gallery</div>
                 <div class="send">
                     Send Mail</div>
                 <div style="clear: both;">
@@ -101,9 +109,16 @@
                     Last Name</div>
                 <div class="client_email">
                     Email</div>
+                
                 <div class="client_password">
                     <input type="text" />
                     <a href="javascript:void(0);">set</a>
+                </div>
+                
+                <div class="gallery">
+                    <select id="selGalleries">
+                        <option value="-1">Not Assigned</option>
+                    </select>
                 </div>
                 <div class="send">
                     <a href="javascript:void(0);">send</a></div>
