@@ -32,5 +32,13 @@ namespace Gallery.Web
                 return WebMethods.GetClients().Json;
             }
         }
+
+        protected string Galleries
+        {
+            get
+            {
+                return Utility.GetGalleriesJson();
+            }
+        }
     }
 }
