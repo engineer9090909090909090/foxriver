@@ -1,6 +1,5 @@
 ﻿// created by blue, 2010-4-23
 var _CurrentContent = null;
-var _IsRequesting = false;
 function GalleryEntity(id, text, show) {
     this.id = id;
     this.text = text;
@@ -12,6 +11,9 @@ var $tbGalleryName = null;
 var $BigPhoto = null;
 var $comments = null;
 function GalleryItem_Click($item) {
+    
+//    $('#priceWin').hide();
+//    $('#phtoWin').show();
     if ($CurrentGalleryItem) {
         $CurrentGalleryItem.css({ 'background-color': '' });
     }
@@ -98,6 +100,7 @@ function FillRow(photo, $row) {
 }
 
 $(document).ready(function() {
+//    LoadPriceSetting();
     var menuContainer = $('#Menu');
     $cbxShow = $('#cbxShow');
     $tbGalleryName = $('#tbGalleryName');
@@ -314,81 +317,6 @@ function checkFile($input) {
 
     return false;
 };
-
-function getPostUrl() {
-    var u = document.location.href;
-    if (u.indexOf("?") < 0) {
-        return u;
-    }
-
-    return u.substr(0, u.indexOf("?"));
-}
-function _postJSON(queryData, postData, callback, errorCallback) {
-    if (_IsRequesting) {
-        alert("Please wait for the current operation's finish");
-        return;
-    }
-    _IsRequesting = true;
-    var url = getPostUrl();
-
-    url += '?nothing=' + encodeURI((new Date()).toString());
-    $.extend(queryData, { 'ajax': '1' });
-    for (var q in queryData) {
-        url += "&" + q + "=" + encodeURI(queryData[q]);
-    }
-
-    $.post(url, postData, function(data) {
-        _IsRequesting = false;
-        if (data.msgId && data.msgId < 0) {
-            if (data.msgId == -1000) {
-                alert("Session expired!");
-                return;
-            }
-
-            // get error from server!
-            if (errorCallback && typeof errorCallback === 'function') {
-                errorCallback(data);
-            } else {
-                alert(data.message);
-            }
-
-        } else {
-            if (callback && typeof callback == 'function') {
-                callback(data);
-            }
-        }
-    }, "json");
-};
-/*
-$(document).ready(function(){
-//var menuContainer = $('#Menu');
-var menuItems = $('#Menu').children('div');
-var len = menuItems.length;
-for ( var i = 0; i < len; ++i ) {
-$(menuItems[i]).hover(function(e){
-$(e.target).css({'text-decoration':'underline'});
-},
-function(e){
-$(e.target).css({'text-decoration':'none'});
-})
-.click(function(e){
-MenuItem_Click(e);
-});
-}
-var index = 0;
-var show = function() {
-$(menuItems[index]).fadeIn('fast');
-++index;
-if ( index >= len) {
-Swamp(null, "Home");
-return;
-}
-window.setTimeout(function(){show()}, 200);
-};
-    
-show();
-});
-*/
 
 function MenuItem_Click(e) {
     var next = $(e.target).attr('cid');
