@@ -5,6 +5,7 @@ CREATE TABLE [dbo].[TAccount](
 	[LastName] [nvarchar](50) COLLATE Chinese_PRC_CI_AS NULL,
 	[Email] [nvarchar](50) COLLATE Chinese_PRC_CI_AS NULL,
 	[Password] [varchar](50) COLLATE Chinese_PRC_CI_AS NULL,
+	[GalleryId] INT DEFAULT (-1) NOT NULL
  CONSTRAINT [PK_TAccount] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC

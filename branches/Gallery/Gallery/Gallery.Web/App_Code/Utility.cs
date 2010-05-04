@@ -19,7 +19,7 @@ namespace Gallery.Web
         //Data Source=207.56.187.6,1433\SQLExpress1;Initial Catalog=dxdpho;User Id=dxdphosql;Password=your password;
 
         const string CONFIG_PRICE = "PRICE";
-        const string INIT_PRICE = "150.00,80.00,80.00,20.00,10.00,15.00,20.00,5.00,10.00,20.00";
+        const string INIT_PRICE = "150.00,80.00,80.00,20.00,10.00,15.00,20.00,5.00,10.00,10.00,20.00";
         #region GetCommand
 
         static public SqlCommand GetCommand()
@@ -132,7 +132,7 @@ namespace Gallery.Web
         {
             using (SqlCommand command = GetCommand())
             {
-                command.CommandText = "SELECT [ID], [GalleryName],[Show],[Description] FROM TGallery";
+                command.CommandText = "SELECT [ID], [GalleryName],[Show],[Description] FROM TGallery ORDER BY [ID];";
 
                 DataTable t = new DataTable();
                 SqlDataAdapter ada = new SqlDataAdapter(command);
