@@ -13,14 +13,9 @@ var $sub = null;
 var $work;
 
 function goToGallery(galleryId){
-//    var $form = $("<form action='gallery.aspx' method='get'></form>").appendTo(document.body);
-//    var $gid = $("<input type='text' name='galleryId' value='" + galleryId + "' />").appendTo($form);
-    //    $form[0].submit();
     document.location.href = "gallery.aspx?galleryId=" + galleryId + "&nothing=" + encodeURI(new Date().toString());
-    
 };
-function ProcessGalleryList(gList) {
-    var galleries = gList;
+function ProcessGalleryList(galleries) {
     $sub = $("<div style='position:absolute;top:-100px;left:-100px;overflow:hidden;display:none;background-color:#000;color:#fff;text-align:left;'></div>")
         .appendTo(document.body);
     for ( var i = 0; i < galleries.length; ++i ) {
@@ -64,12 +59,13 @@ function ProcessGalleryList(gList) {
 };
 $(document).ready(function() {
     
-    addMenu("Home", "home.html");
-    addMenu("About Us","about.htm");
-    //addMenu("Services", "services.htm");
+    addMenu("Home", "home.aspx");
+    addMenu("About Us","about.aspx");
     addMenu("Services", "services.aspx");
     $work = addMenu("Galleries", "javascript:void(0);");
+    addMenu("Client", "client.aspx");
     
+    /*
     $.ajax({
         url : 'admin.aspx?ajax=1&nothing=' + encodeURI( new Date().toString()) + '&method=GetGalleries',
         dataType:"json",
@@ -77,6 +73,7 @@ $(document).ready(function() {
             ProcessGalleryList(data.data);
         }
     });
+    */
     
-    addMenu("Contact Us", "contact.htm");
+    addMenu("Contact Us", "contact.aspx");
 });

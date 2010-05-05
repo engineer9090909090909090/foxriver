@@ -45,7 +45,7 @@
         .client_password
         {
             float: left;
-            width: 150px;
+            width: 190px;
         }
         .client_password input
         {
@@ -59,7 +59,7 @@
         .send
         {
             float: left;
-            width: 80px;
+            width: 50px;
         }
         .gallery
         {
@@ -98,32 +98,31 @@
                 <div class="gallery">
                     Gallery</div>
                 <div class="send">
-                    Send Mail</div>
+                    del</div>
                 <div style="clear: both;">
                 </div>
             </div>
-            <div class="row" id="TEMP">
-                <div class="first_name">
-                    First Name</div>
-                <div class="last_name">
-                    Last Name</div>
-                <div class="client_email">
-                    Email</div>
-                
-                <div class="client_password">
-                    <input type="text" />
-                    <a href="javascript:void(0);">set</a>
-                </div>
-                
-                <div class="gallery">
-                    <select id="selGalleries">
-                        <option value="-1">Not Assigned</option>
-                    </select>
-                </div>
-                <div class="send">
-                    <a href="javascript:void(0);">send</a></div>
-                <div style="clear: both;">
-                </div>
+        </div>
+        <div class="row" id="TEMP">
+            <div class="first_name">
+                First Name</div>
+            <div class="last_name">
+                Last Name</div>
+            <div class="client_email">
+                Email</div>
+            <div class="client_password">
+                <input type="text" />
+                <a href="javascript:void(0);">set</a>
+                <a href="javascript:void(0);">remove</a>
+            </div>
+            <div class="gallery">
+                <select id="selGalleries">
+                    <option value="-1">--Not Assigned--</option>
+                </select>
+            </div>
+            <div class="send">
+                <a href="javascript:void(0);">del</a></div>
+            <div style="clear: both;">
             </div>
         </div>
     </div>

@@ -53,15 +53,16 @@
     <Reference Include="System.Web.Mobile" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="About.htm" />
+    <Content Include="About.aspx" />
     <Content Include="Admin.aspx" />
     <Content Include="App_Data\G1.mdf">
     </Content>
     <Content Include="App_Data\G1_log.ldf">
       <DependentUpon>G1.mdf</DependentUpon>
     </Content>
+    <Content Include="Client.aspx" />
     <Content Include="ClientManagement.aspx" />
-    <Content Include="Contact.htm" />
+    <Content Include="Contact.aspx" />
     <Content Include="Docs\Issues.txt" />
     <Content Include="Docs\OldWebSites\About.htm" />
     <Content Include="Docs\OldWebSites\asmptag_sm.jpg" />
@@ -131,7 +132,9 @@
     <Content Include="Docs\OldWebSites\style.css" />
     <Content Include="Docs\OldWebSites\Work.htm" />
     <Content Include="Gallery.aspx" />
+    <Content Include="GalleryControl.ascx" />
     <Content Include="GalleryManager.aspx" />
+    <Content Include="home.aspx" />
     <Content Include="home.html" />
     <Content Include="Images\asmptag_sm.jpg" />
     <Content Include="Images\c-IMG_0164_resize.jpg" />
@@ -166,17 +169,32 @@
     <Content Include="Scripts\index.js" />
     <Content Include="Scripts\jquery-1.4.1.min.js" />
     <Content Include="Services.aspx" />
+    <Content Include="SiteHeader.ascx" />
     <Content Include="SQLManager.aspx" />
     <Content Include="Style.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="About.aspx.cs">
+      <DependentUpon>About.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="About.aspx.designer.cs">
+      <DependentUpon>About.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Admin.aspx.cs">
       <DependentUpon>Admin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Admin.aspx.designer.cs">
       <DependentUpon>Admin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Client.aspx.cs">
+      <DependentUpon>Client.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Client.aspx.designer.cs">
+      <DependentUpon>Client.aspx</DependentUpon>
     </Compile>
     <Compile Include="ClientManagement.aspx.cs">
       <DependentUpon>ClientManagement.aspx</DependentUpon>
@@ -185,6 +203,13 @@
     <Compile Include="ClientManagement.aspx.designer.cs">
       <DependentUpon>ClientManagement.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Contact.aspx.cs">
+      <DependentUpon>Contact.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Contact.aspx.designer.cs">
+      <DependentUpon>Contact.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Gallery.aspx.cs">
       <DependentUpon>Gallery.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -192,12 +217,26 @@
     <Compile Include="Gallery.aspx.designer.cs">
       <DependentUpon>Gallery.aspx</DependentUpon>
     </Compile>
+    <Compile Include="GalleryControl.ascx.cs">
+      <DependentUpon>GalleryControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GalleryControl.ascx.designer.cs">
+      <DependentUpon>GalleryControl.ascx</DependentUpon>
+    </Compile>
     <Compile Include="GalleryManager.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
       <DependentUpon>GalleryManager.aspx</DependentUpon>
     </Compile>
     <Compile Include="GalleryManager.aspx.designer.cs">
       <DependentUpon>GalleryManager.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="home.aspx.cs">
+      <DependentUpon>home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="home.aspx.designer.cs">
+      <DependentUpon>home.aspx</DependentUpon>
     </Compile>
     <Compile Include="Management.aspx.cs">
       <DependentUpon>Management.aspx</DependentUpon>
@@ -239,6 +278,13 @@
     </Compile>
     <Compile Include="Services.aspx.designer.cs">
       <DependentUpon>Services.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SiteHeader.ascx.cs">
+      <DependentUpon>SiteHeader.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SiteHeader.ascx.designer.cs">
+      <DependentUpon>SiteHeader.ascx</DependentUpon>
     </Compile>
     <Compile Include="SQLManager.aspx.cs">
       <DependentUpon>SQLManager.aspx</DependentUpon>
