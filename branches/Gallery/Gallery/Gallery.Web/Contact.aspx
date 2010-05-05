@@ -113,8 +113,8 @@
                     </div>
                 </div>
                 <div style="width: 420px; margin: 30px auto; font-family: Verdana; color: #ffffff;">
-                    <div style="font-size: 14px; font-weight: bold;">
-                        Sign Up</div>
+                    <div style="font-size: 14px; font-weight: bold;margin-bottom:5px;">
+                        Sign up for Newsletters and Price Specials</div>
                     <div>
                         <div class="left_cell">
                             First Name:</div>
