@@ -472,9 +472,9 @@ namespace Gallery.Web
 
         #region SetClientPassword
 
-        static public void SetClientPassword(int clientId, string password)
+        static public void SetClientPassword(int clientId, string password, int galleryId)
         {
-            string sql = "UPDATE [TAccount] SET [Password] = '" + password.Replace("'", "''") + "' WHERE [ID] = " + clientId;
+            string sql = "UPDATE [TAccount] SET [GalleryId] = " + galleryId + ",  [Password] = '" + password.Replace("'", "''") + "' WHERE [ID] = " + clientId;
             //SqlCommand 
             ExecuteNonQuery(sql);
         }
@@ -493,6 +493,20 @@ namespace Gallery.Web
         }
 
         #endregion
+
+        /// <summary>
+        /// This method used for when set a client password.
+        /// a password just can set one time for one gallery.
+        /// so the password cannot be repetitive.
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        static public bool CheckPasswordExist(string password)
+        {
+            string sql = "SELECT COUNT(*) FROM [TAccount] WHERE [Password] = '" + password.Replace("'", "''") + "';";
+            DataTable t = GetTable(sql);
+            return int.Parse(t.Rows[0][0].ToString()) > 0;
+        }
 
     }
 }

@@ -1,14 +1,13 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Contact.aspx.cs" Inherits="Gallery.Web.Contact" %>
+
+<%@ Register TagName="Header" TagPrefix="Gallery" Src="~/SiteHeader.ascx" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>DxD Photography - Specializing in Equine Photography</title>
     <meta name="keywords" content="Equine photography, Pet photography, Pet portraits" />
     <link href="Style.css" type="text/css" rel="Stylesheet" />
-
-    <script language="javascript" src="scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
-
-    <script language="javascript" src="scripts/index.js" type="text/javascript"></script>
-
+    
     <style type="text/css">
         .left_cell
         {
@@ -42,8 +41,7 @@
             background-repeat: repeat-x;
             background-position: 0px -555px;
             background-color: #79bb16;
-            
-            border:solid 1px #6699cc;
+            border: solid 1px #6699cc;
             color: #ffffff;
             font-weight: 700;
             font-size: 120%;
@@ -54,9 +52,10 @@
             padding-bottom: 2px;
             padding-left: 16px;
             cursor: pointer;
-            width:140px;
+            width: 140px;
         }
     </style>
+
     <script language="javascript" type="text/javascript">
     function singUp() {
         var firstName =$.trim( $('#tbFirstName').attr('value'));
@@ -91,17 +90,12 @@
             },'json');
     };
     </script>
+
 </head>
 <body>
+    <form id="form1" runat="server">
+    <Gallery:Header ID="Header1" runat="server" />
     <div id="container">
-        <div id="header">
-            <div id="header_text">
-                <p>
-                    &nbsp;</p>
-            </div>
-            <ul id="Menu">
-            </ul>
-        </div>
         <div id="content">
             <div id="left" style="font-family: Verdana; color: #ffffff">
                 <div style="font-family: Verdana; font-size: 14px;">
@@ -118,18 +112,6 @@
                         Call or Email for an Appointment
                     </div>
                 </div>
-                <!--<h1>
-                    <font color="#ffffff">Contact Us</font>
-                    <br />
-                    <br />
-                    <font face="verdana" color="#ffffff">Photographs by Donna Delikat<br />
-                        <span style="text-decoration: underline;">858.336.6016</span> &nbsp;&nbsp;&nbsp;<br />
-                        <br />
-                        Contact: </font><a href="mailto:Donna@DxDPhotography.com"><font face="Tahoma" color="#ffffff">
-                            donna@dxdphotography.com</font></a><font face="Verdana" color="#ffffff"><br />
-                                <br />
-                               </font>
-                </h1>-->
                 <div style="width: 420px; margin: 30px auto; font-family: Verdana; color: #ffffff;">
                     <div style="font-size: 14px; font-weight: bold;">
                         Sign Up</div>
@@ -156,7 +138,7 @@
                         <div style="clear: both;">
                         </div>
                     </div>
-                    <div style="width: 100%; text-align: center;margin-top:10px;">
+                    <div style="width: 100%; text-align: center; margin-top: 10px;">
                         <input type="button" value="Sign Up Now" class="signup_button" onclick="singUp();" />
                     </div>
                 </div>
@@ -175,5 +157,6 @@
                 <font color="#ffffff">Copyright © DxD Photography. All rights reserved.</font></p>
         </div>
     </div>
+    </form>
 </body>
 </html>
