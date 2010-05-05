@@ -1,25 +1,19 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="About.aspx.cs" Inherits="Gallery.Web.About" %>
+<%@ Register TagName="Header" TagPrefix="Gallery" Src="~/SiteHeader.ascx" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
 <head>
     <title>DxD Photography - Specializing in Equine Photography</title>
     <meta name="keywords" content="Equine photography, Pet photography, Pet portraits" />
     <link href="Style.css" type="text/css" rel="Stylesheet" />
-    <script language="javascript" src="scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
-
-    <script language="javascript" src="scripts/index.js" type="text/javascript"></script>
-
+    
 </head>
 <body>
-    <body>
-        <div id="container">
-            <div id="header">
-                <div id="header_text">
-                    <p>
-                        &nbsp;</p>
-                </div>
-                <ul id="Menu">
-                </ul>
-            </div>
+    <form id="form1" runat="server">
+    <Gallery:Header ID="Header1" runat="server" />
+    <div id="container">
+            
             <div id="content">
                 <div id="left">
                 <div class="Paragraph">My name is Donna Delikat and I am the owner and principal photographer of <span style="font-weight:900;">DxD Photography</span>.  I specialize in all aspects of equine and pet photography, including equine and pet portraits, competition and action (with or without a rider).  If you have something special in mind, please call us.  It is likely that we can accommodate your request.
@@ -52,5 +46,6 @@
                     <font color="#ffffff">Copyright © DxD Photography. All rights reserved.</font></p>
             </div>
         </div>
-    </body>
+    </form>
+</body>
 </html>

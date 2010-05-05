@@ -46,10 +46,40 @@ namespace Gallery.Web
 
             return new AjaxResult { ReturnCode = 0, Message = string.Empty };
         }
+
         #region GetPhotos
 
-        //stackalloc public AjaxResult GetPhotos
+        static string JsonlizePhotoList(DataTable t)
+        {
+            System.Text.StringBuilder json = new System.Text.StringBuilder();
+            json.Append("[");
+            //DataTable t = Utility.GetPhotos(gId);
+            if (t.Rows.Count > 0)
+            {
+                int count = 0;
+                foreach (DataRow row in t.Rows)
+                {
+                    if (count > 0)
+                    {
+                        json.Append(",");
+                    }
+                    json.Append("{");
 
+                    // id
+                    json.AppendFormat("\"id\":{0}", row["ID"].ToString());
+                    json.AppendFormat(",\"s1\":\"{0}\"", row["ThumbName"]);
+                    json.AppendFormat(",\"s2\":\"{0}\"", row["PhotoName"]);
+                    json.AppendFormat(",\"order\":{0}", row["OrderIndex"].ToString());
+                    json.AppendFormat(",\"width\":{0}", row["Width"].ToString());
+                    json.AppendFormat(",\"height\":{0}", row["Height"].ToString());
+                    json.Append("}");
+                    ++count;
+                }
+            }
+            json.Append("]");
+
+            return json.ToString();
+        }
 
         static public AjaxResult GetPhotos()
         {
@@ -66,10 +96,10 @@ namespace Gallery.Web
 
             //int gId = int.Parse(req.Form["galleryId"]);
             int gId = int.Parse(req["galleryId"]);
-
+            DataTable t = Utility.GetPhotos(gId);
+            /*
             System.Text.StringBuilder json = new System.Text.StringBuilder();
             json.Append("[");
-            DataTable t = Utility.GetPhotos(gId);
             if (t.Rows.Count > 0)
             {
                 int count = 0;
@@ -95,7 +125,8 @@ namespace Gallery.Web
             json.Append("]");
 
             //ar.Message = json.ToString();
-            ar.Json = json.ToString();
+            */
+            ar.Json = JsonlizePhotoList(t);
             //HttpContext.Current.Response.Write("{\"msgId:0,\"message\":" + json.ToString() + "}");
             return ar;
         }
@@ -282,7 +313,7 @@ namespace Gallery.Web
 
         static public AjaxResult GetClients()
         {
-            DataTable t = Utility.GetTable("SELECT [ID],[FirstName],[LastName],[Email],[Password] FROM [TAccount]");
+            DataTable t = Utility.GetTable("SELECT [ID],[FirstName],[LastName],[Email],[Password],[GalleryId] FROM [TAccount]");
             AjaxResult ar = new AjaxResult();
             ar.ReturnCode = 0;
             ar.Message = string.Empty;
@@ -312,6 +343,7 @@ namespace Gallery.Web
                 json.AppendFormat(",\"lastName\":\"{0}\"", Utility.JsonCellData(row["LastName"]));
                 json.AppendFormat(",\"email\":\"{0}\"", Utility.JsonCellData(row["Email"]));
                 json.AppendFormat(",\"password\":\"{0}\"", Utility.JsonCellData(row["Password"]));
+                json.AppendFormat(",\"galleryId\":{0}", row["GalleryId"]);
                 json.Append("}");
 
                 ++count;
@@ -324,17 +356,92 @@ namespace Gallery.Web
 
         #endregion
 
+        #region SetClientPassword
+
         static public AjaxResult SetClientPassword()
         {
             HttpRequest req = HttpContext.Current.Request;
             string password = req.Form["password"];
             int id = int.Parse(req.Form["id"]);
+            int galleryId = int.Parse(req.Form["galleryId"]);
 
             AjaxResult ar = new AjaxResult { ReturnCode = 0, Message = string.Empty, Json = "{}" };
 
-            Utility.SetClientPassword(id, password);
+            if (Utility.CheckPasswordExist(password))
+            {
+                ar.ReturnCode = -1;
+                ar.Message = "The password has been used. Please select another onee!";
+                return ar;
+            }
+            Utility.SetClientPassword(id, password, galleryId);
             return ar;
 
+        }
+
+        static public AjaxResult RemovePassword()
+        {
+            AjaxResult ar = new AjaxResult { ReturnCode = 0, Message = string.Empty, Json = "{}" };
+
+            int id = int.Parse(HttpContext.Current.Request.Form["id"]);
+
+            /*
+            SqlCommand command = Utility.GetCommand(string.Format("DELETE FROM [TAccount] WHERE [ID] = {0}", id));
+            command.ExecuteNonQuery();
+            command.Connection.Close();
+            command.Dispose();
+            */
+
+            Utility.SetClientPassword(id, string.Empty, -1);
+
+            return ar;
+
+        }
+
+        #endregion
+
+        static public AjaxResult GetPhotosFromClient()
+        {
+            AjaxResult ar = new AjaxResult { ReturnCode = 0, Message = string.Empty, Json = "[]" };
+            HttpRequest req = HttpContext.Current.Request;
+
+            string password = req.Form["password"];
+            if (string.IsNullOrEmpty(password))
+            {
+                return ar;
+            }
+
+            string sql = "SELECT TOP 1 [GalleryId] FROM [TAccount] WHERE Password = '" + password.Replace("'", "''") + "';";
+            DataTable t = Utility.GetTable(sql);
+            if (t.Rows.Count == 0)
+                return ar;
+
+
+            int galleryId = int.Parse(t.Rows[0][0].ToString());
+            //req.Form.Add("galleryId", galleryId.ToString() );
+            //req.Form.Set("galleryId", galleryId.ToString());
+
+
+            ar.Json = JsonlizePhotoList(Utility.GetPhotos(galleryId));
+            ar.Message = Utility.GetGalleryDescription(galleryId);
+            if (ar.Message == null)
+            {
+                ar.Message = string.Empty;
+            }
+            return ar;
+        }
+
+        static public AjaxResult DeleteClient()
+        {
+            int clientId = int.Parse(HttpContext.Current.Request.Form["clientId"]);
+
+            string sql = "DELETE FROM [TAccount] WHERE [ID] = " + clientId;
+            SqlCommand com = Utility.GetCommand(sql);
+            com.ExecuteNonQuery();
+            com.Connection.Close();
+            com.Dispose();
+
+            AjaxResult ar = new AjaxResult { ReturnCode = 0, Message = string.Empty, Json = "{}" };
+            return ar;
         }
     }
 
