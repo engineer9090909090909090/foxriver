@@ -102,11 +102,11 @@
         }
     </style>
 
-    <script language="javascript" src="scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
+    <script language="javascript" src="/scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
 
-    <script language="javascript" src="scripts/ajaxfileupload.js" type="text/javascript"></script>
+    <script language="javascript" src="/scripts/ajaxfileupload.js" type="text/javascript"></script>
 
-    <script language="javascript" src="scripts/home.js" type="text/javascript"></script>
+    <script language="javascript" src="GalleryManagement.js" type="text/javascript"></script>
 
     <script language="javascript" type="text/javascript">
     var GalleryList = <%= Galleries %>;
@@ -152,7 +152,7 @@
     </div>
     <div class="row" id="TempRow" style="display: none">
         <div class="thumb">
-            <img src="images/defaultThumb.jpg" style="width: 50px; height: 50px;" />
+            <img src="/images/defaultThumb.jpg" style="width: 50px; height: 50px;" />
         </div>
         <div class="photo">
             <div style="height: 25px; line-height: 25px;">
@@ -173,7 +173,7 @@
         <div style="clear: both;">
         </div>
     </div>
-    <img id="Loading" src="images/loading.gif" style="position: absolute; left: 250px;
+    <img id="Loading" src="/images/loading.gif" style="position: absolute; left: 250px;
         top: 200px; display: none;" />
     </form>
 </body>

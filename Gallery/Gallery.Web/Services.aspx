@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Services.aspx.cs" Inherits="Gallery.Web.Services" %>
+<%@ Register TagName="Header" TagPrefix="Gallery" Src="~/SiteHeader.ascx" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -7,10 +8,10 @@
     <meta name="keywords" content="Equine photography, Pet photography, Pet portraits" />
     <link href="Style.css" type="text/css" rel="Stylesheet" />
 
-    <script language="javascript" src="scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
+    <%--<script language="javascript" src="scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
 
     <script language="javascript" src="scripts/index.js" type="text/javascript"></script>
-
+--%>
     <style type="text/css">
         .price
         {
@@ -42,6 +43,11 @@
             float: left;
         }
     </style>
+    
+</head>
+<body>
+    <form id="form1" runat="server">
+    <Gallery:Header ID="Header1" runat="server" />
     <script language="javascript" type="text/javascript">
     var PriceSettings = '<%= PriceSettings %>';
     $(document).ready(function() {
@@ -53,18 +59,15 @@
         });
     });
     </script>
-</head>
-<body>
-    <form id="form1" runat="server">
     <div id="container">
-        <div id="header">
+        <%--<div id="header">
             <div id="header_text">
                 <p>
                     &nbsp;</p>
             </div>
             <ul id="Menu">
             </ul>
-        </div>
+        </div>--%>
         <div id="content">
             <div id="left">
                 <br />

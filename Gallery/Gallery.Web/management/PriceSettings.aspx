@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Price Settings</title>
-    <script language="javascript" src="scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
+    <script language="javascript" src="/scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
 
     <style type="text/css">
         .pleft

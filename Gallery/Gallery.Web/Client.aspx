@@ -79,7 +79,7 @@
     <div id="passwordContainer" class="content" style="width: 350px;">
         <div style="margin-top: 20px;">
         </div>
-        <img src="images/homepage.jpg" class="img_div" alt="Please enter password" />
+        <img src="images/client.jpg" class="img_div" alt="Please enter password" />
         <div style="margin-top: 20px;">
             <div class="input_div">
                 Enter password:
