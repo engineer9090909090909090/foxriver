@@ -68,14 +68,14 @@
         }
     </style>
 
-    <script language="javascript" src="scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
+    <script language="javascript" src="/scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
 
     <script language="javascript" type="text/javascript">
     var clients = <%= Clients %>;
     var gList = <%= Galleries %>
     </script>
 
-    <script language="javascript" src="scripts/client.js" type="text/javascript"></script>
+    <script language="javascript" src="/scripts/client.js" type="text/javascript"></script>
 
 </head>
 <body>
