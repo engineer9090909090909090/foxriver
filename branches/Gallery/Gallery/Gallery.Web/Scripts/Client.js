@@ -1,6 +1,6 @@
 ﻿// created by blue, 2010-5-4
 // it sucks today.
-var $table;
+var $table;   
 $(document).ready(function() {
     $table = $('#ClientTable');
     Page_Load();
