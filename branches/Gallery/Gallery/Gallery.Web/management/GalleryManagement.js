@@ -78,7 +78,7 @@ function FillRow(photo, $row) {
     if (photo.s1.length > 0) {
         rowControl.thumb.attr('src', '/Photos/' + photo.s1);
     } else {
-        rowControl.thumb.attr('src', 'Images/defaultThumb.jpg');
+        rowControl.thumb.attr('src', '/Images/defaultThumb.jpg');
     }
 
     rowControl.view.attr('img', photo.s2);
@@ -249,6 +249,7 @@ function E() {
     $("#Loading").hide();
 };
 function SavePhoto($input) {
+
     if (!checkFile($input)) {
         alert("Please select correct file type!");
         return;
