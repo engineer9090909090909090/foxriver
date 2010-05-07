@@ -63,7 +63,7 @@ $(document).ready(function() {
     addMenu("About Us","about.aspx");
     addMenu("Services", "services.aspx");
     $work = addMenu("Galleries", "javascript:void(0);");
-    addMenu("Client", "client.aspx");
+    addMenu("Clients", "client.aspx");
     
     /*
     $.ajax({
