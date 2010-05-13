@@ -61,6 +61,7 @@
       <DependentUpon>G1.mdf</DependentUpon>
     </Content>
     <Content Include="Client.aspx" />
+    <Content Include="Images\DxSlogan2.gif" />
     <Content Include="management\ClientManagement.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Docs\Issues.txt" />
