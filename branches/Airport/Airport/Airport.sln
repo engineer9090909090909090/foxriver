@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blue.Airport.Win", "Blue.Airport.Win\Blue.Airport.Win.csproj", "{AAFA2F03-87EB-4DD1-BFA3-DA58D9390B53}"
 EndProject
+Project("{4F174C21-8C12-11D0-8340-0000F80270F8}") = "BullDb", "BullDb\BullDb.dbp", "{343D9665-3648-4D12-8384-655227E8C160}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
