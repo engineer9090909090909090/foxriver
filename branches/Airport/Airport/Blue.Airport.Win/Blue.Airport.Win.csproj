@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Blue.Airport.Win</RootNamespace>
-    <AssemblyName>Blue.Airport.Win</AssemblyName>
+    <AssemblyName>SpringField</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <PublishUrl>http://localhost/Blue.Airport.Win/</PublishUrl>
