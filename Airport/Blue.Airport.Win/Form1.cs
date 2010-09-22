@@ -13,6 +13,13 @@ namespace Blue.Airport.Win
         public Form1()
         {
             InitializeComponent();
+            LoadData();
+        }
+
+        void LoadData()
+        {
+            int total = 0;
+            this.dataGridView1.DataSource = Test.GetTestData(ref total, 2, 1000);
         }
     }
 }
