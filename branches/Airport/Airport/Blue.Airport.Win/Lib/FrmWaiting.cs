@@ -14,8 +14,9 @@ namespace Blue.Airport.Win.Lib
         public delegate void OperationDelegate();
 
         OperationDelegate _Operation;
-        public void BeginOperate(OperationDelegate operationMethod)
+        public void BeginOperate(Form parentForm, OperationDelegate operationMethod)
         {
+            /*
             _Operation = operationMethod;
             if (operationMethod == null)
                 return;
@@ -24,22 +25,23 @@ namespace Blue.Airport.Win.Lib
             //operationMethod();
             Thread thread = new Thread(new ThreadStart(this.BeginOperate));
             thread.Start();
-
+            */
+            BeginOperate(parentForm, operationMethod, null);
         }
 
-        public void BeginOperate(OperationDelegate operationMethod, string waitingText)
+        public void BeginOperate(Form parentForm, OperationDelegate operationMethod, string waitingText)
         {
-            /*
-            this.WaitingText = waitingText;
-
+            if (!string.IsNullOrEmpty(waitingText))
+            {
+                this.WaitingText = waitingText;
+            }
             if (operationMethod == null)
                 return;
-            //Thread myThread = new Thread(new ThreadStart(threadfun));
-          IAsyncResult ar =   this.BeginInvoke(operationMethod);
-            //ar.AsyncWaitHandle.WaitOne(
-
-            //operationMethod();
-            */
+            _Operation = operationMethod;
+            Thread thread = new Thread(new ThreadStart(this.BeginOperate));
+            thread.Priority = ThreadPriority.AboveNormal;
+            thread.Start();
+            this.ShowDialog(parentForm);
         }
 
         //bool _OperationFinished = true;

@@ -14,8 +14,7 @@ namespace Blue.Airport.Win.Lib
         private string filename;
         public string lcDbLocation;
 
-#warning DELETE
-        public frmProgress tfrmProgress;
+        //public frmProgress tfrmProgress;
 
         // Methods
         public CParser(string Filename)
@@ -23,6 +22,8 @@ namespace Blue.Airport.Win.Lib
             this.filename = Filename;
         }
 
+        #region checkDB
+        /*
         public bool checkDB()
         {
 
@@ -64,9 +65,11 @@ namespace Blue.Airport.Win.Lib
                 //return false;
             }
         }
+        */
+        #endregion
 
-        #region parseFLR
-
+        #region parseFLR OLD
+        /*
         public void parseFLR_OLD()
         {
             this.tfrmProgress.txtProgress.Text = "正在解析FLR纪录";
@@ -236,16 +239,18 @@ namespace Blue.Airport.Win.Lib
                 MessageBox.Show("FLR数据库未搜索到任何新记录", "FLR解析完毕", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
         }
-
+        */
         #endregion
 
         #region parseFLR
 
         public void parseFLR()
         {
+            /*
             this.tfrmProgress.txtProgress.Text = "正在解析FLR纪录";
             this.tfrmProgress.Refresh();
             this.tfrmProgress.progressBar.Value = 0;
+            */
             StreamReader reader = File.OpenText(this.filename);
             string flightcode = "";
             string flightdate = "";
@@ -273,11 +278,12 @@ namespace Blue.Airport.Win.Lib
             SqlCommand command = connection.CreateCommand();// new OleDbCommand();
             SqlCommand command2 = connection.CreateCommand();//new OleDbCommand();
             string line = reader.ReadLine();
-            this.tfrmProgress.progressBar.Increment(1);
+
+            //this.tfrmProgress.progressBar.Increment(1);
             while (line != null)
             {
                 line = reader.ReadLine();
-                this.tfrmProgress.progressBar.Increment(1);
+                //this.tfrmProgress.progressBar.Increment(1);
                 if (line != null)
                 {
                     line = line.Trim();
@@ -291,10 +297,10 @@ namespace Blue.Airport.Win.Lib
                         {
                             flag = true;
                             line = reader.ReadLine();
-                            this.tfrmProgress.progressBar.Increment(1);
+                            //this.tfrmProgress.progressBar.Increment(1);
                             flightdate = line.Substring(5).Split(new char[] { '/' })[1].ToUpper();
                             line = reader.ReadLine();
-                            this.tfrmProgress.progressBar.Increment(1);
+                            //this.tfrmProgress.progressBar.Increment(1);
                             continue;
                         }
                         if (line.Substring(0, 5) == "TOTAL")
@@ -420,7 +426,7 @@ namespace Blue.Airport.Win.Lib
         #endregion
 
         #region parseMLB old
-
+        /*
         public void parseMLB_OLD()
         {
             this.tfrmProgress.txtProgress.Text = "正在解析MLB纪录";
@@ -448,11 +454,11 @@ namespace Blue.Airport.Win.Lib
             command.Connection = connection;
             command2.Connection = connection;
             string str = reader.ReadLine();
-            this.tfrmProgress.progressBar.Increment(1);
+            //this.tfrmProgress.progressBar.Increment(1);
             while (str != null)
             {
                 str = reader.ReadLine();
-                this.tfrmProgress.progressBar.Increment(1);
+                //this.tfrmProgress.progressBar.Increment(1);
                 if (str == null)
                 {
                     continue;
@@ -571,6 +577,7 @@ namespace Blue.Airport.Win.Lib
                 MessageBox.Show("MLB数据库未搜索到任何新记录", "MLB解析完毕", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
         }
+        */
 
         #endregion
 
@@ -578,51 +585,37 @@ namespace Blue.Airport.Win.Lib
 
         public void parseMLB()
         {
-            this.tfrmProgress.txtProgress.Text = "正在解析MLB纪录";
-            this.tfrmProgress.Refresh();
-            this.tfrmProgress.progressBar.Value = 0;
             StreamReader reader = File.OpenText(this.filename);
-            string flightcode = "";
-            string flightdate = "";
-            string str4 = "";
+            string flightcode = "", flightdate = "", ticketName = "", ticketcode = "", ticsellagt = "", fltsegment = "";
             string s = "";
-            string ticketName = "";
-            string ticketcode = "";
             string str8 = "";
-            string str9 = "";
+            string ticketstat = "";
             string str10 = "";
-            string ticsellagt = "";
-            string str12 = "";
+            string ticbuydate = "";
             bool flag = false;
             int num2 = 0;
             int num3 = 0;
-            //OleDbConnection connection = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + this.lcDbLocation);
             SqlConnection connection = DbUtility.GetConnection();
             connection.Open();
-            /*
-            OleDbCommand command = new OleDbCommand();
-            OleDbCommand command2 = new OleDbCommand();
-            command.Connection = connection;
-            command2.Connection = connection;
-            */
             SqlCommand command = connection.CreateCommand();
             SqlCommand command2 = connection.CreateCommand();
 
             string line = reader.ReadLine();
-            this.tfrmProgress.progressBar.Increment(1);
             while (line != null)
             {
+                //line = reader.ReadLine().Trim();
                 /*
-                str = reader.ReadLine();
-                this.tfrmProgress.progressBar.Increment(1);
-                if (str == null)
-                {
+                line = reader.ReadLine();
+                line = line.Trim();
+                if (line.Length == 0)
                     continue;
-                }
-                str = str.Trim();
                 */
-                line = reader.ReadLine().Trim();
-                this.tfrmProgress.progressBar.Increment(1);
+                line = reader.ReadLine();
+                if (line == null)
+                    continue;
+                
+
+                line = line.Trim();
                 if (line.Length <= 5)
                 {
                     continue;
@@ -633,11 +626,9 @@ namespace Blue.Airport.Win.Lib
                     flag = true;
                     flightcode = line.Split(new char[] { '/' })[1].ToUpper();
                     line = reader.ReadLine();
-                    this.tfrmProgress.progressBar.Increment(1);
                     line = reader.ReadLine();
                     if (line.Trim().Length != 0)
                     {
-                        this.tfrmProgress.progressBar.Increment(1);
                         flightdate = line.Split(new char[] { '/' })[1].Substring(0, 7);
                     }
                     continue;
@@ -657,7 +648,7 @@ namespace Blue.Airport.Win.Lib
                 }
                 if ((line.Length == 6) && flag)
                 {
-                    str4 = line;
+                    fltsegment = line;
                 }
                 if ((line.Length <= 50) || !flag)
                 {
@@ -671,12 +662,12 @@ namespace Blue.Airport.Win.Lib
                 ticketName = line.Substring(7, 15).Trim();
                 ticketcode = line.Substring(0x18, 5).Trim();
                 str8 = line.Substring(30, 1).Trim();
-                str9 = line.Substring(0x20, 4).Trim();
+                ticketstat = line.Substring(0x20, 4).Trim();
                 str10 = line.Substring(0x26, 6).Trim();
-                str12 = line.Substring(0x2d, 7).Trim();
-                if (str12.Length < 7)
+                ticbuydate = line.Substring(0x2d, 7).Trim();
+                if (ticbuydate.Length < 7)
                 {
-                    str12 = flightdate;
+                    ticbuydate = flightdate;
                 }
                 if (line.Length == 0x4b)
                 {
@@ -686,16 +677,21 @@ namespace Blue.Airport.Win.Lib
                 {
                     ticsellagt = str10;
                 }
-                command.CommandText = "SELECT Id, ticsellagt FROM mlbtable WHERE ticketname LIKE '" + ticketName + "%' AND ticketcode = '" + ticketcode + "'AND flightdate = '" + flightdate + "'AND flightcode = '" + flightcode + "'";
-                //OleDbDataReader reader2 = command.ExecuteReader();
-                SqlDataReader reader2 = command.ExecuteReader();
-                if (!reader2.Read())
+
+
+                //command.CommandText = "SELECT Id, ticsellagt FROM mlbtable WHERE ticketname LIKE '" + ticketName + "%' AND ticketcode = '" + ticketcode + "'AND flightdate = '" + flightdate + "'AND flightcode = '" + flightcode + "'";
+                //SqlDataReader reader2 = command.ExecuteReader();
+                MlbEntity entity = MlbManager.GetAgent(command, ticketName, ticketcode, flightdate, flightcode);
+
+                if (entity == null)
+                //if (!reader2.Read())
                 {
                     if (int.Parse(s) == 1)
                     {
-                        reader2.Close();
-                        command2.CommandText = "INSERT INTO mlbtable (flightdate,flightcode,fltsegment,ticketname,ticketseat,ticketcode,ticketstat,ticbuydate,ticsellagt) VALUES ('" + flightdate + "','" + flightcode + "','" + str4 + "','" + ticketName + "','" + str8 + "','" + ticketcode + "','" + str9 + "','" + str12 + "','" + ticsellagt + "')";
-                        reader2 = command2.ExecuteReader();
+                        //reader2.Close();
+                        command2.CommandText = "INSERT INTO mlbtable (flightdate,flightcode,fltsegment,ticketname,ticketseat,ticketcode,ticketstat,ticbuydate,ticsellagt) VALUES ('" + flightdate + "','" + flightcode + "','" + fltsegment + "','" + ticketName + "','" + str8 + "','" + ticketcode + "','" + ticketstat + "','" + ticbuydate + "','" + ticsellagt + "')";
+                        //reader2 = command2.ExecuteReader();
+                        command2.ExecuteNonQuery();
                         num2++;
                         goto Label_066E;
                     }
@@ -703,9 +699,10 @@ namespace Blue.Airport.Win.Lib
                     {
                         for (num3 = 1; num3 <= int.Parse(s); num3++)
                         {
-                            reader2.Close();
-                            command2.CommandText = "INSERT INTO mlbtable (flightdate,flightcode,fltsegment,ticketname,ticketseat,ticketcode,ticketstat,ticbuydate,ticsellagt) VALUES ('" + flightdate + "','" + flightcode + "','" + str4 + "','" + ticketName + "#" + num3.ToString() + "','" + str8 + "','" + ticketcode + "','" + str9 + "','" + str12 + "','" + ticsellagt + "')";
-                            reader2 = command2.ExecuteReader();
+                            //reader2.Close();
+                            command2.CommandText = "INSERT INTO mlbtable (flightdate,flightcode,fltsegment,ticketname,ticketseat,ticketcode,ticketstat,ticbuydate,ticsellagt) VALUES ('" + flightdate + "','" + flightcode + "','" + fltsegment + "','" + ticketName + "#" + num3.ToString() + "','" + str8 + "','" + ticketcode + "','" + ticketstat + "','" + ticbuydate + "','" + ticsellagt + "')";
+                            //reader2 = command2.ExecuteReader();
+                            command2.ExecuteNonQuery();
                             num2++;
                         }
                         goto Label_066E;
@@ -714,22 +711,27 @@ namespace Blue.Airport.Win.Lib
                     //catch (OleDbException exception)
                     {
                         MessageBox.Show(string.Concat(new object[] { "代号: ", exception.ErrorCode, ": ", exception.Message, "\n发现无法处理的错误，此行数据将被丢弃，根据新版本解决方案，解析将继续进行\n纠错用SQL指令内容: ", command2.CommandText }), "错误:" + exception.ErrorCode, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                        reader2.Close();
+                        //reader2.Close();
                         continue;
                     }
                 }
-                if (reader2.GetString(1).Trim() == "PEK1E")
+
+                if (entity.ticsellagt.Trim() == "PEK1E")
+                //if (reader2.GetString(1).Trim() == "PEK1E")
                 {
-                    int num = reader2.GetInt32(0);
-                    reader2.Close();
+                    //int num = reader2.GetInt32(0);
+                    int num = entity.Id;
+                    //reader2.Close();
                     command2.CommandText = "UPDATE mlbtable SET ticsellagt='" + ticsellagt + "' WHERE Id=" + num.ToString();
-                    reader2 = command2.ExecuteReader();
+                    //reader2 = command2.ExecuteReader();
+                    command2.ExecuteNonQuery();
                 }
-            Label_066E:
-                reader2.Close();
-            }
+            Label_066E: ;
+                //reader2.Close();
+            }// End While
             connection.Close();
             reader.Close();
+
             if (num2 > 0)
             {
                 MessageBox.Show("MLB数据库共提取" + num2.ToString() + "条记录", "MLB解析完毕", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);

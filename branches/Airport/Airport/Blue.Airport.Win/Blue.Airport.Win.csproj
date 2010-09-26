@@ -47,6 +47,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
@@ -99,6 +100,8 @@
     <Compile Include="Lib\FrmWaiting.Designer.cs">
       <DependentUpon>FrmWaiting.cs</DependentUpon>
     </Compile>
+    <Compile Include="Lib\MlbEntity.cs" />
+    <Compile Include="Lib\MlbManager.cs" />
     <Compile Include="Lib\SqlHelper.cs" />
     <Compile Include="Lib\DbUtility.cs" />
     <Compile Include="Program.cs" />
