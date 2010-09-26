@@ -1,7 +1,7 @@
 # Microsoft Developer Studio Project File - Database Project
 Begin DataProject = "BullDb"
    MSDTVersion = "80"
-   DefDBRef = "Bull.mdf"
+   DefDBRef = "Bull.mdf1"
    Begin Folder = "Change Scripts"
       Script = "Test1.sql"
    End
@@ -9,8 +9,8 @@ Begin DataProject = "BullDb"
       Script = "Bull.sql"
    End
    Begin DBRefFolder = "Database References"
-      Begin DBRefNode = "Bull.mdf"
-         ConnectStr = "|Data Source=.\SQLEXPRESS;AttachDbFilename=D:\นคื๗\Karen\Airport\Blue.Airport.Win\App_Data\Bull.mdf;Integrated Security=True;User Instance=True|004400610074006100200053006f0075007200630065003d002e005c00530051004c0045005800500052004500530053003b0041007400740061006300680044006200460069006c0065006e0061006d0065003d0044003a005c5de54f5c005c004b006100720065006e005c0041006900720070006f00720074005c0042006c00750065002e0041006900720070006f00720074002e00570069006e005c004100700070005f0044006100740061005c00420075006c006c002e006d00640066003b0049006e00740065006700720061007400650064002000530065006300750072006900740079003d0054007200750065003b005500730065007200200049006e007300740061006e00630065003d0054007200750065"
+      Begin DBRefNode = "Bull.mdf1"
+         ConnectStr = "Data Source=.\SQLEXPRESS;AttachDbFilename=D:\KyleXY\Airport\Airport\Blue.Airport.Win\App_Data\Bull.mdf;Integrated Security=True;User Instance=True"
          Provider = "{91510608-8809-4020-8897-FBA057E22D54}"
          Colorizer = 6
       End
@@ -19,5 +19,7 @@ Begin DataProject = "BullDb"
       Script = "TestQuerry.sql"
    End
    Begin Folder = "StoredProcedures"
+      Script = "mlb_GetSellAgent.sql"
+      Script = "TRUNCATE_MLB.sql"
    End
 End
