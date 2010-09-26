@@ -1,4 +1,4 @@
-# Microsoft Developer Studio 项目文件 -- 数据库项目
+# Microsoft Developer Studio Project File - Database Project
 Begin DataProject = "BullDb"
    MSDTVersion = "80"
    DefDBRef = "Bull.mdf"
@@ -17,5 +17,7 @@ Begin DataProject = "BullDb"
    End
    Begin Folder = "Queries"
       Script = "TestQuerry.sql"
+   End
+   Begin Folder = "StoredProcedures"
    End
 End
