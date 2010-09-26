@@ -298,5 +298,18 @@ namespace Blue.Airport.Win.Lib
             }
             return null;
         }
+
+
+        // added by blue
+        static public void BuildParameter(SqlCommand command, string paraName, object paraValue)
+        {
+            command.Parameters.AddWithValue(paraName, paraValue);
+        }
+
+        static public SqlParameter BuildParameter(string paraName, object paraValue)
+        {
+            SqlParameter p = new SqlParameter(paraName, paraValue);
+            return p;
+        }
     }
 }

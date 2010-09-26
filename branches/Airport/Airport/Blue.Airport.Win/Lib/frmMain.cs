@@ -125,12 +125,11 @@ namespace Blue.Airport.Win.Lib
         {
             if (this.openImpDialog.ShowDialog() != DialogResult.Cancel)
             {
-                CParser parser = new CParser(this.openImpDialog.FileName);
-                parser.lcDbLocation = this.lcDbLocation;
                 FrmWaiting wait = new FrmWaiting();
-                wait.ShowDialog(this);
-                wait.BeginOperate(new FrmWaiting.OperationDelegate(delegate
+                wait.BeginOperate(this, new FrmWaiting.OperationDelegate(delegate
                 {
+                    CParser parser = new CParser(this.openImpDialog.FileName);
+                    parser.lcDbLocation = this.lcDbLocation;
                     parser.parseMLB();
                     parser.parseFLR();
                 }));
