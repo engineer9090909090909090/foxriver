@@ -719,13 +719,13 @@ namespace Blue.Airport.Win.Lib
 
                 if (entity.ticsellagt.Trim() == "PEK1E")
                 {
-                    //int num = reader2.GetInt32(0);
+                    /*
                     int num = entity.Id;
-                    //reader2.Close();
                     command.CommandText = "UPDATE mlbtable SET ticsellagt='" + ticsellagt + "' WHERE Id=" + num.ToString();
                     command.CommandType = System.Data.CommandType.Text;
-                    //reader2 = command2.ExecuteReader();
                     command.ExecuteNonQuery();
+                    */
+                    MlbManager.Update_ticsellagt(command, entity.Id, ticsellagt);
                 }
             Label_066E: ;
             }// End While
