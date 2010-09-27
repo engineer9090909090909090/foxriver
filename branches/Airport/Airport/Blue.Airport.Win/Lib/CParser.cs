@@ -257,159 +257,167 @@ namespace Blue.Airport.Win.Lib
             string fltsegment = "";
             string flighttime = "";
             string flrtype = "";
-            int num = 0;
-            int num2 = 0;
-            int num3 = 0;
+            int flrrcnfrm = 0;
+            int flrnrcfrm = 0;
+            int flrnohost = 0;
             int flrconnect = 0;
             int flrcnl = 0;
             int flrcap = 0;
             int flrlf = 0;
             bool flag = false;
             int insertCount = 0;
-            //OleDbConnection connection = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + this.lcDbLocation);
             SqlConnection connection = DbUtility.GetConnection();
             connection.Open();
-            /*
-            OleDbCommand command = new OleDbCommand();
-            OleDbCommand command2 = new OleDbCommand();
-            command.Connection = connection;
-            command2.Connection = connection;
-            */
             SqlCommand command = connection.CreateCommand();// new OleDbCommand();
-            SqlCommand command2 = connection.CreateCommand();//new OleDbCommand();
             string line = reader.ReadLine();
 
             //this.tfrmProgress.progressBar.Increment(1);
             while (line != null)
             {
                 line = reader.ReadLine();
-                //this.tfrmProgress.progressBar.Increment(1);
-                if (line != null)
+                if (line == null)
                 {
-                    line = line.Trim();
-                    if ((line.Length > 4) && (line.Substring(0, 5) == "-END-"))
+                    continue;
+                }
+                line = line.Trim();
+                if ((line.Length > 4) && (line.Substring(0, 5) == "-END-"))
+                {
+                    flag = false;
+                }
+                else if (line.Length > 6)
+                {
+                    if ((line.Substring(0, 4).ToLower() == ">flr") && (line.Substring(line.Length - 1, 1).ToLower() == "f"))
+                    {
+                        flag = true;
+                        line = reader.ReadLine();
+                        //this.tfrmProgress.progressBar.Increment(1);
+                        flightdate = line.Substring(5).Split(new char[] { '/' })[1].ToUpper();
+                        line = reader.ReadLine();
+                        //this.tfrmProgress.progressBar.Increment(1);
+                        continue;
+                    }
+                    if (line.Substring(0, 5) == "TOTAL")
                     {
                         flag = false;
+                        continue;
                     }
-                    else if (line.Length > 6)
+                    if ((line.Substring(line.Length - 1, 1) == "+") || (line.Substring(line.Length - 1, 1) == "-"))
                     {
-                        if ((line.Substring(0, 4).ToLower() == ">flr") && (line.Substring(line.Length - 1, 1).ToLower() == "f"))
+                        line = line.Substring(0, line.Length - 1).Trim();
+                    }
+                    if (((line.Length > 60) && flag) && (line.Trim().Substring(0, 4) != "TIME"))
+                    {
+                        fltsegment = line.Substring(0, 7).Trim();
+                        fltsegment = fltsegment.Substring(0, 3) + fltsegment.Substring(4, 3);
+                        flighttime = line.Substring(8, 4).Trim();
+                        flightcode = line.Substring(14, 7).Trim();
+                        flrtype = line.Substring(0x16, 4).Trim();
+                        flrrcnfrm = int.Parse(line.Substring(0x1c, 4).Trim());
+                        flrnrcfrm = int.Parse(line.Substring(0x24, 4).Trim());
+                        flrnohost = int.Parse(line.Substring(0x2c, 4).Trim());
+                        flrconnect = int.Parse(line.Substring(0x34, 4).Trim());
+                        flrcnl = int.Parse(line.Substring(0x3b, 4).Trim());
+                        flrcap = int.Parse(line.Substring(0x41, 4).Trim());
+                        flrlf = int.Parse(line.Substring(0x49, 3).Trim());
+
+                        // get id to check if there is data with same id exist
+                        int savedId = FlrManager.GetId(command,
+                            fltsegment, flightcode, flighttime, flightdate);
+
+                        if ( savedId < 0 )
                         {
-                            flag = true;
-                            line = reader.ReadLine();
-                            //this.tfrmProgress.progressBar.Increment(1);
-                            flightdate = line.Substring(5).Split(new char[] { '/' })[1].ToUpper();
-                            line = reader.ReadLine();
-                            //this.tfrmProgress.progressBar.Increment(1);
-                            continue;
+                            FlrManager.Insert(command, flightdate, flighttime, flightcode, fltsegment, flrtype, flrrcnfrm, flrnrcfrm, flrnohost, flrconnect, flrcnl, flrcap, flrlf);
+                            insertCount++;
                         }
-                        if (line.Substring(0, 5) == "TOTAL")
+                        else
                         {
-                            flag = false;
-                            continue;
-                        }
-                        if ((line.Substring(line.Length - 1, 1) == "+") || (line.Substring(line.Length - 1, 1) == "-"))
-                        {
-                            line = line.Substring(0, line.Length - 1).Trim();
-                        }
-                        if (((line.Length > 60) && flag) && (line.Trim().Substring(0, 4) != "TIME"))
-                        {
-                            fltsegment = line.Substring(0, 7).Trim();
-                            fltsegment = fltsegment.Substring(0, 3) + fltsegment.Substring(4, 3);
-                            flighttime = line.Substring(8, 4).Trim();
-                            flightcode = line.Substring(14, 7).Trim();
-                            flrtype = line.Substring(0x16, 4).Trim();
-                            num = int.Parse(line.Substring(0x1c, 4).Trim());
-                            num2 = int.Parse(line.Substring(0x24, 4).Trim());
-                            num3 = int.Parse(line.Substring(0x2c, 4).Trim());
-                            flrconnect = int.Parse(line.Substring(0x34, 4).Trim());
-                            flrcnl = int.Parse(line.Substring(0x3b, 4).Trim());
-                            flrcap = int.Parse(line.Substring(0x41, 4).Trim());
-                            flrlf = int.Parse(line.Substring(0x49, 3).Trim());
-                            command.CommandText = "SELECT Id FROM flrtable WHERE fltsegment = '" + fltsegment + "' AND flightcode = '" + flightcode + "' AND flighttime = '" + flighttime + "' AND flightdate = '" + flightdate + "'";
-                            //OleDbDataReader reader2 = command.ExecuteReader();
+                            bool flag2 = false;
+                            int num9 = savedId;// reader2.GetInt32(0);
+                            command.CommandText = "SELECT * FROM flrtable WHERE Id = " + num9;
+                            command.CommandType = System.Data.CommandType.Text;
                             SqlDataReader reader2 = command.ExecuteReader();
-                            if (!reader2.Read())
+                            reader2.Read();
+                            if (reader2.GetString(1) != flightdate)
                             {
-                                reader2.Close();
+                                flag2 = true;
+                            }
+                            if (reader2.GetString(2) != flighttime)
+                            {
+                                flag2 = true;
+                            }
+                            if (reader2.GetString(3) != flightcode)
+                            {
+                                flag2 = true;
+                            }
+                            if (reader2.GetString(4) != fltsegment)
+                            {
+                                flag2 = true;
+                            }
+                            if (reader2.GetString(5) != flrtype)
+                            {
+                                flag2 = true;
+                            }
+                            if (reader2.GetInt32(6) != flrrcnfrm)
+                            {
+                                flag2 = true;
+                            }
+                            if (reader2.GetInt32(7) != flrnrcfrm)
+                            {
+                                flag2 = true;
+                            }
+                            if (reader2.GetInt32(8) != flrnohost)
+                            {
+                                flag2 = true;
+                            }
+                            if (reader2.GetInt32(9) != flrconnect)
+                            {
+                                flag2 = true;
+                            }
+                            if (reader2.GetInt32(10) != flrcnl)
+                            {
+                                flag2 = true;
+                            }
+                            if (reader2.GetInt32(11) != flrcap)
+                            {
+                                flag2 = true;
+                            }
+                            if (reader2.GetInt32(12) != flrlf)
+                            {
+                                flag2 = true;
+                            }
+                            // close reader2
+                            reader2.Close();
+
+                            if (flag2)
+                            {
+                                /*
+                                 * OLD method, i think the real field has errors
                                 command2.CommandText = string.Concat(new object[] { 
-                                "INSERT INTO flrtable (flightdate,flighttime,flightcode,fltsegment,flrtype,flrrcnfrm,flrnrcfrm,flrnohost,flrconnect,flrcnl,flrcap,flrlf,flrreal) VALUES ('", flightdate, "','", flighttime, "','", flightcode, "','", fltsegment, "','", flrtype, "','", num, "','", num2, "','", num3, 
-                                "','", flrconnect, "','", flrcnl, "','", flrcap, "','", flrlf, "','", num + num2, "')"
-                             });
-                                reader2 = command2.ExecuteReader();
+                                    "UPDATE flrtable SET flightdate='", flightdate, "', flighttime = '", flighttime, "', flightcode = '", flightcode, "', fltsegment = '", fltsegment, "', flrtype = '", flrtype, "', flrrcnfrm = '", flrrcnfrm, "', flrnrcfrm = '", flrnrcfrm, "', flrnohost = '", flrnohost, 
+                                    "', flrconnect = '", flrconnect, "', flrcnl = '", flrcnl, "', flrcap = '", flrcap, "', flrlf = '", flrlf, "', flrlf = '", flrnrcfrm + flrrcnfrm, "' WHERE Id = ", num9
+                                 });
+                                */
+                                FlrManager.Update(command,
+                                    num9,
+                                    flightdate,
+                                    flighttime,
+                                    flightcode,
+                                    fltsegment,
+                                    flrtype,
+                                    flrrcnfrm,
+                                    flrnrcfrm,
+                                    flrnohost,
+                                    flrconnect,
+                                    flrcnl,
+                                    flrcap,
+                                    flrlf);
+                                
                                 insertCount++;
                             }
-                            else
-                            {
-                                bool flag2 = false;
-                                int num9 = reader2.GetInt32(0);
-                                reader2.Close();
-                                command.CommandText = "SELECT * FROM flrtable WHERE Id = " + num9;
-                                reader2 = command.ExecuteReader();
-                                reader2.Read();
-                                if (reader2.GetString(1) != flightdate)
-                                {
-                                    flag2 = true;
-                                }
-                                if (reader2.GetString(2) != flighttime)
-                                {
-                                    flag2 = true;
-                                }
-                                if (reader2.GetString(3) != flightcode)
-                                {
-                                    flag2 = true;
-                                }
-                                if (reader2.GetString(4) != fltsegment)
-                                {
-                                    flag2 = true;
-                                }
-                                if (reader2.GetString(5) != flrtype)
-                                {
-                                    flag2 = true;
-                                }
-                                if (reader2.GetInt32(6) != num)
-                                {
-                                    flag2 = true;
-                                }
-                                if (reader2.GetInt32(7) != num2)
-                                {
-                                    flag2 = true;
-                                }
-                                if (reader2.GetInt32(8) != num3)
-                                {
-                                    flag2 = true;
-                                }
-                                if (reader2.GetInt32(9) != flrconnect)
-                                {
-                                    flag2 = true;
-                                }
-                                if (reader2.GetInt32(10) != flrcnl)
-                                {
-                                    flag2 = true;
-                                }
-                                if (reader2.GetInt32(11) != flrcap)
-                                {
-                                    flag2 = true;
-                                }
-                                if (reader2.GetInt32(12) != flrlf)
-                                {
-                                    flag2 = true;
-                                }
-                                if (flag2)
-                                {
-                                    reader2.Close();
-                                    command2.CommandText = string.Concat(new object[] { 
-                                    "UPDATE flrtable SET flightdate='", flightdate, "', flighttime = '", flighttime, "', flightcode = '", flightcode, "', fltsegment = '", fltsegment, "', flrtype = '", flrtype, "', flrrcnfrm = '", num, "', flrnrcfrm = '", num2, "', flrnohost = '", num3, 
-                                    "', flrconnect = '", flrconnect, "', flrcnl = '", flrcnl, "', flrcap = '", flrcap, "', flrlf = '", flrlf, "', flrlf = '", num2 + num, "' WHERE Id = ", num9
-                                 });
-                                    reader2 = command2.ExecuteReader();
-                                    insertCount++;
-                                }
-                            }
-                            reader2.Close();
                         }
                     }
                 }
+                //}
             }
             connection.Close();
             reader.Close();
@@ -588,32 +596,26 @@ namespace Blue.Airport.Win.Lib
             StreamReader reader = File.OpenText(this.filename);
             string flightcode = "", flightdate = "", ticketName = "", ticketcode = "", ticsellagt = "", fltsegment = "";
             string s = "";
-            string str8 = "";
+            string ticketseat = "";
             string ticketstat = "";
             string str10 = "";
             string ticbuydate = "";
             bool flag = false;
-            int num2 = 0;
+            int insertCount = 0;
             int num3 = 0;
+
+            string line = reader.ReadLine();
+
             SqlConnection connection = DbUtility.GetConnection();
             connection.Open();
             SqlCommand command = connection.CreateCommand();
-            SqlCommand command2 = connection.CreateCommand();
 
-            string line = reader.ReadLine();
             while (line != null)
             {
-                //line = reader.ReadLine().Trim();
-                /*
-                line = reader.ReadLine();
-                line = line.Trim();
-                if (line.Length == 0)
-                    continue;
-                */
                 line = reader.ReadLine();
                 if (line == null)
                     continue;
-                
+
 
                 line = line.Trim();
                 if (line.Length <= 5)
@@ -661,7 +663,7 @@ namespace Blue.Airport.Win.Lib
                 }
                 ticketName = line.Substring(7, 15).Trim();
                 ticketcode = line.Substring(0x18, 5).Trim();
-                str8 = line.Substring(30, 1).Trim();
+                ticketseat = line.Substring(30, 1).Trim();
                 ticketstat = line.Substring(0x20, 4).Trim();
                 str10 = line.Substring(0x26, 6).Trim();
                 ticbuydate = line.Substring(0x2d, 7).Trim();
@@ -679,62 +681,60 @@ namespace Blue.Airport.Win.Lib
                 }
 
 
-                //command.CommandText = "SELECT Id, ticsellagt FROM mlbtable WHERE ticketname LIKE '" + ticketName + "%' AND ticketcode = '" + ticketcode + "'AND flightdate = '" + flightdate + "'AND flightcode = '" + flightcode + "'";
-                //SqlDataReader reader2 = command.ExecuteReader();
                 MlbEntity entity = MlbManager.GetAgent(command, ticketName, ticketcode, flightdate, flightcode);
 
                 if (entity == null)
-                //if (!reader2.Read())
                 {
                     if (int.Parse(s) == 1)
                     {
-                        //reader2.Close();
-                        command2.CommandText = "INSERT INTO mlbtable (flightdate,flightcode,fltsegment,ticketname,ticketseat,ticketcode,ticketstat,ticbuydate,ticsellagt) VALUES ('" + flightdate + "','" + flightcode + "','" + fltsegment + "','" + ticketName + "','" + str8 + "','" + ticketcode + "','" + ticketstat + "','" + ticbuydate + "','" + ticsellagt + "')";
-                        //reader2 = command2.ExecuteReader();
-                        command2.ExecuteNonQuery();
-                        num2++;
+                        MlbManager.Insert(command,
+                            flightdate,
+                            flightcode,
+                            fltsegment,
+                            ticketName,
+                            ticketseat,
+                            ticketcode,
+                            ticketstat,
+                            ticbuydate,
+                            ticsellagt);
+
+                        insertCount++;
                         goto Label_066E;
                     }
                     try
                     {
                         for (num3 = 1; num3 <= int.Parse(s); num3++)
                         {
-                            //reader2.Close();
-                            command2.CommandText = "INSERT INTO mlbtable (flightdate,flightcode,fltsegment,ticketname,ticketseat,ticketcode,ticketstat,ticbuydate,ticsellagt) VALUES ('" + flightdate + "','" + flightcode + "','" + fltsegment + "','" + ticketName + "#" + num3.ToString() + "','" + str8 + "','" + ticketcode + "','" + ticketstat + "','" + ticbuydate + "','" + ticsellagt + "')";
-                            //reader2 = command2.ExecuteReader();
-                            command2.ExecuteNonQuery();
-                            num2++;
+                            MlbManager.Insert(command, flightdate, flightcode, fltsegment, ticketName + "#" + num3.ToString(), ticketseat, ticketcode, ticketstat, ticbuydate, ticsellagt);
+                            insertCount++;
                         }
                         goto Label_066E;
                     }
                     catch (SqlException exception)
-                    //catch (OleDbException exception)
                     {
-                        MessageBox.Show(string.Concat(new object[] { "代号: ", exception.ErrorCode, ": ", exception.Message, "\n发现无法处理的错误，此行数据将被丢弃，根据新版本解决方案，解析将继续进行\n纠错用SQL指令内容: ", command2.CommandText }), "错误:" + exception.ErrorCode, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                        //reader2.Close();
+                        MessageBox.Show(string.Concat(new object[] { "代号: ", exception.ErrorCode, ": ", exception.Message, "\n发现无法处理的错误，此行数据将被丢弃，根据新版本解决方案，解析将继续进行\n纠错用SQL指令内容: ", command.CommandText }), "错误:" + exception.ErrorCode, MessageBoxButtons.OK, MessageBoxIcon.Hand);
                         continue;
                     }
                 }
 
                 if (entity.ticsellagt.Trim() == "PEK1E")
-                //if (reader2.GetString(1).Trim() == "PEK1E")
                 {
                     //int num = reader2.GetInt32(0);
                     int num = entity.Id;
                     //reader2.Close();
-                    command2.CommandText = "UPDATE mlbtable SET ticsellagt='" + ticsellagt + "' WHERE Id=" + num.ToString();
+                    command.CommandText = "UPDATE mlbtable SET ticsellagt='" + ticsellagt + "' WHERE Id=" + num.ToString();
+                    command.CommandType = System.Data.CommandType.Text;
                     //reader2 = command2.ExecuteReader();
-                    command2.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
                 }
             Label_066E: ;
-                //reader2.Close();
             }// End While
             connection.Close();
             reader.Close();
 
-            if (num2 > 0)
+            if (insertCount > 0)
             {
-                MessageBox.Show("MLB数据库共提取" + num2.ToString() + "条记录", "MLB解析完毕", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                MessageBox.Show("MLB数据库共提取" + insertCount.ToString() + "条记录", "MLB解析完毕", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
             else
             {
