@@ -85,5 +85,21 @@ namespace Blue.Airport.Win.Lib
         }
 
         #endregion
+
+        #region ExecuteScalar
+
+        static public object ExecuteScalar(SqlCommand command, string spName, params SqlParameter[] paraList)
+        {
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = spName;
+            command.Parameters.Clear();
+            command.Parameters.AddRange(paraList);
+            object o = command.ExecuteScalar();
+            if (o == DBNull.Value)
+                return null;
+            return o;
+        }
+
+        #endregion
     }
 }
