@@ -10,7 +10,7 @@ namespace Blue.Airport.Win
 {
     public partial class Paging : UserControl
     {
-        public delegate void LoadDataMethod(ref int total, int pageSize, int currentPage);
+        public delegate DataTable LoadDataMethod(ref int total, int pageSize, int currentPage);
         public LoadDataMethod LoadDataHandler;
 
         public void Test(ref int total, int pageSize, int currentPage)
@@ -86,6 +86,8 @@ namespace Blue.Airport.Win
 
         #endregion
 
+
+
         public void AppendLoadData(LoadDataMethod loadData)
         {
             this.LoadDataHandler = loadData;
@@ -94,6 +96,30 @@ namespace Blue.Airport.Win
         {
             this.LoadDataHandler = loadData;
             _GridView = gridView;
+        }
+
+        void SetEventHandler()
+        {
+            btnNext.Click += delegate
+            {
+                ++CurrentPage;
+                BindGridView();
+            };
+            btnPrevious.Click += delegate
+            {
+                --CurrentPage;
+                BindGridView();
+            };
+        }
+
+        void BindGridView()
+        {
+            if (this._GridView == null ||
+                this.LoadDataHandler == null)
+                return;
+            int total =0;
+            this._GridView.DataSource = this.LoadDataHandler(ref total, PageSize, CurrentPage);
+            lblTotal.Text = total.ToString();
         }
 
         #region GridView

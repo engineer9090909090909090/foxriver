@@ -10,6 +10,7 @@ namespace Blue.Airport.Win.Lib
     {
         const string SP_GET_AGENT = "mlb_GetSellAgent";
         const string SP_mlb_Insert = "mlb_Insert";
+        const string SP_mlb_Update_ticsellagt = "mlb_Update_ticsellagt";
 
         #region GetAgent
 
@@ -33,6 +34,8 @@ namespace Blue.Airport.Win.Lib
         }
 
         #endregion
+
+        #region Insert 
 
         static public int Insert(SqlCommand command,
             string flightdate,
@@ -62,5 +65,22 @@ string ticsellagt
 
             return command.ExecuteNonQuery();
         }
+
+        #endregion
+
+        #region Update_ticsellagt
+
+        static public int Update_ticsellagt(SqlCommand command, int id, string ticsellagt)
+        {
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = SP_mlb_Update_ticsellagt;
+            command.Parameters.Clear();
+            SqlHelper.BuildParameter(command, "Id", id);
+            SqlHelper.BuildParameter(command, "ticsellagt", ticsellagt);
+
+            return command.ExecuteNonQuery();
+        }
+
+        #endregion
     }
 }

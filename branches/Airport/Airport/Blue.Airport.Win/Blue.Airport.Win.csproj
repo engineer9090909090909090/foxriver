@@ -73,6 +73,7 @@
       <DependentUpon>Paging.cs</DependentUpon>
     </Compile>
     <Compile Include="Lib\CParser.cs" />
+    <Compile Include="Lib\DateConverter.cs" />
     <Compile Include="Lib\FlrManager.cs" />
     <Compile Include="Lib\frmConfigDB.cs">
       <SubType>Form</SubType>
