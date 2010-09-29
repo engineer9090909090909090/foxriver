@@ -141,16 +141,6 @@ namespace Blue.Airport.Win.Lib
 
                         // move to next command
                         line = reader.ReadLine();
-
-                        /*
-                        //line = reader.ReadLine().Trim();
-                        item.Tag = reader.ReadLine().Trim();
-                        item.Click += new EventHandler(item_Click);
-                        this.mnQueue.MenuItems.Add(item);
-
-                        // move to next command
-                        line = reader.ReadLine();
-                        */
                     }
 
                 }
@@ -167,6 +157,7 @@ namespace Blue.Airport.Win.Lib
             //SqlHelper.GetDataTable(DbUtility.GetConnection(), 
             try
             {
+                txtsql.Text = (string)item.Tag;
                 this.resDataGridView.DataSource = DbUtility.GetDataFromCommand((string)item.Tag);
             }
             catch (System.Exception ex)
@@ -323,6 +314,81 @@ namespace Blue.Airport.Win.Lib
             {
                 this.runSql();
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (txtsql.Text.Length == 0)
+                return;
+            if (!txtsql.Text.StartsWith("SELECT"))
+                return;
+
+            //SELECT DISTINCT mlbtable.ticsellagt AS 代理人, tabCA1827.cnt AS CA1827, tabCA1587.cnt AS CA1587,tabFM9257.cnt AS FM9257, tabMU2287.cnt AS MU2287, tabCZ3787.cnt AS CZ3787canweh, tabCZ3788.cnt AS CZ3788hrbweh, tabTYNWEH.cnt AS HU7589tynweh, tabTNAWEH.cnt AS HU7589tnaweh, tabCA148.cnt AS CA148, tabMU2018.cnt AS MU2018 FROM ((((((((((mlbtable)  LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA1827' GROUP BY ticsellagt) AS tabCA1827) ON(tabCA1827.ticsellagt =mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA1587' GROUP BY ticsellagt) AS tabCA1587) ON(tabCA1587.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'FM9257' GROUP BY ticsellagt) AS tabFM9257) ON(tabFM9257.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode ='MU2287' GROUP BY ticsellagt) AS tabMU2287) ON(tabMU2287.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CZ3787' and fltsegment = 'CANWEH' GROUP BY ticsellagt) AS tabCZ3787) ON(tabCZ3787.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CZ3788' and fltsegment = 'HRBWEH' GROUP BY ticsellagt) AS tabCZ3788) ON(tabCZ3788.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'TYNWEH' and flightcode = 'HU7589'GROUP BY ticsellagt) AS tabTYNWEH) ON(tabTYNWEH.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'TNAWEH' and flightcode = 'HU7589'GROUP BY ticsellagt) AS tabTNAWEH) ON(tabTNAWEH.ticsellagt =mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA148' GROUP BY ticsellagt) AS tabCA148) ON(tabCA148.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'MU2018' GROUP BY ticsellagt) AS tabMU2018) ON(tabMU2018.ticsellagt = mlbtable.ticsellagt) WHERE mlbtable.ticsellagt LIKE 'weh%' ORDER BY mlbtable.ticsellagt
+
+            System.Text.StringBuilder sql = new StringBuilder();
+            sql.Append("WITH ");
+            string tmp = txtsql.Text;
+            string beforeLeftJoin = tmp.Substring(0, tmp.IndexOf("LEFT JOIN"));
+            tmp = tmp.Substring(tmp.IndexOf("LEFT JOIN"));
+
+            string where = tmp.Substring(tmp.LastIndexOf("WHERE"));
+            tmp = tmp.Substring(0, tmp.LastIndexOf("WHERE"));
+            //MessageBox.Show(where);
+
+            //beforeLeftJoin = tmp.Substring(0, tmp.IndexOf("FROM") );
+            //MessageBox.Show(beforeLeftJoin);
+            //string leftJoin = tmp.Substring(tmp.IndexOf("FROM"));
+            string[] leftJoinArray = tmp.Split(new string[] { "LEFT JOIN" }, StringSplitOptions.RemoveEmptyEntries);
+            //MessageBox.Show(leftJoinArray.Length.ToString());
+            for (int i = 0; i < leftJoinArray.Length; ++i)
+            {
+                //MessageBox.Show(leftJoinArray[i]);
+                if (i > 0)
+                {
+                    sql.Append(",");
+                }
+                string tableName = leftJoinArray[i].Substring(leftJoinArray[i].LastIndexOf("AS") + 2);
+                tableName = tableName.Substring(0, tableName.IndexOf(")"));
+                sql.Append(tableName);
+                sql.Append(" AS\r\n");
+                sql.Append("(");
+                string select = leftJoinArray[i].Substring(leftJoinArray[i].IndexOf("SELECT"));
+                select = select.Substring(0, select.LastIndexOf("AS"));
+                select = select.Substring(0, select.LastIndexOf(")"));
+                sql.Append(select);
+                sql.Append(")\r\n");
+            }
+
+            sql.Append("\r\n");
+
+            sql.Append(beforeLeftJoin.Substring(0, beforeLeftJoin.IndexOf("FROM")));
+            sql.Append("FROM");
+
+            tmp = beforeLeftJoin.Substring(beforeLeftJoin.LastIndexOf("FROM") + 4);
+            tmp = tmp.Replace("(", "").Replace(")", "");
+            sql.Append(tmp);
+
+            sql.Append("\r\n");
+            for (int i = 0; i < leftJoinArray.Length; ++i)
+            {
+                sql.Append("LEFT JOIN ");
+                string tableName = leftJoinArray[i].Substring(leftJoinArray[i].LastIndexOf("AS") + 2);
+                tableName = tableName.Substring(0, tableName.IndexOf(")"));
+                sql.Append(tableName);
+                sql.Append(" ON ");
+
+                tmp = leftJoinArray[i].Substring(leftJoinArray[i].LastIndexOf("ON") + 2);
+                tmp = tmp.Replace("(", "").Replace(")", "");
+                sql.Append("(");
+                sql.Append(tmp);
+                sql.Append(")");
+                sql.Append("\r\n");
+            }
+            //MessageBox.Show(sql.ToString());
+            sql.Append(where);
+            textBox2.Text = sql.ToString();
+
+            //
         }
     }
 
