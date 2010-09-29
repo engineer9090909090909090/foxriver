@@ -9,16 +9,15 @@ CREATE Procedure mlb_GetAllData
 
 @total int OUTPUT,
 @pageSize int,
-@currentPage
+@currentPage int
 AS
 
---SELECT@total= COUNT(*) FROM mlbtable;
-select * from mlbtable
+SELECT @total = COUNT(*) FROM mlbtable;
 
 
---SELECT * FROM
-	--( SELECT *, ROW_NUMBER() over (order by [id] ASC) AS row_index ) FROM mlbtable ) AS NEW_TABLE
---WHERE row_index between (@currentPage - 1 ) * @pageSize and @currentPage * @pageSize
+SELECT * FROM
+	( SELECT *, ROW_NUMBER() over (order by [id] ASC) AS row_index  FROM mlbtable ) AS NEW_TABLE
+WHERE row_index between (@currentPage - 1 ) * @pageSize and @currentPage * @pageSize
 
 GO
 

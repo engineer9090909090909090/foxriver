@@ -12,7 +12,7 @@ namespace Blue.Airport.Win.Lib
     {
         // Fields
         private string filename;
-        public string lcDbLocation;
+        //public string lcDbLocation;
 
         //public frmProgress tfrmProgress;
 
@@ -593,7 +593,7 @@ namespace Blue.Airport.Win.Lib
 
         public void parseMLB()
         {
-            StreamReader reader = File.OpenText(this.filename);
+            StreamReader fileReader = File.OpenText(this.filename);
             string flightcode = "", flightdate = "", ticketName = "", ticketcode = "", ticsellagt = "", fltsegment = "";
             string s = "";
             string ticketseat = "";
@@ -604,7 +604,7 @@ namespace Blue.Airport.Win.Lib
             int insertCount = 0;
             int num3 = 0;
 
-            string line = reader.ReadLine();
+            string line = fileReader.ReadLine();
 
             SqlConnection connection = DbUtility.GetConnection();
             connection.Open();
@@ -612,7 +612,7 @@ namespace Blue.Airport.Win.Lib
 
             while (line != null)
             {
-                line = reader.ReadLine();
+                line = fileReader.ReadLine();
                 if (line == null)
                     continue;
 
@@ -627,8 +627,8 @@ namespace Blue.Airport.Win.Lib
                 {
                     flag = true;
                     flightcode = line.Split(new char[] { '/' })[1].ToUpper();
-                    line = reader.ReadLine();
-                    line = reader.ReadLine();
+                    line = fileReader.ReadLine();
+                    line = fileReader.ReadLine();
                     if (line.Trim().Length != 0)
                     {
                         flightdate = line.Split(new char[] { '/' })[1].Substring(0, 7);
@@ -730,7 +730,7 @@ namespace Blue.Airport.Win.Lib
             Label_066E: ;
             }// End While
             connection.Close();
-            reader.Close();
+            fileReader.Close();
 
             if (insertCount > 0)
             {
