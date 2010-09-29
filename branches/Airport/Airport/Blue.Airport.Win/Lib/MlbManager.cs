@@ -11,6 +11,7 @@ namespace Blue.Airport.Win.Lib
         const string SP_GET_AGENT = "mlb_GetSellAgent";
         const string SP_mlb_Insert = "mlb_Insert";
         const string SP_mlb_Update_ticsellagt = "mlb_Update_ticsellagt";
+        const string SP_mlb_GetAllData = "mlb_GetAllData";
 
         #region GetAgent
 
@@ -35,7 +36,7 @@ namespace Blue.Airport.Win.Lib
 
         #endregion
 
-        #region Insert 
+        #region Insert
 
         static public int Insert(SqlCommand command,
             string flightdate,
@@ -62,6 +63,8 @@ string ticsellagt
             SqlHelper.BuildParameter(command, "ticketstat", ticketstat);
             SqlHelper.BuildParameter(command, "ticbuydate", ticbuydate);
             SqlHelper.BuildParameter(command, "ticsellagt", ticsellagt);
+            SqlHelper.BuildParameter(command, "_flight_date", DateConverter.FromFlightDate(flightdate));
+            SqlHelper.BuildParameter(command, "_ticket_buy_date", DateConverter.FromFlightDate(ticbuydate));
 
             return command.ExecuteNonQuery();
         }
@@ -79,6 +82,27 @@ string ticsellagt
             SqlHelper.BuildParameter(command, "ticsellagt", ticsellagt);
 
             return command.ExecuteNonQuery();
+        }
+
+        #endregion
+
+        #region GetData
+
+        static public DataTable GetData(ref int total, int pageSize, int currentPage)
+        {
+            SqlParameter totalPara = new SqlParameter();
+            totalPara.ParameterName = "total";
+            totalPara.DbType = DbType.Int32;
+            totalPara.Direction = ParameterDirection.Output;
+            
+            DataSet ds = SqlHelper.GetDataSet(Lib.DbUtility.GetConnection(),
+                 CommandType.StoredProcedure,
+                 SP_mlb_GetAllData,
+                 totalPara,
+                 SqlHelper.BuildParameter("pageSize", pageSize),
+                 SqlHelper.BuildParameter("currentPage", currentPage));
+            total = (int)totalPara.Value;
+            return ds.Tables[0];
         }
 
         #endregion

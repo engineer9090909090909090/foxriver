@@ -15,11 +15,13 @@ CREATE Procedure mlb_Insert
 @ticketcode nvarchar(50), 
 @ticketstat nvarchar(50), 
 @ticbuydate nvarchar(50), 
-@ticsellagt nvarchar(50)
+@ticsellagt nvarchar(50),
+@_flight_date datetime,
+@_ticket_buy_date datetime
 AS
 INSERT INTO mlbtable (
-flightdate,     flightcode,    fltsegment,    ticketname,     ticketseat,    ticketcode,    ticketstat,     ticbuydate,    ticsellagt) VALUES (
-@flightdate ,@flightcode ,@fltsegment, @ticketName, @ticketseat, @ticketcode, @ticketstat, @ticbuydate, @ticsellagt );
+flightdate,     flightcode,    fltsegment,    ticketname,     ticketseat,    ticketcode,    ticketstat,     ticbuydate,    ticsellagt,_flight_date, _ticket_buy_date) VALUES (
+@flightdate ,@flightcode ,@fltsegment, @ticketName, @ticketseat, @ticketcode, @ticketstat, @ticbuydate, @ticsellagt,@_flight_date, @_ticket_buy_date );
 
 
 GO
