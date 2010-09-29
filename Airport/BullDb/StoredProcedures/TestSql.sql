@@ -1,59 +1,64 @@
-﻿ WITH tabPEKYNT AS
-  (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'PEKYNT' GROUP BY ticsellagt) 
- 
- , tabSHAYNT AS
-  (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'SHAYNT' GROUP BY ticsellagt)
-  
- , tabHRBYNT AS
-   (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'HRBYNT' GROUP BY ticsellagt)
-   
- , tabTNAYNT AS
-    (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'TNAYNT' GROUP BY ticsellagt) 
-   
- , tabCANYNT AS
-    (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'CANYNT' GROUP BY ticsellagt) 
-   
- , tabSZXYNT AS
-    (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'SZXYNT' GROUP BY ticsellagt) 
-   
- , tabSHEYNT AS 
-    (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'SHEYNT' GROUP BY ticsellagt) 
-   
-   
- , tabYNJYNT AS
-    (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNJYNT' GROUP BY ticsellagt) 
-   
- , tabICNYNT AS
-    (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'ICNYNT' GROUP BY ticsellagt) 
+﻿WITH tabCA1828 AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA1828' GROUP BY ticsellagt) 
+
+, tabCA1588  AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA1588' GROUP BY ticsellagt) 
+
+, tabFM9258  AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'FM9258' GROUP BY ticsellagt) 
+
+, tabMU2288  AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode ='MU2288' GROUP BY ticsellagt) 
+
+, tabCZ3788  AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE  fltsegment = 'WEHCAN' and flightcode = 'CZ3788' GROUP BY ticsellagt) 
+
+, tabCZ3787  AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE  fltsegment = 'WEHHRB' and flightcode = 'CZ3787' GROUP BY ticsellagt) 
+
+, tabWEHTYN  AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE  fltsegment = 'WEHTYN' and flightcode = 'HU7590' GROUP BY ticsellagt) 
+
+,tabWEHTNA   AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'WEHTNA' GROUP BY ticsellagt) 
+
+,  tabCA147 AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA147' GROUP BY ticsellagt) 
+
+,  tabMU2017 AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'MU2017'GROUP BY ticsellagt) 
 
 
-SELECT DISTINCT mlbtable.ticsellagt AS 代理人,
- tabPEKYNT.cnt AS 北京烟台,
-  tabSHAYNT.cnt AS 上海烟台,
- tabHRBYNT.cnt AS 哈尔滨烟台, 
- tabTNAYNT.cnt AS 济南烟台, 
- tabCANYNT.cnt AS 广州烟台, 
- tabSZXYNT.cnt AS 深圳烟台,
-  tabSHEYNT.cnt AS 沈阳烟台, 
-  tabYNJYNT.cnt AS 延吉烟台, 
-  tabICNYNT.cnt AS 汉城烟台 
- FROM mlbtable
- LEFT JOIN   tabPEKYNT ON(tabPEKYNT.ticsellagt = mlbtable.ticsellagt)
- 
- LEFT JOIN   tabSHAYNT ON(tabSHAYNT.ticsellagt = mlbtable.ticsellagt)
-  
-  LEFT JOIN     tabHRBYNT ON(tabHRBYNT.ticsellagt = mlbtable.ticsellagt)
-   
-   LEFT JOIN   tabTNAYNT ON(tabTNAYNT.ticsellagt = mlbtable.ticsellagt)
-   
-   LEFT JOIN  tabCANYNT ON(tabCANYNT.ticsellagt = mlbtable.ticsellagt)
-   
-   LEFT JOIN   tabSZXYNT ON(tabSZXYNT.ticsellagt = mlbtable.ticsellagt)
-   
-   LEFT JOIN   tabSHEYNT ON(tabSHEYNT.ticsellagt = mlbtable.ticsellagt)
-   
-   LEFT JOIN  tabYNJYNT ON(tabYNJYNT.ticsellagt = mlbtable.ticsellagt)
-   
-   LEFT JOIN  tabICNYNT ON(tabICNYNT.ticsellagt = mlbtable.ticsellagt) 
-   
-   WHERE mlbtable.ticsellagt LIKE 'weh%' ORDER BY mlbtable.ticsellagt
+SELECT DISTINCT mlbtable.ticsellagt AS 代理人, 
+tabCA1828.cnt AS CA1828, 
+tabCA1588.cnt AS CA1588,
+tabFM9258.cnt AS FM9258, 
+tabMU2288.cnt AS MU2288, 
+tabCZ3788.cnt AS CZ3788wehcan, 
+tabCZ3787.cnt AS CZ3787wehhrb, 
+tabWEHTYN.cnt AS HU7590wehtyn, 
+tabWEHTNA.cnt AS HU7590wehtna, 
+tabCA147.cnt AS CA147, 
+tabMU2017.cnt AS MU2017 
+FROM mlbtable 
+LEFT JOIN  tabCA1828 ON(tabCA1828.ticsellagt =mlbtable.ticsellagt)
+
+LEFT JOIN  tabCA1588 ON(tabCA1588.ticsellagt = mlbtable.ticsellagt)
+
+LEFT JOIN  tabFM9258 ON(tabFM9258.ticsellagt = mlbtable.ticsellagt)
+
+LEFT JOIN  tabMU2288 ON(tabMU2288.ticsellagt = mlbtable.ticsellagt)
+
+LEFT JOIN  tabCZ3788 ON(tabCZ3788.ticsellagt = mlbtable.ticsellagt)
+
+LEFT JOIN  tabCZ3787 ON(tabCZ3787.ticsellagt = mlbtable.ticsellagt)
+
+LEFT JOIN  tabWEHTYN ON(tabWEHTYN.ticsellagt = mlbtable.ticsellagt)
+
+LEFT JOIN  tabWEHTNA ON(tabWEHTNA.ticsellagt=mlbtable.ticsellagt)
+
+LEFT JOIN  tabCA147 ON(tabCA147.ticsellagt = mlbtable.ticsellagt)
+
+LEFT JOIN  tabMU2017 ON(tabMU2017.ticsellagt = mlbtable.ticsellagt) 
+
+WHERE mlbtable.ticsellagt LIKE 'weh%' ORDER BY mlbtable.ticsellagt
