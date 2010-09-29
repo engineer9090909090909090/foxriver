@@ -1,47 +1,59 @@
-﻿WITH  tabYNTPEK AS
-(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTPEK' GROUP BY ticsellagt),
+﻿ WITH tabPEKYNT AS
+  (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'PEKYNT' GROUP BY ticsellagt) 
+ 
+ , tabSHAYNT AS
+  (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'SHAYNT' GROUP BY ticsellagt)
+  
+ , tabHRBYNT AS
+   (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'HRBYNT' GROUP BY ticsellagt)
+   
+ , tabTNAYNT AS
+    (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'TNAYNT' GROUP BY ticsellagt) 
+   
+ , tabCANYNT AS
+    (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'CANYNT' GROUP BY ticsellagt) 
+   
+ , tabSZXYNT AS
+    (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'SZXYNT' GROUP BY ticsellagt) 
+   
+ , tabSHEYNT AS 
+    (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'SHEYNT' GROUP BY ticsellagt) 
+   
+   
+ , tabYNJYNT AS
+    (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNJYNT' GROUP BY ticsellagt) 
+   
+ , tabICNYNT AS
+    (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'ICNYNT' GROUP BY ticsellagt) 
 
-tabYNTSHA  AS 
- (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTSHA' GROUP BY ticsellagt),
- 
-tabYNTHRB AS
-(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTHRB' GROUP BY ticsellagt) ,
 
- tabYNTTNA AS
- (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTTNA' GROUP BY ticsellagt) ,
-
-tabYNTCAN AS
-(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTCAN' GROUP BY ticsellagt) ,
-
-tabYNTSZX AS
- (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTSZX' GROUP BY ticsellagt) ,
+SELECT DISTINCT mlbtable.ticsellagt AS 代理人,
+ tabPEKYNT.cnt AS 北京烟台,
+  tabSHAYNT.cnt AS 上海烟台,
+ tabHRBYNT.cnt AS 哈尔滨烟台, 
+ tabTNAYNT.cnt AS 济南烟台, 
+ tabCANYNT.cnt AS 广州烟台, 
+ tabSZXYNT.cnt AS 深圳烟台,
+  tabSHEYNT.cnt AS 沈阳烟台, 
+  tabYNJYNT.cnt AS 延吉烟台, 
+  tabICNYNT.cnt AS 汉城烟台 
+ FROM mlbtable
+ LEFT JOIN   tabPEKYNT ON(tabPEKYNT.ticsellagt = mlbtable.ticsellagt)
  
- tabYNTSHE AS
- (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTSHE' GROUP BY ticsellagt) ,
- 
- tabYNTYNJ AS
- (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTYNJ' GROUP BY ticsellagt) ,
- 
-tabYNTICN AS 
- (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTICN' GROUP BY ticsellagt) 
- 
-SELECT DISTINCT mlbtable.ticsellagt AS 代理人, 
-tabYNTPEK.cnt AS 烟台北京, 
-tabYNTSHA.cnt AS 烟台上海, 
-tabYNTHRB.cnt AS 烟台哈尔滨, 
-tabYNTTNA.cnt AS 烟台济南, 
-tabYNTCAN.cnt AS 烟台广州, 
-tabYNTSZX.cnt AS 烟台深圳, 
-tabYNTSHE.cnt AS 烟台沈阳,
-tabYNTYNJ.cnt AS 烟台延吉, 
-tabYNTICN.cnt AS 烟台汉城 FROM mlbtable
-LEFT JOIN  tabYNTPEK ON (tabYNTPEK.ticsellagt = mlbtable.ticsellagt)
-LEFT JOIN   tabYNTSHA ON(tabYNTSHA.ticsellagt = mlbtable.ticsellagt)
-LEFT JOIN tabYNTHRB ON(tabYNTHRB.ticsellagt = mlbtable.ticsellagt)
-LEFT JOIN  tabYNTTNA ON(tabYNTTNA.ticsellagt = mlbtable.ticsellagt)
-LEFT JOIN  tabYNTCAN ON(tabYNTCAN.ticsellagt = mlbtable.ticsellagt)
-LEFT JOIN   tabYNTSZX ON(tabYNTSZX.ticsellagt = mlbtable.ticsellagt)
-LEFT JOIN  tabYNTSHE ON(tabYNTSHE.ticsellagt = mlbtable.ticsellagt)
-LEFT JOIN  tabYNTYNJ ON(tabYNTYNJ.ticsellagt = mlbtable.ticsellagt)
-LEFT JOIN  tabYNTICN ON(tabYNTICN.ticsellagt = mlbtable.ticsellagt) 
-WHERE mlbtable.ticsellagt LIKE 'weh%' ORDER BY mlbtable.ticsellagt
+ LEFT JOIN   tabSHAYNT ON(tabSHAYNT.ticsellagt = mlbtable.ticsellagt)
+  
+  LEFT JOIN     tabHRBYNT ON(tabHRBYNT.ticsellagt = mlbtable.ticsellagt)
+   
+   LEFT JOIN   tabTNAYNT ON(tabTNAYNT.ticsellagt = mlbtable.ticsellagt)
+   
+   LEFT JOIN  tabCANYNT ON(tabCANYNT.ticsellagt = mlbtable.ticsellagt)
+   
+   LEFT JOIN   tabSZXYNT ON(tabSZXYNT.ticsellagt = mlbtable.ticsellagt)
+   
+   LEFT JOIN   tabSHEYNT ON(tabSHEYNT.ticsellagt = mlbtable.ticsellagt)
+   
+   LEFT JOIN  tabYNJYNT ON(tabYNJYNT.ticsellagt = mlbtable.ticsellagt)
+   
+   LEFT JOIN  tabICNYNT ON(tabICNYNT.ticsellagt = mlbtable.ticsellagt) 
+   
+   WHERE mlbtable.ticsellagt LIKE 'weh%' ORDER BY mlbtable.ticsellagt
