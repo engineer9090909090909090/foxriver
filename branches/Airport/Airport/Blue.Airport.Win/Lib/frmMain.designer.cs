@@ -12,7 +12,7 @@ namespace Blue.Airport.Win.Lib
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.sysMenu = new System.Windows.Forms.MainMenu(this.components);
             this.mnFile = new System.Windows.Forms.MenuItem();
             this.mnImport = new System.Windows.Forms.MenuItem();
@@ -29,6 +29,8 @@ namespace Blue.Airport.Win.Lib
             this.txtsql = new System.Windows.Forms.TextBox();
             this.openImpDialog = new System.Windows.Forms.OpenFileDialog();
             this.resDataGridView = new System.Windows.Forms.DataGridView();
+            this.button1 = new System.Windows.Forms.Button();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.resDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -131,7 +133,7 @@ namespace Blue.Airport.Win.Lib
             this.txtsql.Multiline = true;
             this.txtsql.Name = "txtsql";
             this.txtsql.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtsql.Size = new System.Drawing.Size(646, 56);
+            this.txtsql.Size = new System.Drawing.Size(678, 56);
             this.txtsql.TabIndex = 1;
             this.txtsql.Text = "手动查询栏, 按F5执行";
             this.txtsql.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtsql_KeyDown);
@@ -142,8 +144,8 @@ namespace Blue.Airport.Win.Lib
             // 
             // resDataGridView
             // 
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.LightSteelBlue;
-            this.resDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.resDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.resDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
@@ -151,16 +153,38 @@ namespace Blue.Airport.Win.Lib
             this.resDataGridView.Location = new System.Drawing.Point(5, 63);
             this.resDataGridView.Name = "resDataGridView";
             this.resDataGridView.RowTemplate.Height = 23;
-            this.resDataGridView.Size = new System.Drawing.Size(637, 342);
+            this.resDataGridView.Size = new System.Drawing.Size(669, 434);
             this.resDataGridView.TabIndex = 2;
             this.resDataGridView.Sorted += new System.EventHandler(this.resDataGridView_Sorted);
             this.resDataGridView.SelectionChanged += new System.EventHandler(this.resDataGridView_SelectionChanged);
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button1.Location = new System.Drawing.Point(577, 622);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "Convert";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // textBox2
+            // 
+            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.textBox2.Location = new System.Drawing.Point(5, 513);
+            this.textBox2.Multiline = true;
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(669, 103);
+            this.textBox2.TabIndex = 5;
             // 
             // frmMain
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(646, 411);
+            this.ClientSize = new System.Drawing.Size(678, 657);
+            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.resDataGridView);
             this.Controls.Add(this.txtsql);
             this.Menu = this.sysMenu;
@@ -173,5 +197,8 @@ namespace Blue.Airport.Win.Lib
             this.PerformLayout();
 
         }
+
+        private Button button1;
+        private TextBox textBox2;
     }
 }

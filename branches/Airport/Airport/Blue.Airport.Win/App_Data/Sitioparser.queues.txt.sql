@@ -138,35 +138,308 @@ LEFT JOIN tabWEHTYN ON (tabWEHTYN.ticsellagt = mlbtable.ticsellagt)
 LEFT JOIN tabWEHICN ON (tabWEHICN.ticsellagt = mlbtable.ticsellagt)
 WHERE  mlbtable.ticsellagt LIKE 'weh%' ORDER BY mlbtable.ticsellagt
 --END COMMAND
---END ALL
 
 --BEGIN代理人销售威海进港航线业绩统计
-SELECT DISTINCT mlbtable.ticsellagt AS 代理人, tabPEKWEH.cnt AS 北京威海, tabSHAWEH.cnt AS 上海威海, tabCANWEH.cnt AS 广州威海, tabHRBWEH.cnt AS 哈尔滨威海, tabTNAWEH.cnt AS 济南威海, tabTYNWEH.cnt AS 太原威海, tabICNWEH.cnt AS 汉城威海 FROM (((((((mlbtable) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'PEKWEH' GROUP BY ticsellagt) AS tabPEKWEH) ON(tabPEKWEH.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'SHAWEH' GROUP BY ticsellagt) AS tabSHAWEH) ON(tabSHAWEH.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'CANWEH' GROUP BY ticsellagt) AS tabCANWEH) ON(tabCANWEH.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'HRBWEH' GROUP BY ticsellagt) AS tabHRBWEH) ON(tabHRBWEH.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'TNAWEH' GROUP BY ticsellagt) AS tabTNAWEH) ON(tabTNAWEH.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'TYNWEH' GROUP BY ticsellagt) AS tabTYNWEH) ON(tabTYNWEH.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'ICNWEH' GROUP BY ticsellagt) AS tabICNWEH) ON(tabICNWEH.ticsellagt = mlbtable.ticsellagt) WHERE mlbtable.ticsellagt LIKE 'weh%' ORDER BY mlbtable.ticsellagt
+--SELECT DISTINCT mlbtable.ticsellagt AS 代理人, tabPEKWEH.cnt AS 北京威海, tabSHAWEH.cnt AS 上海威海, tabCANWEH.cnt AS 广州威海, tabHRBWEH.cnt AS 哈尔滨威海, tabTNAWEH.cnt AS 济南威海, tabTYNWEH.cnt AS 太原威海, tabICNWEH.cnt AS 汉城威海 FROM (((((((mlbtable) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'PEKWEH' GROUP BY ticsellagt) AS tabPEKWEH) ON(tabPEKWEH.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'SHAWEH' GROUP BY ticsellagt) AS tabSHAWEH) ON(tabSHAWEH.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'CANWEH' GROUP BY ticsellagt) AS tabCANWEH) ON(tabCANWEH.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'HRBWEH' GROUP BY ticsellagt) AS tabHRBWEH) ON(tabHRBWEH.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'TNAWEH' GROUP BY ticsellagt) AS tabTNAWEH) ON(tabTNAWEH.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'TYNWEH' GROUP BY ticsellagt) AS tabTYNWEH) ON(tabTYNWEH.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'ICNWEH' GROUP BY ticsellagt) AS tabICNWEH) ON(tabICNWEH.ticsellagt = mlbtable.ticsellagt) WHERE mlbtable.ticsellagt LIKE 'weh%' ORDER BY mlbtable.ticsellagt
+WITH tabPEKWEH AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'PEKWEH' GROUP BY ticsellagt),
+
+tabSHAWEH AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'SHAWEH' GROUP BY ticsellagt),
+
+tabCANWEH AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'CANWEH' GROUP BY ticsellagt),
+
+tabHRBWEH AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'HRBWEH' GROUP BY ticsellagt),
+
+tabTNAWEH AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'TNAWEH' GROUP BY ticsellagt),
+
+tabTYNWEH AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'TYNWEH' GROUP BY ticsellagt),
+
+tabICNWEH AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'ICNWEH' GROUP BY ticsellagt)
+
+
+SELECT DISTINCT mlbtable.ticsellagt AS 代理人,
+tabPEKWEH.cnt AS 北京威海, 
+tabSHAWEH.cnt AS 上海威海, 
+tabCANWEH.cnt AS 广州威海, 
+tabHRBWEH.cnt AS 哈尔滨威海, 
+tabTNAWEH.cnt AS 济南威海,
+tabTYNWEH.cnt AS 太原威海, 
+tabICNWEH.cnt AS 汉城威海
+  
+FROM mlbtable
+    
+LEFT JOIN tabPEKWEH ON(tabPEKWEH.ticsellagt = mlbtable.ticsellagt)
+LEFT JOIN tabSHAWEH ON(tabSHAWEH.ticsellagt = mlbtable.ticsellagt)
+LEFT JOIN tabCANWEH ON(tabCANWEH.ticsellagt = mlbtable.ticsellagt)
+LEFT JOIN tabHRBWEH ON(tabHRBWEH.ticsellagt = mlbtable.ticsellagt)
+LEFT JOIN tabTNAWEH ON(tabTNAWEH.ticsellagt = mlbtable.ticsellagt)
+LEFT JOIN tabTYNWEH ON(tabTYNWEH.ticsellagt = mlbtable.ticsellagt)
+LEFT JOIN tabICNWEH ON(tabICNWEH.ticsellagt = mlbtable.ticsellagt)
+WHERE mlbtable.ticsellagt LIKE 'weh%' ORDER BY mlbtable.ticsellagt
 --END COMMAND
---END ALL
 
 --BEGIN代理人销售烟台出港航线业绩统计
-SELECT DISTINCT mlbtable.ticsellagt AS 代理人, tabYNTPEK.cnt AS 烟台北京, tabYNTSHA.cnt AS 烟台上海, tabYNTHRB.cnt AS 烟台哈尔滨, tabYNTTNA.cnt AS 烟台济南, tabYNTCAN.cnt AS 烟台广州, tabYNTSZX.cnt AS 烟台深圳, tabYNTSHE.cnt AS 烟台沈阳, tabYNTYNJ.cnt AS 烟台延吉, tabYNTICN.cnt AS 烟台汉城 FROM (((((((((mlbtable) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTPEK' GROUP BY ticsellagt) AS tabYNTPEK) ON(tabYNTPEK.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTSHA' GROUP BY ticsellagt) AS tabYNTSHA) ON(tabYNTSHA.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTHRB' GROUP BY ticsellagt) AS tabYNTHRB) ON(tabYNTHRB.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTTNA' GROUP BY ticsellagt) AS tabYNTTNA) ON(tabYNTTNA.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTCAN' GROUP BY ticsellagt) AS tabYNTCAN) ON(tabYNTCAN.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTSZX' GROUP BY ticsellagt) AS tabYNTSZX) ON(tabYNTSZX.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTSHE' GROUP BY ticsellagt) AS tabYNTSHE) ON(tabYNTSHE.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTYNJ' GROUP BY ticsellagt) AS tabYNTYNJ) ON(tabYNTYNJ.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTICN' GROUP BY ticsellagt) AS tabYNTICN) ON(tabYNTICN.ticsellagt = mlbtable.ticsellagt) WHERE mlbtable.ticsellagt LIKE 'weh%' ORDER BY mlbtable.ticsellagt
+--SELECT DISTINCT mlbtable.ticsellagt AS 代理人, tabYNTPEK.cnt AS 烟台北京, tabYNTSHA.cnt AS 烟台上海, tabYNTHRB.cnt AS 烟台哈尔滨, tabYNTTNA.cnt AS 烟台济南, tabYNTCAN.cnt AS 烟台广州, tabYNTSZX.cnt AS 烟台深圳, tabYNTSHE.cnt AS 烟台沈阳, tabYNTYNJ.cnt AS 烟台延吉, tabYNTICN.cnt AS 烟台汉城 FROM (((((((((mlbtable) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTPEK' GROUP BY ticsellagt) AS tabYNTPEK) ON(tabYNTPEK.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTSHA' GROUP BY ticsellagt) AS tabYNTSHA) ON(tabYNTSHA.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTHRB' GROUP BY ticsellagt) AS tabYNTHRB) ON(tabYNTHRB.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTTNA' GROUP BY ticsellagt) AS tabYNTTNA) ON(tabYNTTNA.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTCAN' GROUP BY ticsellagt) AS tabYNTCAN) ON(tabYNTCAN.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTSZX' GROUP BY ticsellagt) AS tabYNTSZX) ON(tabYNTSZX.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTSHE' GROUP BY ticsellagt) AS tabYNTSHE) ON(tabYNTSHE.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTYNJ' GROUP BY ticsellagt) AS tabYNTYNJ) ON(tabYNTYNJ.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTICN' GROUP BY ticsellagt) AS tabYNTICN) ON(tabYNTICN.ticsellagt = mlbtable.ticsellagt) WHERE mlbtable.ticsellagt LIKE 'weh%' ORDER BY mlbtable.ticsellagt
+WITH  tabYNTPEK AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTPEK' GROUP BY ticsellagt),
+
+tabYNTSHA  AS 
+ (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTSHA' GROUP BY ticsellagt),
+ 
+tabYNTHRB AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTHRB' GROUP BY ticsellagt) ,
+
+ tabYNTTNA AS
+ (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTTNA' GROUP BY ticsellagt) ,
+
+tabYNTCAN AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTCAN' GROUP BY ticsellagt) ,
+
+tabYNTSZX AS
+ (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTSZX' GROUP BY ticsellagt) ,
+ 
+ tabYNTSHE AS
+ (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTSHE' GROUP BY ticsellagt) ,
+ 
+ tabYNTYNJ AS
+ (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTYNJ' GROUP BY ticsellagt) ,
+ 
+tabYNTICN AS 
+ (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNTICN' GROUP BY ticsellagt) 
+ 
+SELECT DISTINCT mlbtable.ticsellagt AS 代理人, 
+tabYNTPEK.cnt AS 烟台北京, 
+tabYNTSHA.cnt AS 烟台上海, 
+tabYNTHRB.cnt AS 烟台哈尔滨, 
+tabYNTTNA.cnt AS 烟台济南, 
+tabYNTCAN.cnt AS 烟台广州, 
+tabYNTSZX.cnt AS 烟台深圳, 
+tabYNTSHE.cnt AS 烟台沈阳,
+tabYNTYNJ.cnt AS 烟台延吉, 
+tabYNTICN.cnt AS 烟台汉城 FROM mlbtable
+LEFT JOIN  tabYNTPEK ON (tabYNTPEK.ticsellagt = mlbtable.ticsellagt)
+LEFT JOIN   tabYNTSHA ON(tabYNTSHA.ticsellagt = mlbtable.ticsellagt)
+LEFT JOIN tabYNTHRB ON(tabYNTHRB.ticsellagt = mlbtable.ticsellagt)
+LEFT JOIN  tabYNTTNA ON(tabYNTTNA.ticsellagt = mlbtable.ticsellagt)
+LEFT JOIN  tabYNTCAN ON(tabYNTCAN.ticsellagt = mlbtable.ticsellagt)
+LEFT JOIN   tabYNTSZX ON(tabYNTSZX.ticsellagt = mlbtable.ticsellagt)
+LEFT JOIN  tabYNTSHE ON(tabYNTSHE.ticsellagt = mlbtable.ticsellagt)
+LEFT JOIN  tabYNTYNJ ON(tabYNTYNJ.ticsellagt = mlbtable.ticsellagt)
+LEFT JOIN  tabYNTICN ON(tabYNTICN.ticsellagt = mlbtable.ticsellagt) 
+WHERE mlbtable.ticsellagt LIKE 'weh%' ORDER BY mlbtable.ticsellagt
 --END COMMAND
---END ALL
 
 --BEGIN代理人销售烟台进港航线业绩统计
-SELECT DISTINCT mlbtable.ticsellagt AS 代理人, tabPEKYNT.cnt AS 北京烟台, tabSHAYNT.cnt AS 上海烟台, tabHRBYNT.cnt AS 哈尔滨烟台, tabTNAYNT.cnt AS 济南烟台, tabCANYNT.cnt AS 广州烟台, tabSZXYNT.cnt AS 深圳烟台, tabSHEYNT.cnt AS 沈阳烟台, tabYNJYNT.cnt AS 延吉烟台, tabICNYNT.cnt AS 汉城烟台 FROM (((((((((mlbtable) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'PEKYNT' GROUP BY ticsellagt) AS tabPEKYNT) ON(tabPEKYNT.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'SHAYNT' GROUP BY ticsellagt) AS tabSHAYNT) ON(tabSHAYNT.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'HRBYNT' GROUP BY ticsellagt) AS tabHRBYNT) ON(tabHRBYNT.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'TNAYNT' GROUP BY ticsellagt) AS tabTNAYNT) ON(tabTNAYNT.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'CANYNT' GROUP BY ticsellagt) AS tabCANYNT) ON(tabCANYNT.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'SZXYNT' GROUP BY ticsellagt) AS tabSZXYNT) ON(tabSZXYNT.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'SHEYNT' GROUP BY ticsellagt) AS tabSHEYNT) ON(tabSHEYNT.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNJYNT' GROUP BY ticsellagt) AS tabYNJYNT) ON(tabYNJYNT.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'ICNYNT' GROUP BY ticsellagt) AS tabICNYNT) ON(tabICNYNT.ticsellagt = mlbtable.ticsellagt) WHERE mlbtable.ticsellagt LIKE 'weh%' ORDER BY mlbtable.ticsellagt
+--SELECT DISTINCT mlbtable.ticsellagt AS 代理人, tabPEKYNT.cnt AS 北京烟台, tabSHAYNT.cnt AS 上海烟台, tabHRBYNT.cnt AS 哈尔滨烟台, tabTNAYNT.cnt AS 济南烟台, tabCANYNT.cnt AS 广州烟台, tabSZXYNT.cnt AS 深圳烟台, tabSHEYNT.cnt AS 沈阳烟台, tabYNJYNT.cnt AS 延吉烟台, tabICNYNT.cnt AS 汉城烟台 FROM (((((((((mlbtable) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'PEKYNT' GROUP BY ticsellagt) AS tabPEKYNT) ON(tabPEKYNT.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'SHAYNT' GROUP BY ticsellagt) AS tabSHAYNT) ON(tabSHAYNT.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'HRBYNT' GROUP BY ticsellagt) AS tabHRBYNT) ON(tabHRBYNT.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'TNAYNT' GROUP BY ticsellagt) AS tabTNAYNT) ON(tabTNAYNT.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'CANYNT' GROUP BY ticsellagt) AS tabCANYNT) ON(tabCANYNT.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'SZXYNT' GROUP BY ticsellagt) AS tabSZXYNT) ON(tabSZXYNT.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'SHEYNT' GROUP BY ticsellagt) AS tabSHEYNT) ON(tabSHEYNT.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNJYNT' GROUP BY ticsellagt) AS tabYNJYNT) ON(tabYNJYNT.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'ICNYNT' GROUP BY ticsellagt) AS tabICNYNT) ON(tabICNYNT.ticsellagt = mlbtable.ticsellagt) WHERE mlbtable.ticsellagt LIKE 'weh%' ORDER BY mlbtable.ticsellagt
+ WITH tabPEKYNT AS
+  (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'PEKYNT' GROUP BY ticsellagt) 
+ 
+ , tabSHAYNT AS
+  (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'SHAYNT' GROUP BY ticsellagt)
+  
+ , tabHRBYNT AS
+   (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'HRBYNT' GROUP BY ticsellagt)
+   
+ , tabTNAYNT AS
+    (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'TNAYNT' GROUP BY ticsellagt) 
+   
+ , tabCANYNT AS
+    (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'CANYNT' GROUP BY ticsellagt) 
+   
+ , tabSZXYNT AS
+    (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'SZXYNT' GROUP BY ticsellagt) 
+   
+ , tabSHEYNT AS 
+    (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'SHEYNT' GROUP BY ticsellagt) 
+   
+   
+ , tabYNJYNT AS
+    (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'YNJYNT' GROUP BY ticsellagt) 
+   
+ , tabICNYNT AS
+    (SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'ICNYNT' GROUP BY ticsellagt) 
+
+
+SELECT DISTINCT mlbtable.ticsellagt AS 代理人,
+ tabPEKYNT.cnt AS 北京烟台,
+  tabSHAYNT.cnt AS 上海烟台,
+ tabHRBYNT.cnt AS 哈尔滨烟台, 
+ tabTNAYNT.cnt AS 济南烟台, 
+ tabCANYNT.cnt AS 广州烟台, 
+ tabSZXYNT.cnt AS 深圳烟台,
+  tabSHEYNT.cnt AS 沈阳烟台, 
+  tabYNJYNT.cnt AS 延吉烟台, 
+  tabICNYNT.cnt AS 汉城烟台 
+ FROM mlbtable
+ LEFT JOIN   tabPEKYNT ON(tabPEKYNT.ticsellagt = mlbtable.ticsellagt)
+ 
+ LEFT JOIN   tabSHAYNT ON(tabSHAYNT.ticsellagt = mlbtable.ticsellagt)
+  
+  LEFT JOIN     tabHRBYNT ON(tabHRBYNT.ticsellagt = mlbtable.ticsellagt)
+   
+   LEFT JOIN   tabTNAYNT ON(tabTNAYNT.ticsellagt = mlbtable.ticsellagt)
+   
+   LEFT JOIN  tabCANYNT ON(tabCANYNT.ticsellagt = mlbtable.ticsellagt)
+   
+   LEFT JOIN   tabSZXYNT ON(tabSZXYNT.ticsellagt = mlbtable.ticsellagt)
+   
+   LEFT JOIN   tabSHEYNT ON(tabSHEYNT.ticsellagt = mlbtable.ticsellagt)
+   
+   LEFT JOIN  tabYNJYNT ON(tabYNJYNT.ticsellagt = mlbtable.ticsellagt)
+   
+   LEFT JOIN  tabICNYNT ON(tabICNYNT.ticsellagt = mlbtable.ticsellagt) 
+   
+   WHERE mlbtable.ticsellagt LIKE 'weh%' ORDER BY mlbtable.ticsellagt
+
 --END COMMAND
---END ALL
 
 --BEGIN威海出港各航班代理人销售统计
-SELECT DISTINCT mlbtable.ticsellagt AS 代理人, tabCA1828.cnt AS CA1828, tabCA1588.cnt AS CA1588,tabFM9258.cnt AS FM9258, tabMU2288.cnt AS MU2288, tabCZ3788.cnt AS CZ3788wehcan, tabCZ3787.cnt AS CZ3787wehhrb, tabWEHTYN.cnt AS HU7590wehtyn, tabWEHTNA.cnt AS HU7590wehtna, tabCA147.cnt AS CA147, tabMU2017.cnt AS MU2017 FROM ((((((((((mlbtable) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA1828' GROUP BY ticsellagt) AS tabCA1828) ON(tabCA1828.ticsellagt =mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA1588' GROUP BY ticsellagt) AS tabCA1588) ON(tabCA1588.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'FM9258' GROUP BY ticsellagt) AS tabFM9258) ON(tabFM9258.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode ='MU2288' GROUP BY ticsellagt) AS tabMU2288) ON(tabMU2288.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE  fltsegment = 'WEHCAN' and flightcode = 'CZ3788' GROUP BY ticsellagt) AS tabCZ3788) ON(tabCZ3788.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE  fltsegment = 'WEHHRB' and flightcode = 'CZ3787' GROUP BY ticsellagt) AS tabCZ3787) ON(tabCZ3787.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE  fltsegment = 'WEHTYN' and flightcode = 'HU7590' GROUP BY ticsellagt) AS tabWEHTYN) ON(tabWEHTYN.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'WEHTNA' GROUP BY ticsellagt) AS tabWEHTNA) ON(tabWEHTNA.ticsellagt=mlbtable.ticsellagt))LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA147' GROUP BY ticsellagt) AS tabCA147) ON(tabCA147.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'MU2017'GROUP BY ticsellagt) AS tabMU2017) ON(tabMU2017.ticsellagt = mlbtable.ticsellagt) WHERE mlbtable.ticsellagt LIKE 'weh%' ORDER BY mlbtable.ticsellagt
+--SELECT DISTINCT mlbtable.ticsellagt AS 代理人, tabCA1828.cnt AS CA1828, tabCA1588.cnt AS CA1588,tabFM9258.cnt AS FM9258, tabMU2288.cnt AS MU2288, tabCZ3788.cnt AS CZ3788wehcan, tabCZ3787.cnt AS CZ3787wehhrb, tabWEHTYN.cnt AS HU7590wehtyn, tabWEHTNA.cnt AS HU7590wehtna, tabCA147.cnt AS CA147, tabMU2017.cnt AS MU2017 FROM ((((((((((mlbtable) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA1828' GROUP BY ticsellagt) AS tabCA1828) ON(tabCA1828.ticsellagt =mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA1588' GROUP BY ticsellagt) AS tabCA1588) ON(tabCA1588.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'FM9258' GROUP BY ticsellagt) AS tabFM9258) ON(tabFM9258.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode ='MU2288' GROUP BY ticsellagt) AS tabMU2288) ON(tabMU2288.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE  fltsegment = 'WEHCAN' and flightcode = 'CZ3788' GROUP BY ticsellagt) AS tabCZ3788) ON(tabCZ3788.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE  fltsegment = 'WEHHRB' and flightcode = 'CZ3787' GROUP BY ticsellagt) AS tabCZ3787) ON(tabCZ3787.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE  fltsegment = 'WEHTYN' and flightcode = 'HU7590' GROUP BY ticsellagt) AS tabWEHTYN) ON(tabWEHTYN.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'WEHTNA' GROUP BY ticsellagt) AS tabWEHTNA) ON(tabWEHTNA.ticsellagt=mlbtable.ticsellagt))LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA147' GROUP BY ticsellagt) AS tabCA147) ON(tabCA147.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'MU2017'GROUP BY ticsellagt) AS tabMU2017) ON(tabMU2017.ticsellagt = mlbtable.ticsellagt) WHERE mlbtable.ticsellagt LIKE 'weh%' ORDER BY mlbtable.ticsellagt
+WITH tabCA1828 AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA1828' GROUP BY ticsellagt) 
+
+, tabCA1588  AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA1588' GROUP BY ticsellagt) 
+
+, tabFM9258  AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'FM9258' GROUP BY ticsellagt) 
+
+, tabMU2288  AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode ='MU2288' GROUP BY ticsellagt) 
+
+, tabCZ3788  AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE  fltsegment = 'WEHCAN' and flightcode = 'CZ3788' GROUP BY ticsellagt) 
+
+, tabCZ3787  AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE  fltsegment = 'WEHHRB' and flightcode = 'CZ3787' GROUP BY ticsellagt) 
+
+, tabWEHTYN  AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE  fltsegment = 'WEHTYN' and flightcode = 'HU7590' GROUP BY ticsellagt) 
+
+,tabWEHTNA   AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'WEHTNA' GROUP BY ticsellagt) 
+
+,  tabCA147 AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA147' GROUP BY ticsellagt) 
+
+,  tabMU2017 AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'MU2017'GROUP BY ticsellagt) 
+
+
+SELECT DISTINCT mlbtable.ticsellagt AS 代理人, 
+tabCA1828.cnt AS CA1828, 
+tabCA1588.cnt AS CA1588,
+tabFM9258.cnt AS FM9258, 
+tabMU2288.cnt AS MU2288, 
+tabCZ3788.cnt AS CZ3788wehcan, 
+tabCZ3787.cnt AS CZ3787wehhrb, 
+tabWEHTYN.cnt AS HU7590wehtyn, 
+tabWEHTNA.cnt AS HU7590wehtna, 
+tabCA147.cnt AS CA147, 
+tabMU2017.cnt AS MU2017 
+FROM mlbtable 
+LEFT JOIN  tabCA1828 ON(tabCA1828.ticsellagt =mlbtable.ticsellagt)
+
+LEFT JOIN  tabCA1588 ON(tabCA1588.ticsellagt = mlbtable.ticsellagt)
+
+LEFT JOIN  tabFM9258 ON(tabFM9258.ticsellagt = mlbtable.ticsellagt)
+
+LEFT JOIN  tabMU2288 ON(tabMU2288.ticsellagt = mlbtable.ticsellagt)
+
+LEFT JOIN  tabCZ3788 ON(tabCZ3788.ticsellagt = mlbtable.ticsellagt)
+
+LEFT JOIN  tabCZ3787 ON(tabCZ3787.ticsellagt = mlbtable.ticsellagt)
+
+LEFT JOIN  tabWEHTYN ON(tabWEHTYN.ticsellagt = mlbtable.ticsellagt)
+
+LEFT JOIN  tabWEHTNA ON(tabWEHTNA.ticsellagt=mlbtable.ticsellagt)
+
+LEFT JOIN  tabCA147 ON(tabCA147.ticsellagt = mlbtable.ticsellagt)
+
+LEFT JOIN  tabMU2017 ON(tabMU2017.ticsellagt = mlbtable.ticsellagt) 
+
+WHERE mlbtable.ticsellagt LIKE 'weh%' ORDER BY mlbtable.ticsellagt
+
 --END COMMAND
---END ALL
 
 --BEGIN威海进港各航班代理人销售统计
-SELECT DISTINCT mlbtable.ticsellagt AS 代理人, tabCA1827.cnt AS CA1827, tabCA1587.cnt AS CA1587,tabFM9257.cnt AS FM9257, tabMU2287.cnt AS MU2287, tabCZ3787.cnt AS CZ3787canweh, tabCZ3788.cnt AS CZ3788hrbweh, tabTYNWEH.cnt AS HU7589tynweh, tabTNAWEH.cnt AS HU7589tnaweh, tabCA148.cnt AS CA148, tabMU2018.cnt AS MU2018 FROM ((((((((((mlbtable)  LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA1827' GROUP BY ticsellagt) AS tabCA1827) ON(tabCA1827.ticsellagt =mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA1587' GROUP BY ticsellagt) AS tabCA1587) ON(tabCA1587.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'FM9257' GROUP BY ticsellagt) AS tabFM9257) ON(tabFM9257.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode ='MU2287' GROUP BY ticsellagt) AS tabMU2287) ON(tabMU2287.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CZ3787' and fltsegment = 'CANWEH' GROUP BY ticsellagt) AS tabCZ3787) ON(tabCZ3787.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CZ3788' and fltsegment = 'HRBWEH' GROUP BY ticsellagt) AS tabCZ3788) ON(tabCZ3788.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'TYNWEH' and flightcode = 'HU7589'GROUP BY ticsellagt) AS tabTYNWEH) ON(tabTYNWEH.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'TNAWEH' and flightcode = 'HU7589'GROUP BY ticsellagt) AS tabTNAWEH) ON(tabTNAWEH.ticsellagt =mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA148' GROUP BY ticsellagt) AS tabCA148) ON(tabCA148.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'MU2018' GROUP BY ticsellagt) AS tabMU2018) ON(tabMU2018.ticsellagt = mlbtable.ticsellagt) WHERE mlbtable.ticsellagt LIKE 'weh%' ORDER BY mlbtable.ticsellagt
+--SELECT DISTINCT mlbtable.ticsellagt AS 代理人, tabCA1827.cnt AS CA1827, tabCA1587.cnt AS CA1587,tabFM9257.cnt AS FM9257, tabMU2287.cnt AS MU2287, tabCZ3787.cnt AS CZ3787canweh, tabCZ3788.cnt AS CZ3788hrbweh, tabTYNWEH.cnt AS HU7589tynweh, tabTNAWEH.cnt AS HU7589tnaweh, tabCA148.cnt AS CA148, tabMU2018.cnt AS MU2018 FROM ((((((((((mlbtable)  LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA1827' GROUP BY ticsellagt) AS tabCA1827) ON(tabCA1827.ticsellagt =mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA1587' GROUP BY ticsellagt) AS tabCA1587) ON(tabCA1587.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'FM9257' GROUP BY ticsellagt) AS tabFM9257) ON(tabFM9257.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode ='MU2287' GROUP BY ticsellagt) AS tabMU2287) ON(tabMU2287.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CZ3787' and fltsegment = 'CANWEH' GROUP BY ticsellagt) AS tabCZ3787) ON(tabCZ3787.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CZ3788' and fltsegment = 'HRBWEH' GROUP BY ticsellagt) AS tabCZ3788) ON(tabCZ3788.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'TYNWEH' and flightcode = 'HU7589'GROUP BY ticsellagt) AS tabTYNWEH) ON(tabTYNWEH.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'TNAWEH' and flightcode = 'HU7589'GROUP BY ticsellagt) AS tabTNAWEH) ON(tabTNAWEH.ticsellagt =mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA148' GROUP BY ticsellagt) AS tabCA148) ON(tabCA148.ticsellagt = mlbtable.ticsellagt)) LEFT JOIN ((SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'MU2018' GROUP BY ticsellagt) AS tabMU2018) ON(tabMU2018.ticsellagt = mlbtable.ticsellagt) WHERE mlbtable.ticsellagt LIKE 'weh%' ORDER BY mlbtable.ticsellagt
+WITH  tabCA1827 AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA1827' GROUP BY ticsellagt)
+, tabCA1587 AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA1587' GROUP BY ticsellagt)
+, tabFM9257 AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'FM9257' GROUP BY ticsellagt)
+, tabMU2287 AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode ='MU2287' GROUP BY ticsellagt)
+, tabCZ3787 AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CZ3787' and fltsegment = 'CANWEH' GROUP BY ticsellagt)
+, tabCZ3788 AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CZ3788' and fltsegment = 'HRBWEH' GROUP BY ticsellagt)
+, tabTYNWEH AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'TYNWEH' and flightcode = 'HU7589'GROUP BY ticsellagt)
+, tabTNAWEH AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE fltsegment = 'TNAWEH' and flightcode = 'HU7589'GROUP BY ticsellagt)
+, tabCA148 AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA148' GROUP BY ticsellagt)
+, tabMU2018 AS
+(SELECT ticsellagt, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'MU2018' GROUP BY ticsellagt)
+
+SELECT DISTINCT mlbtable.ticsellagt AS 代理人, tabCA1827.cnt AS CA1827, tabCA1587.cnt AS CA1587,tabFM9257.cnt AS FM9257, tabMU2287.cnt AS MU2287, tabCZ3787.cnt AS CZ3787canweh, tabCZ3788.cnt AS CZ3788hrbweh, tabTYNWEH.cnt AS HU7589tynweh, tabTNAWEH.cnt AS HU7589tnaweh, tabCA148.cnt AS CA148, tabMU2018.cnt AS MU2018 FROM mlbtable  
+LEFT JOIN  tabCA1827 ON (tabCA1827.ticsellagt =mlbtable.ticsellagt )
+LEFT JOIN  tabCA1587 ON (tabCA1587.ticsellagt = mlbtable.ticsellagt )
+LEFT JOIN  tabFM9257 ON (tabFM9257.ticsellagt = mlbtable.ticsellagt )
+LEFT JOIN  tabMU2287 ON (tabMU2287.ticsellagt = mlbtable.ticsellagt )
+LEFT JOIN  tabCZ3787 ON (tabCZ3787.ticsellagt = mlbtable.ticsellagt )
+LEFT JOIN  tabCZ3788 ON (tabCZ3788.ticsellagt = mlbtable.ticsellagt )
+LEFT JOIN  tabTYNWEH ON (tabTYNWEH.ticsellagt = mlbtable.ticsellagt )
+LEFT JOIN  tabTNAWEH ON (tabTNAWEH.ticsellagt =mlbtable.ticsellagt )
+LEFT JOIN  tabCA148 ON (tabCA148.ticsellagt = mlbtable.ticsellagt )
+LEFT JOIN  tabMU2018 ON (tabMU2018.ticsellagt = mlbtable.ticsellagt )
+WHERE mlbtable.ticsellagt LIKE 'weh%' ORDER BY mlbtable.ticsellagt
 --END COMMAND
---END ALL
 
 --BEGIN威海出港各航班月销售统计表MLB
-SELECT DISTINCT mlbtable.flightdate AS 班期, tabCA1828.cnt AS CA1828, tabCA1588.cnt AS CA1588, tabFM9258.cnt AS FM9258, tabMU2288.cnt AS MU2288, tabCZ3788.cnt AS CZ3788wehcan, tabCZ3787.cnt AS CZ3787wehhrb, tabWEHTYN.cnt AS HU7590wehtyn, tabWEHTNA.cnt AS HU7590wehtna, tabCA147.cnt AS CA147, tabMU2017.cnt AS MU2017 FROM ((((((((((mlbtable)  LEFT JOIN ((SELECT flightdate, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA1828' GROUP BY flightdate) AS tabCA1828) ON(tabCA1828.flightdate = mlbtable.flightdate)) LEFT JOIN ((SELECT flightdate, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA1588' GROUP BY flightdate) AS tabCA1588) ON(tabCA1588.flightdate = mlbtable.flightdate)) LEFT JOIN ((SELECT flightdate, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'FM9258' GROUP BY flightdate) AS tabFM9258) ON(tabFM9258.flightdate = mlbtable.flightdate)) LEFT JOIN ((SELECT flightdate, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'MU2288' GROUP BY flightdate) AS tabMU2288) ON(tabMU2288.flightdate = mlbtable.flightdate)) LEFT JOIN ((SELECT flightdate, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CZ3788' and fltsegment = 'WEHCAN' GROUP BY flightdate) AS tabCZ3788) ON(tabCZ3788.flightdate = mlbtable.flightdate)) LEFT JOIN ((SELECT flightdate, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CZ3787' and fltsegment = 'WEHHRB' GROUP BY flightdate) AS tabCZ3787) ON(tabCZ3787.flightdate = mlbtable.flightdate)) LEFT JOIN ((SELECT flightdate, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'HU7590' and fltsegment = 'WEHTYN' GROUP BY flightdate) AS tabWEHTYN) ON(tabWEHTYN.flightdate = mlbtable.flightdate)) LEFT JOIN ((SELECT flightdate, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'HU7590' and fltsegment = 'WEHTNA' GROUP BY flightdate) AS tabWEHTNA) ON(tabWEHTNA.flightdate = mlbtable.flightdate)) LEFT JOIN ((SELECT flightdate, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA147' GROUP BY flightdate) AS tabCA147) ON(tabCA147.flightdate = mlbtable.flightdate)) LEFT JOIN ((SELECT flightdate, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'MU2017' GROUP BY flightdate) AS tabMU2017) ON(tabMU2017.flightdate = mlbtable.flightdate) WHERE mlbtable.flightdate LIKE '%%' ORDER BY mlbtable.flightdate
+--SELECT DISTINCT mlbtable.flightdate AS 班期, tabCA1828.cnt AS CA1828, tabCA1588.cnt AS CA1588, tabFM9258.cnt AS FM9258, tabMU2288.cnt AS MU2288, tabCZ3788.cnt AS CZ3788wehcan, tabCZ3787.cnt AS CZ3787wehhrb, tabWEHTYN.cnt AS HU7590wehtyn, tabWEHTNA.cnt AS HU7590wehtna, tabCA147.cnt AS CA147, tabMU2017.cnt AS MU2017 FROM ((((((((((mlbtable)  LEFT JOIN ((SELECT flightdate, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA1828' GROUP BY flightdate) AS tabCA1828) ON(tabCA1828.flightdate = mlbtable.flightdate)) LEFT JOIN ((SELECT flightdate, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA1588' GROUP BY flightdate) AS tabCA1588) ON(tabCA1588.flightdate = mlbtable.flightdate)) LEFT JOIN ((SELECT flightdate, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'FM9258' GROUP BY flightdate) AS tabFM9258) ON(tabFM9258.flightdate = mlbtable.flightdate)) LEFT JOIN ((SELECT flightdate, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'MU2288' GROUP BY flightdate) AS tabMU2288) ON(tabMU2288.flightdate = mlbtable.flightdate)) LEFT JOIN ((SELECT flightdate, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CZ3788' and fltsegment = 'WEHCAN' GROUP BY flightdate) AS tabCZ3788) ON(tabCZ3788.flightdate = mlbtable.flightdate)) LEFT JOIN ((SELECT flightdate, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CZ3787' and fltsegment = 'WEHHRB' GROUP BY flightdate) AS tabCZ3787) ON(tabCZ3787.flightdate = mlbtable.flightdate)) LEFT JOIN ((SELECT flightdate, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'HU7590' and fltsegment = 'WEHTYN' GROUP BY flightdate) AS tabWEHTYN) ON(tabWEHTYN.flightdate = mlbtable.flightdate)) LEFT JOIN ((SELECT flightdate, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'HU7590' and fltsegment = 'WEHTNA' GROUP BY flightdate) AS tabWEHTNA) ON(tabWEHTNA.flightdate = mlbtable.flightdate)) LEFT JOIN ((SELECT flightdate, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA147' GROUP BY flightdate) AS tabCA147) ON(tabCA147.flightdate = mlbtable.flightdate)) LEFT JOIN ((SELECT flightdate, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'MU2017' GROUP BY flightdate) AS tabMU2017) ON(tabMU2017.flightdate = mlbtable.flightdate) WHERE mlbtable.flightdate LIKE '%%' ORDER BY mlbtable.flightdate
+WITH  tabCA1828 AS
+(SELECT flightdate, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA1828' GROUP BY flightdate)
+, tabCA1588 AS
+(SELECT flightdate, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA1588' GROUP BY flightdate)
+, tabFM9258 AS
+(SELECT flightdate, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'FM9258' GROUP BY flightdate)
+, tabMU2288 AS
+(SELECT flightdate, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'MU2288' GROUP BY flightdate)
+, tabCZ3788 AS
+(SELECT flightdate, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CZ3788' and fltsegment = 'WEHCAN' GROUP BY flightdate)
+, tabCZ3787 AS
+(SELECT flightdate, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CZ3787' and fltsegment = 'WEHHRB' GROUP BY flightdate)
+, tabWEHTYN AS
+(SELECT flightdate, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'HU7590' and fltsegment = 'WEHTYN' GROUP BY flightdate)
+, tabWEHTNA AS
+(SELECT flightdate, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'HU7590' and fltsegment = 'WEHTNA' GROUP BY flightdate)
+, tabCA147 AS
+(SELECT flightdate, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'CA147' GROUP BY flightdate)
+, tabMU2017 AS
+(SELECT flightdate, COUNT(*) AS cnt FROM mlbtable WHERE flightcode = 'MU2017' GROUP BY flightdate)
+
+SELECT DISTINCT mlbtable.flightdate AS 班期, tabCA1828.cnt AS CA1828, tabCA1588.cnt AS CA1588, tabFM9258.cnt AS FM9258, tabMU2288.cnt AS MU2288, tabCZ3788.cnt AS CZ3788wehcan, tabCZ3787.cnt AS CZ3787wehhrb, tabWEHTYN.cnt AS HU7590wehtyn, tabWEHTNA.cnt AS HU7590wehtna, tabCA147.cnt AS CA147, tabMU2017.cnt AS MU2017 FROM mlbtable  
+LEFT JOIN  tabCA1828 ON (tabCA1828.flightdate = mlbtable.flightdate )
+LEFT JOIN  tabCA1588 ON (tabCA1588.flightdate = mlbtable.flightdate )
+LEFT JOIN  tabFM9258 ON (tabFM9258.flightdate = mlbtable.flightdate )
+LEFT JOIN  tabMU2288 ON (tabMU2288.flightdate = mlbtable.flightdate )
+LEFT JOIN  tabCZ3788 ON (tabCZ3788.flightdate = mlbtable.flightdate )
+LEFT JOIN  tabCZ3787 ON (tabCZ3787.flightdate = mlbtable.flightdate )
+LEFT JOIN  tabWEHTYN ON (tabWEHTYN.flightdate = mlbtable.flightdate )
+LEFT JOIN  tabWEHTNA ON (tabWEHTNA.flightdate = mlbtable.flightdate )
+LEFT JOIN  tabCA147 ON (tabCA147.flightdate = mlbtable.flightdate )
+LEFT JOIN  tabMU2017 ON (tabMU2017.flightdate = mlbtable.flightdate )
+WHERE mlbtable.flightdate LIKE '%%' ORDER BY mlbtable.flightdate
 --END COMMAND
 --END ALL
 
