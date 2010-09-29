@@ -101,5 +101,23 @@ namespace Blue.Airport.Win.Lib
         }
 
         #endregion
+
+        #region GetDataFromCommand
+
+        static public DataTable GetDataFromCommand(string command)
+        {
+            using (SqlConnection con = GetConnection())
+            {
+                DataTable t = SqlHelper.GetDataTable(con,
+                     CommandType.Text,
+                     command);
+                con.Close();
+                return t;
+
+            }
+
+        }
+
+        #endregion
     }
 }

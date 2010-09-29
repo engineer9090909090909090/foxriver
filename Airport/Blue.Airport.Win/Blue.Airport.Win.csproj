@@ -114,6 +114,9 @@
     <EmbeddedResource Include="Controls\Paging.resx">
       <DependentUpon>Paging.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Lib\frmMain.resx">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Lib\FrmWaiting.resx">
       <DependentUpon>FrmWaiting.cs</DependentUpon>
     </EmbeddedResource>
@@ -158,6 +161,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>Bull.mdf</DependentUpon>
     </Content>
+    <EmbeddedResource Include="App_Data\Sitioparser.queues.txt.sql" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

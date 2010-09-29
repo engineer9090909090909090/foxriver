@@ -13,6 +13,10 @@ namespace Blue.Airport.Win.Lib
 {
     public partial class frmMain : Form
     {
+        const string END_ALL = "--END ALL";
+        const string COMMAND_BEGIN = "--BEGIN";
+        const string COMMAND_END = "--END COMMAND";
+        const int COMMAND_START_INDEX = 7;
         // Fields
         private IContainer components;
         private frmConfigDB configDialog;
@@ -22,8 +26,6 @@ namespace Blue.Airport.Win.Lib
         private MenuItem menuItem2;
         private MenuItem menuItem3;
         private MenuItem menuItem4;
-        private MenuItem mnConfig;
-        private MenuItem mnConfigDB;
         private MenuItem mnEdit;
         private MenuItem mnExcecuteQueue;
         private MenuItem mnExport;
@@ -63,6 +65,7 @@ namespace Blue.Airport.Win.Lib
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+            /*
             this.Text = Application.ProductName + " " + Application.ProductVersion;
             this.configDialog = new frmConfigDB();
             this.sqlManDialog = new frmSQLMan();
@@ -78,16 +81,99 @@ namespace Blue.Airport.Win.Lib
                 item.Click += new EventHandler(this.mnStoQueueMenu_Click);
                 this.mnQueue.MenuItems.Add(item);
             }
+            */
+            LoadSavedSearchFromResource();
         }
 
-
-        /*
-        [STAThread]
-        private static void Main()
+        const string COMMAND_TXT_NAME = "Blue.Airport.Win.App_Data.Sitioparser.queues.txt.sql";
+        void LoadSavedSearchFromResource()
         {
-            Application.Run(new frmMain());
+            System.Text.StringBuilder sqlCommand = new StringBuilder();
+            System.Reflection.Assembly appDll = System.Reflection.Assembly.GetExecutingAssembly();
+            using (System.IO.Stream stream = appDll.GetManifestResourceStream(COMMAND_TXT_NAME))
+            {
+                bool findCommand = false;
+                MenuItem item = null;
+                using (System.IO.StreamReader reader = new StreamReader(stream))
+                {
+                    string line = reader.ReadLine();
+
+                    while (line != null)
+                    {
+
+                        // command file end
+                        if (line.Equals(END_ALL))
+                            break;
+
+                        if (!findCommand && line.StartsWith(COMMAND_BEGIN))
+                        {
+                            findCommand = true;
+                            item = new MenuItem();
+                            item.Text = line.Substring(COMMAND_START_INDEX);
+                            line = reader.ReadLine();
+                            continue;
+                        }
+
+                        line = line.Trim();
+
+                        // find empty line
+                        if (line.Length == 0)
+                        {
+                            line = reader.ReadLine();
+                            continue;
+                        }
+
+                        // find command end
+                        if (findCommand && line.Equals(COMMAND_END))
+                        {
+                            findCommand = false;
+                            item.Tag = sqlCommand.ToString();
+                            sqlCommand.Remove(0, sqlCommand.Length);
+                            item.Click += new EventHandler(item_Click);
+                            this.mnQueue.MenuItems.Add(item);
+                            line = reader.ReadLine();
+                            continue;
+                        }
+
+                        sqlCommand.Append(line);
+                        // add return character
+                        sqlCommand.Append("\r\n");
+
+                        // move to next command
+                        line = reader.ReadLine();
+
+                        /*
+                        //line = reader.ReadLine().Trim();
+                        item.Tag = reader.ReadLine().Trim();
+                        item.Click += new EventHandler(item_Click);
+                        this.mnQueue.MenuItems.Add(item);
+
+                        // move to next command
+                        line = reader.ReadLine();
+                        */
+                    }
+
+                }
+                stream.Close();
+            }
+
         }
-        */
+
+        void item_Click(object sender, EventArgs e)
+        {
+            //throw new NotImplementedException();
+            MenuItem item = (MenuItem)sender;
+            //MessageBox.Show((string)item.Tag);
+            //SqlHelper.GetDataTable(DbUtility.GetConnection(), 
+            try
+            {
+                this.resDataGridView.DataSource = DbUtility.GetDataFromCommand((string)item.Tag);
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
         private void menuItem4_Click(object sender, EventArgs e)
         {
@@ -129,7 +215,7 @@ namespace Blue.Airport.Win.Lib
                 wait.BeginOperate(this, new FrmWaiting.OperationDelegate(delegate
                 {
                     CParser parser = new CParser(this.openImpDialog.FileName);
-                    parser.lcDbLocation = this.lcDbLocation;
+                    //parser.lcDbLocation = this.lcDbLocation;
                     parser.parseMLB();
                     parser.parseFLR();
                 }));
