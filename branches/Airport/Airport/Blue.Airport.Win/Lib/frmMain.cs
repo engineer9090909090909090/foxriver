@@ -135,6 +135,12 @@ namespace Blue.Airport.Win.Lib
                             continue;
                         }
 
+                        // find comments line
+                        if (line.StartsWith("--"))
+                        {
+                            line = reader.ReadLine();
+                            continue;
+                        }
                         sqlCommand.Append(line);
                         // add return character
                         sqlCommand.Append("\r\n");

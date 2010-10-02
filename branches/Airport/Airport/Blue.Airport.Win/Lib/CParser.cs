@@ -12,9 +12,6 @@ namespace Blue.Airport.Win.Lib
     {
         // Fields
         private string filename;
-        //public string lcDbLocation;
-
-        //public frmProgress tfrmProgress;
 
         // Methods
         public CParser(string Filename)
@@ -271,7 +268,6 @@ namespace Blue.Airport.Win.Lib
             SqlCommand command = connection.CreateCommand();// new OleDbCommand();
             string line = reader.ReadLine();
 
-            //this.tfrmProgress.progressBar.Increment(1);
             while (line != null)
             {
                 line = reader.ReadLine();
@@ -290,10 +286,8 @@ namespace Blue.Airport.Win.Lib
                     {
                         flag = true;
                         line = reader.ReadLine();
-                        //this.tfrmProgress.progressBar.Increment(1);
                         flightdate = line.Substring(5).Split(new char[] { '/' })[1].ToUpper();
                         line = reader.ReadLine();
-                        //this.tfrmProgress.progressBar.Increment(1);
                         continue;
                     }
                     if (line.Substring(0, 5) == "TOTAL")
@@ -417,7 +411,6 @@ namespace Blue.Airport.Win.Lib
                         }
                     }
                 }
-                //}
             }
             connection.Close();
             reader.Close();
@@ -616,7 +609,6 @@ namespace Blue.Airport.Win.Lib
                 if (line == null)
                     continue;
 
-
                 line = line.Trim();
                 if (line.Length <= 5)
                 {
@@ -682,7 +674,6 @@ namespace Blue.Airport.Win.Lib
 
 
                 MlbEntity entity = MlbManager.GetAgent(command, ticketName, ticketcode, flightdate, flightcode);
-
                 if (entity == null)
                 {
                     if (int.Parse(s) == 1)
@@ -744,9 +735,4 @@ namespace Blue.Airport.Win.Lib
 
         #endregion
     }
-
-
-
-
-
 }
