@@ -12,11 +12,15 @@ namespace Blue.Airport.Win.Lib
     {
         // Fields
         private string filename;
+        public delegate void ShowWaitingText(string text);
+        ShowWaitingText _ShowWaitingText;
 
         // Methods
         public CParser(string Filename)
+        //public CParser(string Filename, ShowWaitingText waitingMethod)
         {
             this.filename = Filename;
+            //_ShowWaitingText = waitingMethod;
         }
 
         #region checkDB
@@ -614,6 +618,7 @@ namespace Blue.Airport.Win.Lib
                 {
                     continue;
                 }
+                //_ShowWaitingText(line);
 
                 if (line.Substring(0, 4).ToLower() == ">mlb")
                 {
