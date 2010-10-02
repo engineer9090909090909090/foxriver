@@ -19,6 +19,7 @@ Begin DataProject = "BullDb"
       Script = "TestQuerry.sql"
    End
    Begin Folder = "StoredProcedures"
+      Script = "flr_GetAllData.sql"
       Script = "flr_GetId.sql"
       Script = "flr_Insert.sql"
       Script = "flr_Update.sql"
