@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace Blue.Airport.Win.Lib
 {
@@ -10,6 +11,7 @@ namespace Blue.Airport.Win.Lib
         const string SP_flr_GetId = "flr_GetId";
         const string SP_flr_Insert = "flr_Insert";
         const string SP_flr_Update = "flr_Update";
+        const string SP_flr_GetAllData = "flr_GetAllData";
 
         #region GetId
 
@@ -112,5 +114,23 @@ namespace Blue.Airport.Win.Lib
         }
 
         #endregion
+
+        static public DataTable GetData(ref int total, int pageSize, int currentPage)
+        {
+
+            SqlParameter totalPara = new SqlParameter();
+            totalPara.ParameterName = "total";
+            totalPara.DbType = DbType.Int32;
+            totalPara.Direction = ParameterDirection.Output;
+
+            DataSet ds = SqlHelper.GetDataSet(Lib.DbUtility.GetConnection(),
+                 CommandType.StoredProcedure,
+                 SP_flr_GetAllData,
+                 totalPara,
+                 SqlHelper.BuildParameter("pageSize", pageSize),
+                 SqlHelper.BuildParameter("currentPage", currentPage));
+            total = (int)totalPara.Value;
+            return ds.Tables[0];
+        }
     }
 }
