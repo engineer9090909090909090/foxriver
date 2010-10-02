@@ -14,18 +14,22 @@ namespace Blue.Airport.Win
         public Form1()
         {
             InitializeComponent();
-            LoadData();
 
             SetEventHandler();
         }
 
-        void LoadData()
-        {
-            this.paging1.AppendLoadData(new Paging.LoadDataMethod(Lib.MlbManager.GetData), this.dataGridView1);
-        }
 
         void SetEventHandler()
         {
+            btnLoadFlr.Click += delegate
+            {
+                this.paging1.AppendLoadData(new Paging.LoadDataMethod(Lib.FlrManager.GetData), this.dataGridView1);
+            };
+
+            btnLoadMlb.Click += delegate
+            {
+                this.paging1.AppendLoadData(new Paging.LoadDataMethod(Lib.MlbManager.GetData), this.dataGridView1);
+            };
         }
 
         private void btnImport_Click(object sender, EventArgs e)

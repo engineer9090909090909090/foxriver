@@ -13,6 +13,14 @@ namespace Blue.Airport.Win.Lib
     {
         public delegate void OperationDelegate();
 
+        public delegate void ShowWaitingText(string text);
+
+        ShowWaitingText _Waiting;
+        public void ShowText(string text)
+        {
+            this.BeginInvoke(_Waiting);
+        }
+
         OperationDelegate _Operation;
         public void BeginOperate(Form parentForm, OperationDelegate operationMethod)
         {
@@ -63,6 +71,11 @@ namespace Blue.Airport.Win.Lib
             InitializeComponent();
 
             WaitingText = "Please wait...";
+
+            this._Waiting = new ShowWaitingText(delegate(string text)
+            {
+                this.WaitingText = text;
+            });
         }
 
         public string WaitingText

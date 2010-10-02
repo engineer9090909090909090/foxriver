@@ -16,8 +16,8 @@ namespace Blue.Airport.Win
             Application.SetCompatibleTextRenderingDefault(false);
 
 
-           //Application.Run(new Form1());
-             Application.Run(new Lib.frmMain());
+           Application.Run(new Form1());
+           //  Application.Run(new Lib.frmMain());
         }
     }
 }
