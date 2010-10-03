@@ -40,10 +40,12 @@
             this.dataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnImport = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnQuerys = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnOldParser = new System.Windows.Forms.ToolStripMenuItem();
             this.openImpDialog = new System.Windows.Forms.OpenFileDialog();
-            this.btnQuerys = new System.Windows.Forms.ToolStripMenuItem();
+            this.ddlYear = new System.Windows.Forms.ComboBox();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.paging1 = new Blue.Airport.Win.Paging();
             this.testEntityBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -51,6 +53,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.bullDataSetBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bullDataSetBindingSource1)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.testEntityBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -60,11 +63,11 @@
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(23, 82);
+            this.dataGridView1.Location = new System.Drawing.Point(24, 113);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 27;
-            this.dataGridView1.Size = new System.Drawing.Size(972, 418);
+            this.dataGridView1.Size = new System.Drawing.Size(971, 387);
             this.dataGridView1.TabIndex = 1;
             // 
             // bullDataSet
@@ -128,16 +131,22 @@
             // btnImport
             // 
             this.btnImport.Name = "btnImport";
-            this.btnImport.Size = new System.Drawing.Size(152, 24);
+            this.btnImport.Size = new System.Drawing.Size(127, 24);
             this.btnImport.Text = "Import";
             this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
             // 
             // exportToolStripMenuItem
             // 
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(127, 24);
             this.exportToolStripMenuItem.Text = "Export";
             this.exportToolStripMenuItem.Visible = false;
+            // 
+            // btnQuerys
+            // 
+            this.btnQuerys.Name = "btnQuerys";
+            this.btnQuerys.Size = new System.Drawing.Size(64, 23);
+            this.btnQuerys.Text = "Query";
             // 
             // helpToolStripMenuItem
             // 
@@ -159,11 +168,26 @@
             // 
             this.openImpDialog.Filter = "eTerm文本文件|*.txt";
             // 
-            // btnQuerys
+            // ddlYear
             // 
-            this.btnQuerys.Name = "btnQuerys";
-            this.btnQuerys.Size = new System.Drawing.Size(64, 23);
-            this.btnQuerys.Text = "Query";
+            this.ddlYear.DisplayMember = "year";
+            this.ddlYear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ddlYear.FormattingEnabled = true;
+            this.ddlYear.Location = new System.Drawing.Point(14, 3);
+            this.ddlYear.Name = "ddlYear";
+            this.ddlYear.Size = new System.Drawing.Size(129, 21);
+            this.ddlYear.TabIndex = 3;
+            this.ddlYear.ValueMember = "year";
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.ddlYear);
+            this.panel1.Location = new System.Drawing.Point(24, 77);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(971, 30);
+            this.panel1.TabIndex = 4;
             // 
             // paging1
             // 
@@ -187,6 +211,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1022, 527);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.paging1);
             this.Controls.Add(this.menuStrip1);
@@ -200,6 +225,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.bullDataSetBindingSource1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.testEntityBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -225,6 +251,8 @@
         private System.Windows.Forms.OpenFileDialog openImpDialog;
         private System.Windows.Forms.ToolStripMenuItem btnOldParser;
         private System.Windows.Forms.ToolStripMenuItem btnQuerys;
+        private System.Windows.Forms.ComboBox ddlYear;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 
