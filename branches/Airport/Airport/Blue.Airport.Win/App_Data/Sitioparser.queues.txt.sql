@@ -1,11 +1,3 @@
---BEGIN显示MLB所有内容
-SELECT * FROM mlbtable
---END COMMAND
-
---BEGIN显示FLR所有内容
-SELECT * FROM flrtable
---END COMMAND
-
 --BEGIN显示MLB有效数据
 SELECT flightdate as 班期,
 	fltsegment as 航程, 

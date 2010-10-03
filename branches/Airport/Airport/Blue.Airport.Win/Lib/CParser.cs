@@ -13,7 +13,9 @@ namespace Blue.Airport.Win.Lib
         // Fields
         private string filename;
         public delegate void ShowWaitingText(string text);
-        ShowWaitingText _ShowWaitingText;
+        public ShowWaitingText WaitingMethod;
+
+        internal FrmWaiting WaitingForm { get; set; }
 
         // Methods
         public CParser(string Filename)
@@ -280,6 +282,7 @@ namespace Blue.Airport.Win.Lib
                     continue;
                 }
                 line = line.Trim();
+                ShowProcessingText(line);
                 if ((line.Length > 4) && (line.Substring(0, 5) == "-END-"))
                 {
                     flag = false;
@@ -418,6 +421,7 @@ namespace Blue.Airport.Win.Lib
             }
             connection.Close();
             reader.Close();
+            /*
             if (insertCount > 0)
             {
                 MessageBox.Show("FLR数据库共提取" + insertCount.ToString() + "条记录", "FLR解析完毕", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
@@ -426,6 +430,7 @@ namespace Blue.Airport.Win.Lib
             {
                 MessageBox.Show("FLR数据库未搜索到任何新记录", "FLR解析完毕", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
+            */
         }
 
         #endregion
@@ -586,6 +591,16 @@ namespace Blue.Airport.Win.Lib
 
         #endregion
 
+        void ShowProcessingText(string line)
+        {
+            //_ShowWaitingText(line);
+            if (WaitingForm != null && WaitingMethod != null)
+            {
+                //WaitingForm.ShowText(line);
+                WaitingForm.Invoke(WaitingMethod, new object[] { line });
+            }
+        }
+
         #region parseMLB
 
         public void parseMLB()
@@ -618,7 +633,7 @@ namespace Blue.Airport.Win.Lib
                 {
                     continue;
                 }
-                //_ShowWaitingText(line);
+                ShowProcessingText(line);
 
                 if (line.Substring(0, 4).ToLower() == ">mlb")
                 {
@@ -728,6 +743,7 @@ namespace Blue.Airport.Win.Lib
             connection.Close();
             fileReader.Close();
 
+            /*
             if (insertCount > 0)
             {
                 MessageBox.Show("MLB数据库共提取" + insertCount.ToString() + "条记录", "MLB解析完毕", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
@@ -736,6 +752,7 @@ namespace Blue.Airport.Win.Lib
             {
                 MessageBox.Show("MLB数据库未搜索到任何新记录", "MLB解析完毕", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
+            */
         }
 
         #endregion
