@@ -38,13 +38,14 @@
             this.btnLoadMlb = new System.Windows.Forms.ToolStripMenuItem();
             this.btnLoadFlr = new System.Windows.Forms.ToolStripMenuItem();
             this.dataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnImport = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnOldParser = new System.Windows.Forms.ToolStripMenuItem();
             this.openImpDialog = new System.Windows.Forms.OpenFileDialog();
+            this.btnQuerys = new System.Windows.Forms.ToolStripMenuItem();
             this.paging1 = new Blue.Airport.Win.Paging();
             this.testEntityBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.btnOldParser = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bullDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bullDataSetBindingSource)).BeginInit();
@@ -86,6 +87,7 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.viewToolStripMenuItem,
             this.dataToolStripMenuItem,
+            this.btnQuerys,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -123,14 +125,6 @@
             this.dataToolStripMenuItem.Size = new System.Drawing.Size(53, 23);
             this.dataToolStripMenuItem.Text = "Data";
             // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnOldParser});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(53, 23);
-            this.helpToolStripMenuItem.Text = "Help";
-            // 
             // btnImport
             // 
             this.btnImport.Name = "btnImport";
@@ -143,10 +137,33 @@
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
             this.exportToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             this.exportToolStripMenuItem.Text = "Export";
+            this.exportToolStripMenuItem.Visible = false;
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnOldParser});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(53, 23);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // btnOldParser
+            // 
+            this.btnOldParser.Name = "btnOldParser";
+            this.btnOldParser.Size = new System.Drawing.Size(265, 24);
+            this.btnOldParser.Text = "Check Old Parser Program";
+            this.btnOldParser.Visible = false;
+            this.btnOldParser.Click += new System.EventHandler(this.btnOldParser_Click);
             // 
             // openImpDialog
             // 
             this.openImpDialog.Filter = "eTerm文本文件|*.txt";
+            // 
+            // btnQuerys
+            // 
+            this.btnQuerys.Name = "btnQuerys";
+            this.btnQuerys.Size = new System.Drawing.Size(64, 23);
+            this.btnQuerys.Text = "Query";
             // 
             // paging1
             // 
@@ -164,13 +181,6 @@
             // testEntityBindingSource
             // 
             this.testEntityBindingSource.DataSource = typeof(Blue.Airport.Win.TestEntity);
-            // 
-            // btnOldParser
-            // 
-            this.btnOldParser.Name = "btnOldParser";
-            this.btnOldParser.Size = new System.Drawing.Size(265, 24);
-            this.btnOldParser.Text = "Check Old Parser Program";
-            this.btnOldParser.Click += new System.EventHandler(this.btnOldParser_Click);
             // 
             // Form1
             // 
@@ -214,6 +224,7 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openImpDialog;
         private System.Windows.Forms.ToolStripMenuItem btnOldParser;
+        private System.Windows.Forms.ToolStripMenuItem btnQuerys;
     }
 }
 

@@ -110,6 +110,7 @@ namespace Blue.Airport.Win
             _GridView = gridView;
 
             _TotalPage = -1;
+            CurrentPage = 1;
             BindGridView();
         }
 
@@ -186,6 +187,7 @@ namespace Blue.Airport.Win
             #region reset page properties
             if (_TotalPage < 0)
             {
+                ddlPage.Items.Clear();
 
                 if (Total == 0)
                 {
@@ -203,7 +205,6 @@ namespace Blue.Airport.Win
                     }
                 }
                 lblTotalPages.Text = _TotalPage.ToString();
-                ddlPage.Items.Clear();
                 for (int i = 1; i <= _TotalPage; ++i)
                 {
                     ddlPage.Items.Add(i.ToString());
@@ -216,6 +217,10 @@ namespace Blue.Airport.Win
             {
                 return;
             }
+            //if (CurrentPage > ddlPage.Items.Count)
+            //{
+            //    CurrentPage = 1;
+            //}
             ddlPage.SelectedIndex = CurrentPage - 1;
 
         }
