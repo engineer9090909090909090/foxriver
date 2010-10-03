@@ -30,9 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.bullDataSet = new Blue.Airport.Win.App_Data.BullDataSet();
-            this.bullDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.bullDataSetBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnLoadMlb = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,14 +43,17 @@
             this.openImpDialog = new System.Windows.Forms.OpenFileDialog();
             this.ddlYear = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.bullDataSet = new Blue.Airport.Win.App_Data.BullDataSet();
+            this.bullDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.bullDataSetBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.paging1 = new Blue.Airport.Win.Paging();
             this.testEntityBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.menuStrip1.SuspendLayout();
+            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bullDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bullDataSetBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bullDataSetBindingSource1)).BeginInit();
-            this.menuStrip1.SuspendLayout();
-            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.testEntityBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -69,21 +69,6 @@
             this.dataGridView1.RowTemplate.Height = 27;
             this.dataGridView1.Size = new System.Drawing.Size(971, 387);
             this.dataGridView1.TabIndex = 1;
-            // 
-            // bullDataSet
-            // 
-            this.bullDataSet.DataSetName = "BullDataSet";
-            this.bullDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // bullDataSetBindingSource
-            // 
-            this.bullDataSetBindingSource.DataSource = this.bullDataSet;
-            this.bullDataSetBindingSource.Position = 0;
-            // 
-            // bullDataSetBindingSource1
-            // 
-            this.bullDataSetBindingSource1.DataSource = this.bullDataSet;
-            this.bullDataSetBindingSource1.Position = 0;
             // 
             // menuStrip1
             // 
@@ -189,6 +174,21 @@
             this.panel1.Size = new System.Drawing.Size(971, 30);
             this.panel1.TabIndex = 4;
             // 
+            // bullDataSet
+            // 
+            this.bullDataSet.DataSetName = "BullDataSet";
+            this.bullDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // bullDataSetBindingSource
+            // 
+            this.bullDataSetBindingSource.DataSource = this.bullDataSet;
+            this.bullDataSetBindingSource.Position = 0;
+            // 
+            // bullDataSetBindingSource1
+            // 
+            this.bullDataSetBindingSource1.DataSource = this.bullDataSet;
+            this.bullDataSetBindingSource1.Position = 0;
+            // 
             // paging1
             // 
             this.paging1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -218,14 +218,14 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "数据库管理系统";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bullDataSet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bullDataSetBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bullDataSetBindingSource1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.bullDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bullDataSetBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bullDataSetBindingSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.testEntityBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
