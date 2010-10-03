@@ -18,7 +18,11 @@ namespace Blue.Airport.Win.Lib
         ShowWaitingText _Waiting;
         public void ShowText(string text)
         {
-            this.BeginInvoke(_Waiting);
+            IAsyncResult ar = this.BeginInvoke(_Waiting);
+            while (!ar.IsCompleted)
+            {
+                ar.AsyncWaitHandle.WaitOne();
+            }
         }
 
         OperationDelegate _Operation;
@@ -52,7 +56,6 @@ namespace Blue.Airport.Win.Lib
             this.ShowDialog(parentForm);
         }
 
-        //bool _OperationFinished = true;
         void BeginOperate()
         {
             //method();
@@ -78,6 +81,8 @@ namespace Blue.Airport.Win.Lib
             });
         }
 
+        #region WaitingText
+
         public string WaitingText
         {
             get
@@ -87,8 +92,10 @@ namespace Blue.Airport.Win.Lib
             set
             {
                 label1.Text = value;
-                this.Text = value;
+                //this.Text = value;
             }
         }
+
+        #endregion
     }
 }
