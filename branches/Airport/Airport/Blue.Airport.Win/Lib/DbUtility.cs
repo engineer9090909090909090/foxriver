@@ -14,7 +14,11 @@ namespace Blue.Airport.Win.Lib
         {
             get
             {
+#if DEBUG
                 return System.Configuration.ConfigurationManager.ConnectionStrings["Blue.Airport.Win.Properties.Settings.BullConnectionString"].ConnectionString;
+#else
+                return System.Configuration.ConfigurationManager.ConnectionStrings["Blue.Airport.Win.Properties.Settings.BullConnectionString_Release"].ConnectionString;
+#endif
                 //return System.Configuration.ConfigurationSettings.AppSettings["Blue.Airport.Win.Properties.Settings.BullConnectionString"];
             }
         }
@@ -116,6 +120,19 @@ namespace Blue.Airport.Win.Lib
 
             }
 
+        }
+
+        static public DataTable GetDataFromSp(string spName)
+        {
+            using (SqlConnection con = GetConnection())
+            {
+                DataTable t = SqlHelper.GetDataTable(con,
+                     CommandType.StoredProcedure,
+                     spName);
+                con.Close();
+                return t;
+
+            }
         }
 
         #endregion
