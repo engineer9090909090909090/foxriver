@@ -9,4 +9,10 @@ namespace Blue.Airport.Win.Lib
         public int Id { get; set; }
         public string ticsellagt { get; set; }
     }
+
+    public enum DataBaseType
+    {
+        MLB = 64,
+        FLR = 65
+    }
 }
