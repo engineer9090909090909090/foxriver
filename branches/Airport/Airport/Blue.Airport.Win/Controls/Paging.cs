@@ -27,10 +27,26 @@ namespace Blue.Airport.Win
         {
             get
             {
+                /*
+                if (ddlPage.Items.Count == 0)
+                    return 0;
+                // don't have data, current page is zero
+                if (_Total <= 0)
+                    return 0;
+
+                return int.Parse(ddlPage.SelectedValue.ToString()) + 1;
+                */
                 return _CurrentPage;
             }
             set
             {
+                /*
+                //_CurrentPage = value;
+                if (value < 0 || value >= ddlPage.Items.Count)
+                    return;
+
+                ddlPage.SelectedIndex = value - 1;
+                */
                 _CurrentPage = value;
             }
         }
@@ -110,7 +126,7 @@ namespace Blue.Airport.Win
             _GridView = gridView;
 
             _TotalPage = -1;
-            CurrentPage = 1;
+            //CurrentPage = 1;
             BindGridView();
         }
 
@@ -124,8 +140,10 @@ namespace Blue.Airport.Win
             {
                 if (_TotalPage < 1)
                     return;
+                
                 CurrentPage = 1;
                 BindGridView();
+                
             };
             btnNext.Click += delegate
             {
@@ -137,6 +155,7 @@ namespace Blue.Airport.Win
                     MessageBox.Show("Arrive at last page");
                     return;
                 }
+                
                 ++CurrentPage;
                 BindGridView();
             };
@@ -164,7 +183,6 @@ namespace Blue.Airport.Win
             {
                 if (_TotalPage < 1)
                     return;
-                
                 CurrentPage = int.Parse(ddlPage.SelectedItem.ToString());
                 BindGridView();
             };
@@ -181,6 +199,8 @@ namespace Blue.Airport.Win
                 this.LoadDataHandler == null)
                 return;
             //int total = 0;
+            //if (CurrentPage - 1 == ddlPage.SelectedIndex)
+            //    return;
             this._GridView.DataSource = this.LoadDataHandler(ref _Total, PageSize, CurrentPage);
             lblTotal.Text = _Total.ToString();
 

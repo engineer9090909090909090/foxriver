@@ -42,7 +42,7 @@
             this.btnOldParser = new System.Windows.Forms.ToolStripMenuItem();
             this.openImpDialog = new System.Windows.Forms.OpenFileDialog();
             this.ddlYear = new System.Windows.Forms.ComboBox();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.pnlControl = new System.Windows.Forms.Panel();
             this.bullDataSet = new Blue.Airport.Win.App_Data.BullDataSet();
             this.bullDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.bullDataSetBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
@@ -50,7 +50,7 @@
             this.testEntityBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.pnlControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bullDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bullDataSetBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bullDataSetBindingSource1)).BeginInit();
@@ -63,11 +63,11 @@
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(24, 113);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 122);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 27;
-            this.dataGridView1.Size = new System.Drawing.Size(971, 387);
+            this.dataGridView1.Size = new System.Drawing.Size(998, 378);
             this.dataGridView1.TabIndex = 1;
             // 
             // menuStrip1
@@ -158,21 +158,23 @@
             this.ddlYear.DisplayMember = "year";
             this.ddlYear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ddlYear.FormattingEnabled = true;
-            this.ddlYear.Location = new System.Drawing.Point(14, 3);
+            this.ddlYear.Location = new System.Drawing.Point(3, 56);
             this.ddlYear.Name = "ddlYear";
             this.ddlYear.Size = new System.Drawing.Size(129, 21);
             this.ddlYear.TabIndex = 3;
             this.ddlYear.ValueMember = "year";
             // 
-            // panel1
+            // pnlControl
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.pnlControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Controls.Add(this.ddlYear);
-            this.panel1.Location = new System.Drawing.Point(24, 77);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(971, 30);
-            this.panel1.TabIndex = 4;
+            this.pnlControl.Controls.Add(this.ddlYear);
+            this.pnlControl.Controls.Add(this.paging1);
+            this.pnlControl.Location = new System.Drawing.Point(12, 30);
+            this.pnlControl.Name = "pnlControl";
+            this.pnlControl.Size = new System.Drawing.Size(998, 86);
+            this.pnlControl.TabIndex = 4;
+            this.pnlControl.Visible = false;
             // 
             // bullDataSet
             // 
@@ -194,11 +196,11 @@
             this.paging1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.paging1.CurrentPage = 1;
             this.paging1.GridView = null;
-            this.paging1.Location = new System.Drawing.Point(434, 35);
+            this.paging1.Location = new System.Drawing.Point(30, 3);
             this.paging1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.paging1.Name = "paging1";
             this.paging1.PageSize = 1000;
-            this.paging1.Size = new System.Drawing.Size(561, 47);
+            this.paging1.Size = new System.Drawing.Size(955, 47);
             this.paging1.TabIndex = 0;
             this.paging1.Total = 0;
             // 
@@ -211,18 +213,17 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1022, 527);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.pnlControl);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.paging1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.Name = "Form1";
-            this.Text = "数据库管理系统";
+            this.Text = "民航数据管理系统";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.panel1.ResumeLayout(false);
+            this.pnlControl.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bullDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bullDataSetBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bullDataSetBindingSource1)).EndInit();
@@ -252,7 +253,7 @@
         private System.Windows.Forms.ToolStripMenuItem btnOldParser;
         private System.Windows.Forms.ToolStripMenuItem btnQuerys;
         private System.Windows.Forms.ComboBox ddlYear;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel pnlControl;
     }
 }
 

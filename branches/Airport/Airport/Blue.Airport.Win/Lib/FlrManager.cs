@@ -34,7 +34,7 @@ namespace Blue.Airport.Win.Lib
 
         #endregion
 
-        #region Insert 
+        #region Insert
 
         static public int Insert(SqlCommand command,
             string flightdate,
@@ -51,6 +51,7 @@ namespace Blue.Airport.Win.Lib
             int flrlf)
         {
 
+            DateTime flightDate = DateConverter.FromFlightDate(flightdate);
 
             command.CommandType = System.Data.CommandType.StoredProcedure;
             command.CommandText = SP_flr_Insert;
@@ -67,11 +68,12 @@ namespace Blue.Airport.Win.Lib
             SqlHelper.BuildParameter(command, "flrcnl", flrcnl);
             SqlHelper.BuildParameter(command, "flrcap", flrcap);
             SqlHelper.BuildParameter(command, "flrlf", flrlf);
+            SqlHelper.BuildParameter(command, "_flight_date", flightdate);
 
             return command.ExecuteNonQuery();
         }
 
-      
+
 
 
         #endregion
@@ -115,8 +117,12 @@ namespace Blue.Airport.Win.Lib
 
         #endregion
 
-        static public DataTable GetData(ref int total, int pageSize, int currentPage)
+        #region GetData
+
+        static public DataTable GetData(ref int total, int pageSize, int currentPage, int year, int month)
         {
+            DateTime beginDate = new DateTime(year, month, 1);
+            DateTime endDate = DateConverter.GetLastDayOfAMonth(beginDate);
 
             SqlParameter totalPara = new SqlParameter();
             totalPara.ParameterName = "total";
@@ -128,9 +134,13 @@ namespace Blue.Airport.Win.Lib
                  SP_flr_GetAllData,
                  totalPara,
                  SqlHelper.BuildParameter("pageSize", pageSize),
-                 SqlHelper.BuildParameter("currentPage", currentPage));
+                 SqlHelper.BuildParameter("currentPage", currentPage),
+                 SqlHelper.BuildParameter("flightDateBegin", beginDate),
+                SqlHelper.BuildParameter("flightDateEnd", endDate));
             total = (int)totalPara.Value;
             return ds.Tables[0];
         }
+
+        #endregion
     }
 }
