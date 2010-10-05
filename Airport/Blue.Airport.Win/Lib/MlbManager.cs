@@ -88,19 +88,45 @@ string ticsellagt
 
         #region GetData
 
+        /*
         static public DataTable GetData(ref int total, int pageSize, int currentPage)
         {
             SqlParameter totalPara = new SqlParameter();
             totalPara.ParameterName = "total";
             totalPara.DbType = DbType.Int32;
             totalPara.Direction = ParameterDirection.Output;
-            
+
             DataSet ds = SqlHelper.GetDataSet(Lib.DbUtility.GetConnection(),
                  CommandType.StoredProcedure,
                  SP_mlb_GetAllData,
                  totalPara,
                  SqlHelper.BuildParameter("pageSize", pageSize),
                  SqlHelper.BuildParameter("currentPage", currentPage));
+            total = (int)totalPara.Value;
+            return ds.Tables[0];
+        }
+        */
+
+        static public DataTable GetData(ref int total, int pageSize, int currentPage, int year, int month)
+        {
+            DateTime beginDate = new DateTime(year, month, 1);
+            DateTime endDate = DateConverter.GetLastDayOfAMonth(beginDate);
+
+            SqlParameter totalPara = new SqlParameter();
+            totalPara.ParameterName = "total";
+            totalPara.DbType = DbType.Int32;
+            totalPara.Direction = ParameterDirection.Output;
+
+
+
+            DataSet ds = SqlHelper.GetDataSet(Lib.DbUtility.GetConnection(),
+                 CommandType.StoredProcedure,
+                 SP_mlb_GetAllData,
+                 totalPara,
+                 SqlHelper.BuildParameter("pageSize", pageSize),
+                 SqlHelper.BuildParameter("currentPage", currentPage),
+                 SqlHelper.BuildParameter("flightDateBegin", beginDate),
+                SqlHelper.BuildParameter("flightDateEnd", endDate));
             total = (int)totalPara.Value;
             return ds.Tables[0];
         }

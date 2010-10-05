@@ -18,6 +18,11 @@ namespace Blue.Airport.Win
         const int COMMAND_START_INDEX = 7;
         const string COMMAND_TXT_NAME = "Blue.Airport.Win.App_Data.Sitioparser.queues.txt.sql";
 
+        int _SelectedMonth = 1;
+        Lib.DataBaseType _SelectedDatabase = DataBaseType.MLB;
+        List<LinkLabel> _MonthButtonList = new List<LinkLabel>();
+        LinkLabel _SelectedMonthButton = null;
+
         public Form1()
         {
             InitializeComponent();
@@ -25,34 +30,15 @@ namespace Blue.Airport.Win
             SetEventHandler();
             LoadSavedQuerys();
             LoadMonth();
+
+            btnLoadMlb.Tag = Lib.DataBaseType.MLB;
+            btnLoadFlr.Tag = Lib.DataBaseType.FLR;
         }
 
         #region LoadMonthData
 
         void LoadMonth()
         {
-            /*
-            var list = new object[12];
-            List<object> monList = new List<object>();
-            monList.Add( new { tag = 0, name = "JAN" });
-
-            list[0] = new { tag = 0, name = "JAN" };
-            list[1] = new { tag = 1, name = "FEB" };
-            list[2] = new { tag = 2, name = "MAR" };
-            list[3] = new { tag = 3, name = "APR" };
-            list[4] = new { tag = 4, name = "MAY" };
-            list[5] = new { tag = 5, name = "JUN" };
-            list[6] = new { tag = 6, name = "JUL" };
-            list[7] = new { tag = 7, name = "AUG" };
-            list[8] = new { tag = 8, name = "SEP" };
-            list[9] = new { tag = 9, name = "OCT" };
-            list[10] = new { tag = 10, name = "NOV" };
-            list[11] = new { tag = 11, name = "DEC" };
-            for (int i = 0; i < list.Length; ++i)
-            {
-                //list[i].
-            }
-            */
             AddMonthLink(1, "Jan");
             AddMonthLink(2, "Feb");
             AddMonthLink(3, "Mar");
@@ -65,6 +51,9 @@ namespace Blue.Airport.Win
             AddMonthLink(10, "Oct");
             AddMonthLink(11, "Nov");
             AddMonthLink(12, "Dec");
+
+            _MonthButtonList[0].Font = new Font(_MonthButtonList[0].Font, FontStyle.Bold);
+            _SelectedMonthButton = _MonthButtonList[0];
         }
 
         void AddMonthLink(int index, string name)
@@ -75,7 +64,8 @@ namespace Blue.Airport.Win
             lnL.Width = 40;
             lnL.Left = ddlYear.Right + index * 40;
             lnL.Top = ddlYear.Top;
-            panel1.Controls.Add(lnL);
+            pnlControl.Controls.Add(lnL);
+            _MonthButtonList.Add(lnL);
             lnL.Click += new EventHandler(lnL_Click);
         }
 
@@ -84,9 +74,35 @@ namespace Blue.Airport.Win
             if (ddlYear.SelectedItem == null)
                 return;
 
+            LinkLabel currentButton = (LinkLabel)sender;
+            if (currentButton == _SelectedMonthButton)
+                return;
+
+            _SelectedMonthButton.Font = new Font(_SelectedMonthButton.Font, FontStyle.Regular);
+            currentButton.Font = new Font(currentButton.Font, FontStyle.Bold);
+            _SelectedMonthButton = currentButton;
+
+            //LinkLabel currentButton = _MonthButtonList.Find(button => (int)button.Tag == (int)_SelectedMonthButton.Tag);
+            //if (currentButton != null)
+            //{
+            //    return;
+            //}
+
+
+
+            /*
             int year = int.Parse(ddlYear.SelectedValue.ToString());
             int monty = (int)((LinkLabel)sender).Tag;
-
+            */
+            _SelectedMonth = (int)((LinkLabel)sender).Tag;
+            if (_SelectedDatabase == DataBaseType.MLB)
+            {
+                this.paging1.AppendLoadData(new Paging.LoadDataMethod(this.LoadMlbData), this.dataGridView1);
+            }
+            else if (_SelectedDatabase == DataBaseType.FLR)
+            {
+                this.paging1.AppendLoadData(new Paging.LoadDataMethod(this.LoadFlrData), this.dataGridView1);
+            }
         }
 
         #endregion
@@ -176,25 +192,55 @@ namespace Blue.Airport.Win
 
         #endregion
 
+        #region SetEventHandler
 
         void SetEventHandler()
         {
             btnLoadFlr.Click += delegate
             {
+                pnlControl.Visible = true;
+                _SelectedDatabase = DataBaseType.FLR;
                 // load year list
                 System.Data.DataTable yearList = DbUtility.GetDataFromSp("flr_GetYearList");
                 ddlYear.DataSource = yearList;
-                this.paging1.AppendLoadData(new Paging.LoadDataMethod(Lib.FlrManager.GetData), this.dataGridView1);
+                //this.paging1.AppendLoadData(new Paging.LoadDataMethod(Lib.FlrManager.GetData), this.dataGridView1);
+                this.paging1.AppendLoadData(new Paging.LoadDataMethod(this.LoadFlrData), this.dataGridView1);
             };
 
             btnLoadMlb.Click += delegate
             {
+                pnlControl.Visible = true;
+                _SelectedDatabase = DataBaseType.MLB;
                 System.Data.DataTable yearList = DbUtility.GetDataFromSp("mlb_GetYearList");
                 ddlYear.DataSource = yearList;
-                this.paging1.AppendLoadData(new Paging.LoadDataMethod(Lib.MlbManager.GetData), this.dataGridView1);
+                //this.paging1.AppendLoadData(new Paging.LoadDataMethod(Lib.MlbManager.GetData), this.dataGridView1);
+                this.paging1.AppendLoadData(new Paging.LoadDataMethod(this.LoadMlbData), this.dataGridView1);
             };
         }
 
+        DataTable LoadMlbData(ref int total, int pageSize, int currentPage)
+        {
+            if (ddlYear.Items.Count == 0)
+                return null;
+
+            int year = int.Parse(ddlYear.SelectedValue.ToString());
+            int month = _SelectedMonth;
+            return MlbManager.GetData(ref total, pageSize, currentPage, year, month);
+        }
+
+        DataTable LoadFlrData(ref int total, int pageSize, int currentPage)
+        {
+            if (ddlYear.Items.Count == 0)
+                return null;
+
+            int year = int.Parse(ddlYear.SelectedValue.ToString());
+            int month = _SelectedMonth;
+            return FlrManager.GetData(ref total, pageSize, currentPage, year, month);
+        }
+
+        #endregion
+
+        #region Import
 
         private void btnImport_Click(object sender, EventArgs e)
         {
@@ -218,11 +264,14 @@ namespace Blue.Airport.Win
             }
         }
 
+        #endregion
+
         private void btnOldParser_Click(object sender, EventArgs e)
         {
             Lib.frmMain old = new frmMain();
             old.ShowDialog(this);
         }
+
 
     }
 }

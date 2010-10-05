@@ -6,6 +6,8 @@ namespace Blue.Airport.Win.Lib
 {
     public class DateConverter
     {
+        #region FromFlightDate
+
         static public DateTime FromFlightDate(string flight)
         {
             //01JAN08
@@ -69,5 +71,33 @@ namespace Blue.Airport.Win.Lib
                 return new DateTime(1999, 1, 1);
             }
         }
+
+        #endregion
+
+        #region GetLastDayOfAMonth
+
+        static public DateTime GetLastDayOfAMonth(DateTime firstDayOfAMonth)
+        {
+            /*
+            if (firstDayOfAMonth.Day != 1)
+            {
+                throw new Exception("所选的日期不是当月的第一天");
+            }
+            */
+
+            //int month = firstDayOfAMonth.Month;
+            /*
+            DateTime ret = new DateTime(firstDayOfAMonth.Year, firstDayOfAMonth.Month, 2);
+            while (ret.Month == month)
+            {
+                ret.ad
+            }
+            */
+            DateTime ret = firstDayOfAMonth.AddMonths(1);
+            ret = ret.AddDays(-1);
+            return ret;
+        }
+
+        #endregion
     }
 }
