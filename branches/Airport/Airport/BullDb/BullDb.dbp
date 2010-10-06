@@ -16,6 +16,12 @@ Begin DataProject = "BullDb"
       End
    End
    Begin Folder = "FlrSps"
+      Script = "flr_GetAllData.sql"
+      Script = "flr_GetId.sql"
+      Script = "flr_GetYearList.sql"
+      Script = "flr_Insert.sql"
+      Script = "flr_test.sql"
+      Script = "flr_Update.sql"
    End
    Begin Folder = "Queries"
       Script = "TestQuerry.sql"
