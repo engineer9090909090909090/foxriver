@@ -14,7 +14,7 @@ CREATE Procedure flr_GetAllData
 @flightDateEnd datetime
 AS
 
-SELECT @total = COUNT(*) FROM flrtable WHERE  flightdate >= @flightDateBegin AND flightdate <= @flightDateEnd
+SELECT @total = COUNT(*) FROM flrtable WHERE  _flight_date >= @flightDateBegin AND _flight_date <= @flightDateEnd
 
 SELECT row_index as [序号],
 	flightdate as 航班日期, 
@@ -27,7 +27,7 @@ SELECT row_index as [序号],
 	flrlf as 乘坐率
  FROM
 	(
-	SELECT *, ROW_NUMBER() over (order by [id] ASC) AS row_index  FROM flrtable WHERE flightdate >= @flightDateBegin AND flightdate <= @flightDateEnd
+	SELECT *, ROW_NUMBER() over (order by [id] ASC) AS row_index  FROM flrtable WHERE _flight_date >= @flightDateBegin AND _flight_date <= @flightDateEnd
 	) AS NEW_TABLE
 WHERE row_index between (@currentPage - 1 ) * @pageSize and @currentPage * @pageSize
 GO
