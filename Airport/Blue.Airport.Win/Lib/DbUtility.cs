@@ -42,7 +42,9 @@ namespace Blue.Airport.Win.Lib
         {
             SqlConnection conn = GetConnection();
             conn.Open();
-            return conn.CreateCommand();
+            SqlCommand command = conn.CreateCommand();
+            command.CommandTimeout = 300;
+            return command;
         }
 
         #endregion
