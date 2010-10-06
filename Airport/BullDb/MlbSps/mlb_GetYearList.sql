@@ -8,7 +8,7 @@ GO
 CREATE Procedure mlb_GetYearList
 AS
 
-select distinct year( flightdate)  as [year] from mlbtable
+select distinct year(_flight_date)  as [year] from mlbtable
 
 GO
 
