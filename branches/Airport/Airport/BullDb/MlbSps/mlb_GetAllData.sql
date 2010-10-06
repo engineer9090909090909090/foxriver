@@ -15,7 +15,7 @@ CREATE Procedure mlb_GetAllData
 @flightDateEnd datetime
 AS
 
-SELECT @total = COUNT(*) FROM mlbtable WHERE  flightdate >= @flightDateBegin AND flightdate <= @flightDateEnd;
+SELECT @total = COUNT(*) FROM mlbtable WHERE  _flight_date >= @flightDateBegin AND _flight_date <= @flightDateEnd;
 
 
 SELECT row_index as [序号],
