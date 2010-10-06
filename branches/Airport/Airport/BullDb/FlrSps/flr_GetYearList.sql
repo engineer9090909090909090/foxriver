@@ -8,7 +8,7 @@ GO
 CREATE Procedure flr_GetYearList
 AS
 
-select distinct year( flightdate) as [year] from flrtable
+select distinct year(_flight_date) as [year] from flrtable
 
 GO
 
