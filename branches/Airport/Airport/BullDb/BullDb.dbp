@@ -20,9 +20,6 @@ Begin DataProject = "BullDb"
       Script = "flr_test.sql"
       Script = "flr_Update.sql"
    End
-   Begin Folder = "Queries"
-      Script = "TestQuerry.sql"
-   End
    Begin Folder = "StoredProcedures"
       Begin Folder = "Mlb"
          Script = "mlb_GetAllData.sql"
