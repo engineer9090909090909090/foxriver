@@ -2,9 +2,6 @@
 Begin DataProject = "BullDb"
    MSDTVersion = "80"
    DefDBRef = "Bull.mdf1"
-   Begin Folder = "Change Scripts"
-      Script = "Test1.sql"
-   End
    Begin Folder = "Create Scripts"
       Script = "Bull.sql"
    End
